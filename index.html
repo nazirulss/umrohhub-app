@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UmrohHub - Marketplace & Portal Umroh Terverifikasi Kemenag</title>
+  <title>Umrohpedia - Marketplace & Portal Umroh Terverifikasi Kemenag</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
@@ -475,32 +475,45 @@
     .quick-categories-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      gap: 12px;
-      margin: 20px 0;
+      gap: 14px;
+      margin: 22px 0;
     }
     .category-icon-card {
       background: var(--white);
       border: 1px solid var(--slate-200);
-      border-radius: var(--radius-md);
-      padding: 14px 10px;
+      border-radius: var(--radius-lg);
+      padding: 16px 8px 14px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+      transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
       box-shadow: var(--shadow-xs);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
     }
     .category-icon-card:hover {
-      transform: translateY(-3px);
+      transform: translateY(-4px);
       box-shadow: var(--shadow-card-hover);
       border-color: var(--primary-600);
     }
-    .category-icon-img {
-      font-size: 1.8rem;
-      margin-bottom: 6px;
+    .category-icon-circle {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .category-icon-card:hover .category-icon-circle {
+      transform: scale(1.1);
     }
     .category-icon-label {
       font-size: 12px;
       font-weight: 700;
-      color: var(--slate-700);
+      color: var(--slate-800);
+      line-height: 1.25;
     }
 
     /* ==========================================================================
@@ -1280,7 +1293,7 @@
     <div class="container main-header-inner">
       <a href="#" class="brand-logo" onclick="Router.navigate('home')">
         <div class="kaaba-icon">🕋</div>
-        <div>Umroh<span>Hub</span></div>
+        <div>Umroh<span>pedia</span></div>
       </a>
 
       <!-- Category Mega Menu Dropdown -->
@@ -1339,14 +1352,14 @@
       <div>
         <div class="brand-logo" style="margin-bottom: 8px;">
           <div class="kaaba-icon">🕋</div>
-          <div>Umroh<span>Hub</span></div>
+          <div>Umroh<span>pedia</span></div>
         </div>
         <p style="max-width: 380px;">Marketplace agregator paket perjalanan ibadah Umroh resmi berizin PPIU Kementerian Agama RI dengan sistem perlindungan booking amanah.</p>
       </div>
       <div>
         <h4 style="color: var(--slate-800); margin-bottom: 10px; font-size: 13px;">Layanan Konsumen & Mitra</h4>
         <p>WhatsApp Hotline: 0812-8899-1122</p>
-        <p>Email: bantuan@umrohhub.id</p>
+        <p>Email: bantuan@umrohpedia.my.id</p>
         <p>Jam Layanan: Senin - Ahad (08.00 - 20.00 WIB)</p>
       </div>
       <div>
@@ -1359,7 +1372,7 @@
       </div>
     </div>
     <div class="container" style="text-align: center; margin-top: 30px; padding-top: 16px; border-top: 1px solid var(--slate-200);">
-      <p>&copy; 2026 UmrohHub. Diberdayakan oleh Arsitektur Headless Google Apps Script & Google Spreadsheet Cloud Database.</p>
+      <p>&copy; 2026 Umrohpedia. All Rights Reserved.</p>
     </div>
   </footer>
 
@@ -1742,27 +1755,65 @@
           <!-- Category Quick Icon Shortcuts -->
           <section class="quick-categories-grid">
             <div class="category-icon-card" onclick="Marketplace.quickFilterTag('Reguler')">
-              <div class="category-icon-img">🕌</div>
+              <div class="category-icon-circle" style="background: linear-gradient(135deg, #e5f9f0 0%, #c4f2dc 100%); color: #008a4b;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 21h18"></path>
+                  <path d="M5 21V10l7-5 7 5v11"></path>
+                  <path d="M9 21v-6a3 3 0 0 1 6 0v6"></path>
+                  <circle cx="12" cy="3" r="1"></circle>
+                </svg>
+              </div>
               <div class="category-icon-label">Umroh Reguler</div>
             </div>
+
             <div class="category-icon-card" onclick="Marketplace.quickFilterTag('VIP')">
-              <div class="category-icon-img">👑</div>
+              <div class="category-icon-circle" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #b45309;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </div>
               <div class="category-icon-label">VIP Bintang 5</div>
             </div>
+
             <div class="category-icon-card" onclick="Marketplace.quickFilterTag('Turki')">
-              <div class="category-icon-img">✈️</div>
+              <div class="category-icon-circle" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); color: #0284c7;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+              </div>
               <div class="category-icon-label">Plus Turki & Dubai</div>
             </div>
+
             <div class="category-icon-card" onclick="Marketplace.quickFilterTag('Ramadhan')">
-              <div class="category-icon-img">🌙</div>
+              <div class="category-icon-circle" style="background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%); color: #7e22ce;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                  <circle cx="17" cy="7" r="1.5" fill="currentColor"></circle>
+                </svg>
+              </div>
               <div class="category-icon-label">Spesial Ramadhan</div>
             </div>
+
             <div class="category-icon-card" onclick="Router.navigate('travels')">
-              <div class="category-icon-img">📜</div>
+              <div class="category-icon-circle" style="background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%); color: #0f766e;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  <polyline points="9 12 11 14 15 10"></polyline>
+                </svg>
+              </div>
               <div class="category-icon-label">Cek SK Kemenag</div>
             </div>
+
             <div class="category-icon-card" onclick="Router.navigate('affiliate-info')">
-              <div class="category-icon-img">💰</div>
+              <div class="category-icon-circle" style="background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%); color: #c2410c;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9"></circle>
+                  <path d="M12 6v12"></path>
+                  <path d="M17 10a5 5 0 0 0-5-4 5 5 0 0 0-5 4c0 3 4 3 6 4 3 1 4 2 4 4a5 5 0 0 1-5 4 5 5 0 0 1-5-4"></path>
+                </svg>
+              </div>
               <div class="category-icon-label">Komisi Afiliasi</div>
             </div>
           </section>
@@ -2011,7 +2062,7 @@
         root.innerHTML = `
           <div style="padding: 40px 0 60px; text-align: center; max-width: 720px; margin: 0 auto;">
             <span class="slide-badge" style="background:var(--gold-500);">Kemitraan Digital Berkah</span>
-            <h1 style="font-size: 2.2rem; font-weight: 800; color: var(--slate-900); margin: 12px 0;">Program Kemitraan Affiliate UmrohHub</h1>
+            <h1 style="font-size: 2.2rem; font-weight: 800; color: var(--slate-900); margin: 12px 0;">Program Kemitraan Affiliate Umrohpedia</h1>
             <p style="color: var(--slate-600); font-size: 15px; line-height: 1.6; margin-bottom: 24px;">
               Raih komisi berkah hingga <strong>Rp 1.500.000 / jamaah</strong> yang mendaftar melalui link referensi digital Anda. Dilengkapi pelacakan otomatis 30-day cookie window dan pencairan transparan.
             </p>
@@ -2534,13 +2585,13 @@
               </div>
               <div style="background:var(--slate-50); padding:12px; border-radius:var(--radius-sm); border:1px solid var(--slate-200); font-size:12px;">
                 <strong>Link Referral Anda:</strong>
-                <input type="text" readonly value="https://umrohhub.id/?ref=${aff.code}" class="form-control" style="margin-top:6px; font-size:11px; background:var(--white);">
-                <button class="btn btn-outline-primary btn-sm" onclick="navigator.clipboard.writeText('https://umrohhub.id/?ref=${aff.code}'); Toast.show('Link referral disalin ke clipboard!', 'success');" style="margin-top:8px; width:100%;">Salin Link 📋</button>
+                <input type="text" readonly value="https://umrohpedia.my.id/?ref=${aff.code}" class="form-control" style="margin-top:6px; font-size:11px; background:var(--white);">
+                <button class="btn btn-outline-primary btn-sm" onclick="navigator.clipboard.writeText('https://umrohpedia.my.id/?ref=${aff.code}'); Toast.show('Link referral disalin ke clipboard!', 'success');" style="margin-top:8px; width:100%;">Salin Link 📋</button>
               </div>
             </aside>
             <section class="dashboard-main">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                <h2 style="font-size:1.3rem; font-weight:800;">Dashboard Mitra Affiliate UmrohHub</h2>
+                <h2 style="font-size:1.3rem; font-weight:800;">Dashboard Mitra Affiliate Umrohpedia</h2>
               </div>
               <div class="kpi-grid">
                 <div class="kpi-card"><div class="kpi-value">${Number(aff.clicks || 342)}</div><p style="font-size:0.8rem; color:var(--slate-600);">Total Klik Link (30-Day Window)</p></div>

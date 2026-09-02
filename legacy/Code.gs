@@ -25,7 +25,7 @@
 // 1. CONFIG.GS
 // ==============================================================================
 const CONFIG = Object.freeze({
-  APP_NAME: "UmrohHub API Backend",
+  APP_NAME: "Umrohpedia API Backend",
   VERSION: "1.1.0-hardened",
   TIMEZONE: "Asia/Jakarta",
   CURRENCY: "IDR",
@@ -1434,7 +1434,7 @@ class Router {
         return {
           affiliateId: context.affiliateId,
           referralCode: context.referralCode,
-          referralLink: `https://umrohhub.id/?ref=${context.referralCode}&packageId=${body.packageId || ""}`
+          referralLink: `https://umrohpedia.my.id/?ref=${context.referralCode}&packageId=${body.packageId || ""}`
         };
 
       case "commissions.list":
