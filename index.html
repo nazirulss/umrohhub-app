@@ -301,6 +301,59 @@
       cursor: pointer;
     }
 
+    /* Tokopedia User Profile Pill */
+    .header-user-profile {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--white);
+      border: 1px solid var(--slate-300);
+      padding: 4px 10px 4px 5px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .header-user-profile:hover {
+      border-color: var(--primary-600);
+      background: var(--slate-50);
+      box-shadow: var(--shadow-xs);
+    }
+    .user-avatar-mini {
+      width: 28px;
+      height: 28px;
+      background: var(--primary-600);
+      color: var(--white);
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .user-profile-text {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      line-height: 1.15;
+    }
+    .user-profile-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--slate-900);
+    }
+    .user-profile-role {
+      font-size: 10px;
+      color: var(--slate-500);
+    }
+    .live-gas-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: var(--radius-full);
+      background: #03ac0e;
+      box-shadow: 0 0 0 2px var(--primary-100);
+    }
+
     /* ==========================================================================
        3. HERO PROMO BANNER SLIDER & SHORTCUTS (TOKOPEDIA HOMEPAGE)
        ========================================================================== */
@@ -1544,15 +1597,38 @@
         const container = document.getElementById('auth-action-container');
         if (!container) return;
 
-        const badgeHtml = ApiClient.isMockFallbackActive
-          ? `<span class="badge badge-danger" title="Koneksi GAS offline">⚠️ Mock</span>`
-          : `<span class="badge badge-verified" title="Terhubung ke GAS Live Database">🟢 Live GAS</span>`;
-        
-        if (this.currentUser.role === 'customer') {
-          container.innerHTML = `${badgeHtml} <button class="btn btn-outline-primary btn-sm" onclick="Router.navigate('customer-dashboard')">Akun Jamaah</button>`;
-        } else {
-          container.innerHTML = `${badgeHtml} <button class="btn btn-primary btn-sm" onclick="Router.navigate('${this.currentUser.role}-dashboard')">Buka Dashboard</button>`;
+        let initials = "AF";
+        let roleLabel = "Jamaah";
+        let targetRoute = "customer-dashboard";
+
+        if (this.currentUser.role === 'travel') {
+          initials = "TR";
+          roleLabel = "Travel Owner";
+          targetRoute = "travel-dashboard";
+        } else if (this.currentUser.role === 'affiliate') {
+          initials = "UA";
+          roleLabel = "Mitra Affiliate";
+          targetRoute = "affiliate-dashboard";
+        } else if (this.currentUser.role === 'admin') {
+          initials = "AD";
+          roleLabel = "Platform Admin";
+          targetRoute = "admin-dashboard";
         }
+
+        const liveDot = ApiClient.isMockFallbackActive
+          ? `<span title="Koneksi GAS Offline" style="display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--danger-600);"></span>`
+          : `<span title="Terhubung ke GAS Live Database" class="live-gas-dot"></span>`;
+
+        container.innerHTML = `
+          <div class="header-user-profile" onclick="Router.navigate('${targetRoute}')" title="Buka ${roleLabel}">
+            <div class="user-avatar-mini">${initials}</div>
+            <div class="user-profile-text">
+              <span class="user-profile-name">${escapeHtml(this.currentUser.name.split(' ')[0])}</span>
+              <span class="user-profile-role">${roleLabel}</span>
+            </div>
+            ${liveDot}
+          </div>
+        `;
       },
 
       toggleWishlist(pkgId) {
@@ -2258,23 +2334,37 @@
     };
 
     /* ==========================================================================
-       5. DASHBOARDS (JAMAAH, TRAVEL, AFFILIATE, ADMIN)
+       5. DASHBOARDS (JAMAAH, TRAVEL, AFFILIATE, ADMIN) - SWR INSTANT CACHING
        ========================================================================== */
     const CustomerDashboard = {
       async render() {
-        const root = document.getElementById('app-root');
-        root.innerHTML = '<div class="empty-state">Memuat data riwayat jamaah...</div>';
-
+        const cacheKey = 'uh_cache_dash_customer';
         let bookings = ApiClient.db.bookings;
+        const cachedRaw = localStorage.getItem(cacheKey);
+        if (cachedRaw) {
+          try { bookings = JSON.parse(cachedRaw); } catch(e) {}
+        }
+
+        // Render UI langsung (< 10ms)
+        this.renderDom(bookings);
+
+        // Background revalidation
         try {
           const res = await ApiClient.request('bookings.listCustomer');
           if (res && res.success && Array.isArray(res.data) && res.data.length > 0) {
-            bookings = res.data;
+            localStorage.setItem(cacheKey, JSON.stringify(res.data));
+            if (Router.currentRoute === 'customer-dashboard') {
+              this.renderDom(res.data);
+            }
           }
         } catch (e) {
-          console.warn("Failed fetching live customer bookings, using fallback", e);
+          console.warn("Background customer fetch failed", e);
         }
+      },
 
+      renderDom(bookings) {
+        const root = document.getElementById('app-root');
+        if (!root || Router.currentRoute !== 'customer-dashboard') return;
         root.innerHTML = `
           <div class="dashboard-layout">
             <aside class="dashboard-sidebar">
@@ -2282,9 +2372,13 @@
                 <div class="profile-img">AF</div>
                 <div><h4>${escapeHtml(AuthStore.currentUser.name)}</h4><p style="font-size:0.75rem; color:var(--slate-500);">Jamaah Terdaftar</p></div>
               </div>
+              <button class="btn btn-outline btn-sm" onclick="Router.navigate('marketplace')" style="width:100%;">Cari Paket Baru &rarr;</button>
             </aside>
             <section class="dashboard-main">
-              <h2>Riwayat Booking & Ibadah Jamaah</h2>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <h2 style="font-size:1.3rem; font-weight:800;">Riwayat Booking & Ibadah Jamaah</h2>
+                <span class="badge badge-verified">Total: ${bookings.length} Transaksi</span>
+              </div>
               <div class="table-container">
                 <table class="data-table">
                   <thead><tr><th>ID Booking</th><th>Paket</th><th>Pax</th><th>Total</th><th>Status</th><th>Pembayaran</th></tr></thead>
@@ -2295,7 +2389,7 @@
                         <td>${escapeHtml(b.packageName || b.bookingCode || b.packageId)}</td>
                         <td>${Number(b.paxCount || 1)} Pax</td>
                         <td>Rp ${Number(b.totalPrice || 0).toLocaleString('id-ID')}</td>
-                        <td><span class="badge badge-info">${escapeHtml(b.status || 'PENDING')}</span></td>
+                        <td><span class="badge ${b.status === 'CONFIRMED' ? 'badge-verified' : 'badge-info'}">${escapeHtml(b.status || 'PENDING')}</span></td>
                         <td><span class="badge ${b.paymentStatus === 'FULL_PAID' ? 'badge-verified' : 'badge-gold'}">${escapeHtml(b.paymentStatus || 'UNPAID')}</span></td>
                       </tr>
                     `).join('')}
@@ -2310,62 +2404,76 @@
 
     const TravelDashboard = {
       async render() {
-        const root = document.getElementById('app-root');
-        root.innerHTML = '<div class="empty-state">Memuat data operasional travel...</div>';
+        const cacheKey = 'uh_cache_dash_travel';
+        let data = { packages: ApiClient.db.packages, bookings: ApiClient.db.bookings };
+        const cachedRaw = localStorage.getItem(cacheKey);
+        if (cachedRaw) {
+          try { data = JSON.parse(cachedRaw); } catch(e) {}
+        }
 
-        let packagesCount = 1;
-        let bookingsCount = 53;
-        let travelPackages = [];
-        let travelBookings = [];
+        // Render UI langsung (< 10ms)
+        this.renderDom(data.packages, data.bookings);
 
+        // Background revalidation
         try {
           const [pkgRes, bkgRes] = await Promise.all([
             ApiClient.request('travel.packages.list'),
             ApiClient.request('bookings.listTravel')
           ]);
-          if (pkgRes && pkgRes.success && Array.isArray(pkgRes.data)) {
-            travelPackages = pkgRes.data;
-            packagesCount = travelPackages.length;
-          }
-          if (bkgRes && bkgRes.success && Array.isArray(bkgRes.data)) {
-            travelBookings = bkgRes.data;
-            bookingsCount = travelBookings.reduce((sum, b) => sum + Number(b.paxCount || 0), 0) || travelBookings.length;
+          let packages = data.packages;
+          let bookings = data.bookings;
+          if (pkgRes && pkgRes.success && Array.isArray(pkgRes.data)) packages = pkgRes.data;
+          if (bkgRes && bkgRes.success && Array.isArray(bkgRes.data)) bookings = bkgRes.data;
+          
+          localStorage.setItem(cacheKey, JSON.stringify({ packages, bookings }));
+          if (Router.currentRoute === 'travel-dashboard') {
+            this.renderDom(packages, bookings);
           }
         } catch (e) {
-          console.warn("Failed fetching live travel data, using fallback", e);
+          console.warn("Background travel fetch failed", e);
         }
+      },
+
+      renderDom(packages, bookings) {
+        const root = document.getElementById('app-root');
+        if (!root || Router.currentRoute !== 'travel-dashboard') return;
+        const totalPax = bookings.reduce((sum, b) => sum + Number(b.paxCount || 0), 0) || bookings.length;
 
         root.innerHTML = `
           <div class="dashboard-layout">
             <aside class="dashboard-sidebar">
-              <div class="dashboard-profile-card"><div class="profile-img" style="background:var(--gold-600);">TR</div><div><h4>Al-Falah Travel</h4><p style="font-size:0.75rem; color:var(--slate-500);">Biro PPIU Terverifikasi</p></div></div>
+              <div class="dashboard-profile-card">
+                <div class="profile-img" style="background:var(--gold-600);">TR</div>
+                <div><h4>Al-Falah Travel</h4><p style="font-size:0.75rem; color:var(--slate-500);">Biro PPIU Terverifikasi</p></div>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="Toast.show('Fitur pembuatan paket baru', 'info')" style="width:100%;">+ Buat Paket Baru</button>
             </aside>
             <section class="dashboard-main">
-              <h2>Manajemen Operasional Biro PPIU</h2>
-              <div class="kpi-grid">
-                <div class="kpi-card"><div class="kpi-value">${bookingsCount} Jamaah</div><p style="font-size:0.8rem; color:var(--slate-600);">Total Terdaftar</p></div>
-                <div class="kpi-card"><div class="kpi-value">${packagesCount} Paket</div><p style="font-size:0.8rem; color:var(--slate-600);">Paket Aktif & Draft</p></div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <h2 style="font-size:1.3rem; font-weight:800;">Manajemen Operasional Biro PPIU</h2>
               </div>
-              ${travelBookings.length > 0 ? `
-                <div class="table-container" style="margin-top: 24px;">
-                  <h3 style="margin-bottom: 12px; font-size: 14px;">Daftar Booking Masuk</h3>
-                  <table class="data-table">
-                    <thead><tr><th>ID</th><th>Jamaah</th><th>Pax</th><th>Total</th><th>Status</th><th>Pembayaran</th></tr></thead>
-                    <tbody>
-                      ${travelBookings.slice(0, 8).map(b => `
-                        <tr>
-                          <td><strong>${escapeHtml(b.bookingCode || b.id)}</strong></td>
-                          <td>${escapeHtml(b.jamaahName)}<br><small style="color:var(--slate-500);">${escapeHtml(b.jamaahPhone)}</small></td>
-                          <td>${Number(b.paxCount)} Pax</td>
-                          <td>Rp ${Number(b.totalPrice).toLocaleString('id-ID')}</td>
-                          <td><span class="badge ${b.status === 'CONFIRMED' ? 'badge-verified' : 'badge-info'}">${escapeHtml(b.status)}</span></td>
-                          <td><span class="badge ${b.paymentStatus === 'FULL_PAID' ? 'badge-verified' : 'badge-gold'}">${escapeHtml(b.paymentStatus)}</span></td>
-                        </tr>
-                      `).join('')}
-                    </tbody>
-                  </table>
-                </div>
-              ` : ''}
+              <div class="kpi-grid">
+                <div class="kpi-card"><div class="kpi-value">${totalPax} Jamaah</div><p style="font-size:0.8rem; color:var(--slate-600);">Total Terdaftar</p></div>
+                <div class="kpi-card"><div class="kpi-value">${packages.length} Paket</div><p style="font-size:0.8rem; color:var(--slate-600);">Paket Aktif & Draft</p></div>
+              </div>
+              <div class="table-container" style="margin-top: 24px;">
+                <h3 style="margin-bottom: 12px; font-size: 14px;">Daftar Booking Masuk</h3>
+                <table class="data-table">
+                  <thead><tr><th>ID</th><th>Jamaah</th><th>Pax</th><th>Total</th><th>Status</th><th>Pembayaran</th></tr></thead>
+                  <tbody>
+                    ${bookings.map(b => `
+                      <tr>
+                        <td><strong>${escapeHtml(b.bookingCode || b.id)}</strong></td>
+                        <td>${escapeHtml(b.jamaahName)}<br><small style="color:var(--slate-500);">${escapeHtml(b.jamaahPhone)}</small></td>
+                        <td>${Number(b.paxCount || 1)} Pax</td>
+                        <td>Rp ${Number(b.totalPrice || 0).toLocaleString('id-ID')}</td>
+                        <td><span class="badge ${b.status === 'CONFIRMED' ? 'badge-verified' : 'badge-info'}">${escapeHtml(b.status || 'PENDING')}</span></td>
+                        <td><span class="badge ${b.paymentStatus === 'FULL_PAID' ? 'badge-verified' : 'badge-gold'}">${escapeHtml(b.paymentStatus || 'UNPAID')}</span></td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
             </section>
           </div>
         `;
@@ -2374,57 +2482,78 @@
 
     const AffiliateDashboard = {
       async render() {
-        const root = document.getElementById('app-root');
-        root.innerHTML = '<div class="empty-state">Memuat data mitra affiliate...</div>';
+        const cacheKey = 'uh_cache_dash_affiliate';
+        let commissions = [];
+        const cachedRaw = localStorage.getItem(cacheKey);
+        if (cachedRaw) {
+          try { commissions = JSON.parse(cachedRaw); } catch(e) {}
+        }
 
-        const aff = ApiClient.db.affiliates[0];
-        let clicksCount = Number(aff.clicks);
-        let unpaidComm = Number(aff.unpaidCommission);
-        let commissionsList = [];
+        // Render UI langsung (< 10ms)
+        this.renderDom(commissions);
 
+        // Background revalidation
         try {
           const res = await ApiClient.request('commissions.list');
           if (res && res.success && Array.isArray(res.data)) {
-            commissionsList = res.data;
-            if (commissionsList.length > 0) {
-              unpaidComm = commissionsList
-                .filter(c => c.status === 'PENDING' || c.status === 'APPROVED')
-                .reduce((sum, c) => sum + Number(c.amount || 0), 0);
+            commissions = res.data;
+            localStorage.setItem(cacheKey, JSON.stringify(commissions));
+            if (Router.currentRoute === 'affiliate-dashboard') {
+              this.renderDom(commissions);
             }
           }
         } catch (e) {
-          console.warn("Failed fetching live affiliate commissions, using fallback", e);
+          console.warn("Background affiliate fetch failed", e);
         }
+      },
+
+      renderDom(commissions) {
+        const root = document.getElementById('app-root');
+        if (!root || Router.currentRoute !== 'affiliate-dashboard') return;
+        const aff = ApiClient.db.affiliates[0];
+        const unpaidComm = commissions.length > 0 
+          ? commissions.filter(c => c.status === 'PENDING' || c.status === 'APPROVED').reduce((sum, c) => sum + Number(c.amount || 0), 0)
+          : Number(aff.unpaidCommission || 9000000);
 
         root.innerHTML = `
           <div class="dashboard-layout">
             <aside class="dashboard-sidebar">
-              <div class="dashboard-profile-card"><div class="profile-img" style="background:var(--gold-500);">UA</div><div><h4>${escapeHtml(aff.name)}</h4><p style="font-size:0.75rem; color:var(--slate-500);">Mitra Affiliate Resmi</p></div></div>
+              <div class="dashboard-profile-card">
+                <div class="profile-img" style="background:var(--gold-500);">UA</div>
+                <div><h4>${escapeHtml(aff.name)}</h4><p style="font-size:0.75rem; color:var(--slate-500);">Mitra Affiliate Resmi</p></div>
+              </div>
+              <div style="background:var(--slate-50); padding:12px; border-radius:var(--radius-sm); border:1px solid var(--slate-200); font-size:12px;">
+                <strong>Link Referral Anda:</strong>
+                <input type="text" readonly value="https://umrohhub.id/?ref=${aff.code}" class="form-control" style="margin-top:6px; font-size:11px; background:var(--white);">
+                <button class="btn btn-outline-primary btn-sm" onclick="navigator.clipboard.writeText('https://umrohhub.id/?ref=${aff.code}'); Toast.show('Link referral disalin ke clipboard!', 'success');" style="margin-top:8px; width:100%;">Salin Link 📋</button>
+              </div>
             </aside>
             <section class="dashboard-main">
-              <h2>Dashboard Mitra Affiliate UmrohHub</h2>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <h2 style="font-size:1.3rem; font-weight:800;">Dashboard Mitra Affiliate UmrohHub</h2>
+              </div>
               <div class="kpi-grid">
-                <div class="kpi-card"><div class="kpi-value">${clicksCount}</div><p style="font-size:0.8rem; color:var(--slate-600);">Total Klik Link (30-Day Window)</p></div>
+                <div class="kpi-card"><div class="kpi-value">${Number(aff.clicks || 342)}</div><p style="font-size:0.8rem; color:var(--slate-600);">Total Klik Link (30-Day Window)</p></div>
                 <div class="kpi-card"><div class="kpi-value">Rp ${unpaidComm.toLocaleString('id-ID')}</div><p style="font-size:0.8rem; color:var(--slate-600);">Komisi Akumulasi</p></div>
               </div>
-              ${commissionsList.length > 0 ? `
-                <div class="table-container" style="margin-top: 24px;">
-                  <h3 style="margin-bottom: 12px; font-size: 14px;">Riwayat Komisi Afiliasi</h3>
-                  <table class="data-table">
-                    <thead><tr><th>ID Komisi</th><th>Booking Ref</th><th>Jumlah</th><th>Status</th></tr></thead>
-                    <tbody>
-                      ${commissionsList.map(c => `
-                        <tr>
-                          <td><strong>${escapeHtml(c.id)}</strong></td>
-                          <td>${escapeHtml(c.bookingId)}</td>
-                          <td>Rp ${Number(c.amount).toLocaleString('id-ID')}</td>
-                          <td><span class="badge ${c.status === 'APPROVED' || c.status === 'PAID' ? 'badge-verified' : 'badge-gold'}">${escapeHtml(c.status)}</span></td>
-                        </tr>
-                      `).join('')}
-                    </tbody>
-                  </table>
-                </div>
-              ` : ''}
+              <div class="table-container" style="margin-top: 24px;">
+                <h3 style="margin-bottom: 12px; font-size: 14px;">Riwayat Komisi Afiliasi</h3>
+                <table class="data-table">
+                  <thead><tr><th>ID Komisi</th><th>Booking Ref</th><th>Jumlah</th><th>Status</th></tr></thead>
+                  <tbody>
+                    ${commissions.length > 0 ? commissions.map(c => `
+                      <tr>
+                        <td><strong>${escapeHtml(c.id)}</strong></td>
+                        <td>${escapeHtml(c.bookingId)}</td>
+                        <td>Rp ${Number(c.amount).toLocaleString('id-ID')}</td>
+                        <td><span class="badge ${c.status === 'APPROVED' || c.status === 'PAID' ? 'badge-verified' : 'badge-gold'}">${escapeHtml(c.status)}</span></td>
+                      </tr>
+                    `).join('') : `
+                      <tr><td colspan="4" style="text-align:center; color:var(--slate-500);">Belum ada klaim komisi aktif.</td></tr>
+                    `}
+                  </tbody>
+                </table>
+              </div>
             </section>
           </div>
         `;
@@ -2433,61 +2562,82 @@
 
     const AdminDashboard = {
       async render() {
-        const root = document.getElementById('app-root');
-        root.innerHTML = '<div class="empty-state">Memuat pusat kontrol legalitas...</div>';
+        const cacheKey = 'uh_cache_dash_admin';
+        let data = { travelsTotal: 6, bookingsTotal: 35, commissionsTotal: 12, travelsList: ApiClient.db.travels };
+        const cachedRaw = localStorage.getItem(cacheKey);
+        if (cachedRaw) {
+          try { data = JSON.parse(cachedRaw); } catch(e) {}
+        }
 
-        let travelsTotal = ApiClient.db.travels.length;
-        let bookingsTotal = ApiClient.db.bookings.length;
-        let commissionsTotal = 0;
-        let travelsList = [];
+        // Render UI langsung (< 10ms)
+        this.renderDom(data.travelsTotal, data.bookingsTotal, data.commissionsTotal, data.travelsList);
 
+        // Background revalidation
         try {
           const [dashRes, travelsRes] = await Promise.all([
             ApiClient.request('admin.dashboard'),
             ApiClient.request('admin.travels')
           ]);
+          let travelsTotal = data.travelsTotal;
+          let bookingsTotal = data.bookingsTotal;
+          let commissionsTotal = data.commissionsTotal;
+          let travelsList = data.travelsList;
+
           if (dashRes && dashRes.success && dashRes.data) {
             travelsTotal = dashRes.data.travelsTotal || travelsTotal;
             bookingsTotal = dashRes.data.bookingsTotal || bookingsTotal;
-            commissionsTotal = dashRes.data.commissionsTotal || 0;
+            commissionsTotal = dashRes.data.commissionsTotal || commissionsTotal;
           }
           if (travelsRes && travelsRes.success && Array.isArray(travelsRes.data)) {
             travelsList = travelsRes.data;
           }
+
+          localStorage.setItem(cacheKey, JSON.stringify({ travelsTotal, bookingsTotal, commissionsTotal, travelsList }));
+          if (Router.currentRoute === 'admin-dashboard') {
+            this.renderDom(travelsTotal, bookingsTotal, commissionsTotal, travelsList);
+          }
         } catch (e) {
-          console.warn("Failed fetching live admin data, using fallback", e);
+          console.warn("Background admin fetch failed", e);
         }
+      },
+
+      renderDom(travelsTotal, bookingsTotal, commissionsTotal, travelsList) {
+        const root = document.getElementById('app-root');
+        if (!root || Router.currentRoute !== 'admin-dashboard') return;
 
         root.innerHTML = `
           <div class="dashboard-layout">
             <aside class="dashboard-sidebar">
-              <div class="dashboard-profile-card"><div class="profile-img" style="background:var(--slate-900);">AD</div><div><h4>Platform Admin</h4><p style="font-size:0.75rem; color:var(--slate-500);">Pengawasan PPIU Kemenag</p></div></div>
+              <div class="dashboard-profile-card">
+                <div class="profile-img" style="background:var(--slate-900);">AD</div>
+                <div><h4>Platform Admin</h4><p style="font-size:0.75rem; color:var(--slate-500);">Pengawasan PPIU Kemenag</p></div>
+              </div>
             </aside>
             <section class="dashboard-main">
-              <h2>Pusat Kontrol & Pengawasan Legalitas PPIU</h2>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+                <h2 style="font-size:1.3rem; font-weight:800;">Pusat Kontrol & Pengawasan Legalitas PPIU</h2>
+              </div>
               <div class="kpi-grid">
                 <div class="kpi-card"><div class="kpi-value">${travelsTotal} Biro</div><p style="font-size:0.8rem; color:var(--slate-600);">Terdaftar Platform</p></div>
                 <div class="kpi-card"><div class="kpi-value">${bookingsTotal} Booking</div><p style="font-size:0.8rem; color:var(--slate-600);">Transaksi Jamaah</p></div>
                 <div class="kpi-card"><div class="kpi-value">${commissionsTotal} Komisi</div><p style="font-size:0.8rem; color:var(--slate-600);">Klaim Afiliasi</p></div>
               </div>
-              ${travelsList.length > 0 ? `
-                <div class="table-container" style="margin-top: 24px;">
-                  <h3 style="margin-bottom: 12px; font-size: 14px;">Status Legalitas PPIU Kemenag</h3>
-                  <table class="data-table">
-                    <thead><tr><th>Nama Travel</th><th>No. Izin PPIU</th><th>Kota</th><th>Status Kemenag</th></tr></thead>
-                    <tbody>
-                      ${travelsList.map(t => `
-                        <tr>
-                          <td><strong>${escapeHtml(t.name)}</strong></td>
-                          <td>${escapeHtml(t.skKemenag)}</td>
-                          <td>${escapeHtml(t.city)}</td>
-                          <td><span class="badge ${t.status === 'VERIFIED' ? 'badge-verified' : (t.status === 'PENDING' ? 'badge-gold' : 'badge-danger')}">${escapeHtml(t.status)}</span></td>
-                        </tr>
-                      `).join('')}
-                    </tbody>
-                  </table>
-                </div>
-              ` : ''}
+              <div class="table-container" style="margin-top: 24px;">
+                <h3 style="margin-bottom: 12px; font-size: 14px;">Status Legalitas PPIU Kemenag</h3>
+                <table class="data-table">
+                  <thead><tr><th>Nama Travel</th><th>No. Izin PPIU</th><th>Kota</th><th>Status Kemenag</th></tr></thead>
+                  <tbody>
+                    ${travelsList.map(t => `
+                      <tr>
+                        <td><strong>${escapeHtml(t.name)}</strong></td>
+                        <td>${escapeHtml(t.skKemenag)}</td>
+                        <td>${escapeHtml(t.city)}</td>
+                        <td><span class="badge ${t.status === 'VERIFIED' ? 'badge-verified' : (t.status === 'PENDING' ? 'badge-gold' : 'badge-danger')}">${escapeHtml(t.status)}</span></td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
             </section>
           </div>
         `;
