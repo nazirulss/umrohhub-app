@@ -1,0 +1,32 @@
+{
+  "name": "Umrohpedia — Marketplace Umroh Kemenag",
+  "short_name": "Umrohpedia",
+  "description": "Marketplace & Portal Perjalanan Ibadah Umroh Terverifikasi Kemenag RI",
+  "start_url": "/?source=pwa",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#00AA5B",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["travel", "shopping", "lifestyle"],
+  "lang": "id"
+}
