@@ -179,6 +179,14 @@ const Utils = {
     if (val === null || val === undefined) return "";
     if (val instanceof Date) return val.toISOString();
     return val;
+  },
+
+  invalidatePublicCache() {
+    try {
+      const cache = CacheService.getScriptCache();
+      cache.remove("UH_PUB_PACKAGES_LIST");
+      cache.remove("UH_PUB_TRAVELS_LIST");
+    } catch (e) {}
   }
 };
 
@@ -296,6 +304,8 @@ const Auth = {
 // ==============================================================================
 // 5. SPREADSHEET REPOSITORY (PURE DATA ACCESS LAYER / ORM - NO NESTED LOCK)
 // ==============================================================================
+let _globalCachedSpreadsheet = null;
+
 class SpreadsheetRepository {
   constructor(sheetName) {
     this.sheetName = sheetName;
@@ -306,13 +316,18 @@ class SpreadsheetRepository {
   }
 
   getSpreadsheet_() {
+    if (_globalCachedSpreadsheet) return _globalCachedSpreadsheet;
     const active = SpreadsheetApp.getActiveSpreadsheet();
-    if (active) return active;
+    if (active) {
+      _globalCachedSpreadsheet = active;
+      return _globalCachedSpreadsheet;
+    }
     
     const props = PropertiesService.getScriptProperties();
     const storedId = props.getProperty("SPREADSHEET_ID");
     if (storedId) {
-      return SpreadsheetApp.openById(storedId);
+      _globalCachedSpreadsheet = SpreadsheetApp.openById(storedId);
+      return _globalCachedSpreadsheet;
     }
     throw new AppError("CONFIGURATION_ERROR", "Spreadsheet database belum dikonfigurasi. Jalankan setupDatabase() terlebih dahulu.");
   }
@@ -466,12 +481,27 @@ class TravelService {
   }
 
   list(filters = {}) {
-    return this.repo.findWhere(t => {
+    const hasCustomFilters = (filters.city && filters.city !== "") || (filters.status && filters.status !== "");
+    const cache = CacheService.getScriptCache();
+    const cacheKey = "UH_PUB_TRAVELS_LIST";
+    if (!hasCustomFilters) {
+      const cached = cache.get(cacheKey);
+      if (cached) {
+        try { return JSON.parse(cached); } catch (e) {}
+      }
+    }
+
+    const result = this.repo.findWhere(t => {
       if (filters.isVerified !== undefined && String(t.isVerified) !== String(filters.isVerified)) return false;
       if (filters.status && t.status !== filters.status) return false;
       if (filters.city && !t.city.toLowerCase().includes(filters.city.toLowerCase())) return false;
       return true;
     }).map(t => this._toPublicDTO(t));
+
+    if (!hasCustomFilters && result.length > 0) {
+      try { cache.put(cacheKey, JSON.stringify(result), 600); } catch (e) {}
+    }
+    return result;
   }
 
   /**
@@ -554,6 +584,17 @@ class PackageService {
    * Parameter filters.isPublished dari client diabaikan secara tegas di server.
    */
   listPublic(filters = {}) {
+    const hasCustomFilters = (filters.category && filters.category !== "") || (filters.travelId && filters.travelId !== "");
+    const cache = CacheService.getScriptCache();
+    const cacheKey = "UH_PUB_PACKAGES_LIST";
+    
+    if (!hasCustomFilters) {
+      const cached = cache.get(cacheKey);
+      if (cached) {
+        try { return JSON.parse(cached); } catch (e) {}
+      }
+    }
+
     const packages = this.packageRepo.findWhere(p => {
       const isPub = p.isPublished === true || p.isPublished === "true";
       if (!isPub) return false;
@@ -565,7 +606,7 @@ class PackageService {
     const departures = this.departureRepo.findAll();
     const travels = this.travelRepo.findAll();
 
-    return packages.map(pkg => {
+    const result = packages.map(pkg => {
       const pkgDepartures = departures.filter(d => String(d.packageId) === String(pkg.id) && d.status === CONFIG.STATUS.DEPARTURE.OPEN);
       const travel = travels.find(t => String(t.id) === String(pkg.travelId));
       return {
@@ -576,6 +617,14 @@ class PackageService {
         departures: pkgDepartures
       };
     });
+
+    if (!hasCustomFilters && result.length > 0) {
+      try {
+        cache.put(cacheKey, JSON.stringify(result), 300); // Cache 5 menit
+      } catch (e) {}
+    }
+
+    return result;
   }
 
   /**
@@ -623,7 +672,7 @@ class PackageService {
     if (isNaN(price) || price <= 0) throw new AppError("VALIDATION_ERROR", "Harga paket harus lebih dari 0.");
     if (isNaN(durationDays) || durationDays <= 0) throw new AppError("VALIDATION_ERROR", "Durasi hari harus lebih dari 0.");
 
-    return this.packageRepo.insert({
+    const inserted = this.packageRepo.insert({
       travelId: travelId, // Ditentukan dari auth context, BUKAN payload
       title: payload.title,
       category: payload.category || "Reguler",
@@ -635,6 +684,8 @@ class PackageService {
       commissionAffiliate: Number(payload.commissionAffiliate || 0),
       isPublished: false
     });
+    Utils.invalidatePublicCache();
+    return inserted;
   }
 
   /**
@@ -658,6 +709,7 @@ class PackageService {
     }
 
     const updated = this.packageRepo.updateById(id, sanitized);
+    Utils.invalidatePublicCache();
     return updated;
   }
 
@@ -705,6 +757,7 @@ class PackageService {
     }
 
     const updated = this.packageRepo.updateById(id, { isPublished: !!isPublished });
+    Utils.invalidatePublicCache();
     return updated;
   }
 
@@ -725,7 +778,7 @@ class PackageService {
       throw new AppError("VALIDATION_ERROR", "Jumlah kuota total harus lebih dari 0.");
     }
 
-    return this.departureRepo.insert({
+    const inserted = this.departureRepo.insert({
       packageId: payload.packageId,
       departureDate: payload.departureDate,
       returnDate: payload.returnDate || "",
@@ -734,6 +787,8 @@ class PackageService {
       quotaTaken: 0,
       status: CONFIG.STATUS.DEPARTURE.OPEN
     });
+    Utils.invalidatePublicCache();
+    return inserted;
   }
 }
 
@@ -1050,6 +1105,7 @@ class BookingService {
         status: CONFIG.STATUS.BOOKING.CONFIRMED
       });
 
+      Utils.invalidatePublicCache();
       return updated;
     } finally {
       if (lock.hasLock()) lock.releaseLock();
@@ -1147,6 +1203,7 @@ class BookingService {
         status: CONFIG.STATUS.BOOKING.CANCELLED
       });
 
+      Utils.invalidatePublicCache();
       return updated;
     } finally {
       if (lock.hasLock()) lock.releaseLock();

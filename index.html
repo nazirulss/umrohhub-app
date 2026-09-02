@@ -282,6 +282,18 @@
 
     .empty-state { text-align: center; padding: 50px 20px; color: var(--slate-500); }
     .site-footer { background: var(--slate-900); color: var(--slate-400); padding: 60px 0 30px; border-top: 1px solid var(--slate-800); font-size: 0.92rem; }
+
+    /* Performance & Skeleton Loader */
+    @keyframes agShimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .skeleton-box {
+      background: linear-gradient(90deg, var(--slate-100) 25%, var(--slate-200) 50%, var(--slate-100) 75%);
+      background-size: 200% 100%;
+      animation: agShimmer 1.4s infinite ease-in-out;
+      border-radius: var(--radius-sm);
+    }
   </style>
 </head>
 <body>
@@ -417,15 +429,38 @@
         return key;
       },
 
-      async fetchPackages() {
+      async fetchPackages(forceRefresh = false) {
+        // 1. Cek LocalStorage Cache untuk instant rendering (< 10ms)
+        const cachedRaw = localStorage.getItem('uh_cache_packages');
+        if (cachedRaw && !forceRefresh) {
+          try {
+            const cached = JSON.parse(cachedRaw);
+            if (Array.isArray(cached) && cached.length > 0) {
+              this.db.packages = cached;
+              // Background revalidation
+              this.revalidatePackagesInBackground();
+              return cached;
+            }
+          } catch (e) {}
+        }
+        return await this.revalidatePackagesInBackground();
+      },
+
+      async revalidatePackagesInBackground() {
         try {
           const response = await fetch(`${this.gasEndpointUrl}?action=packages.list`);
           const result = await response.json();
           if (result.success && Array.isArray(result.data)) {
             const normalized = result.data.map(p => this.normalizePackage(p));
             this.db.packages = normalized;
+            localStorage.setItem('uh_cache_packages', JSON.stringify(normalized));
             this.isMockFallbackActive = false;
             AuthStore.renderAuthButton();
+            
+            // Re-render marketplace if active
+            if (Router.currentRoute === 'marketplace') {
+              Marketplace.renderCards(false);
+            }
             return normalized;
           }
           throw new Error(result.message || "Gagal mengambil data dari Google Apps Script.");
@@ -435,10 +470,10 @@
             this.isMockFallbackActive = false;
             AuthStore.renderAuthButton();
             const root = document.getElementById('app-root');
-            if (root) {
+            if (root && (!this.db.packages || this.db.packages.length === 0)) {
               root.innerHTML = `<div class="empty-state" style="color: var(--danger-600);"><p>⚠️ Gagal memuat data dari backend live API.</p><p style="font-size:0.8rem; color:var(--slate-500); margin-top:8px;">${escapeHtml(err.message)}</p></div>`;
             }
-            return [];
+            return this.db.packages || [];
           }
           this.isMockFallbackActive = true;
           AuthStore.renderAuthButton();
@@ -647,13 +682,15 @@
               </div>
               <button class="btn btn-outline" onclick="Router.navigate('marketplace')">Lihat Semua Paket &rarr;</button>
             </div>
-            <div class="packages-grid" id="featured-packages-grid"></div>
+            <div class="packages-grid" id="featured-packages-grid">
+              ${Marketplace.createSkeletonHtml(4)}
+            </div>
           </section>
         `;
 
         const packages = await ApiClient.fetchPackages();
         const grid = document.getElementById('featured-packages-grid');
-        if (grid) grid.innerHTML = packages.map(pkg => Marketplace.createPackageCardHtml(pkg)).join('');
+        if (grid) grid.innerHTML = packages.slice(0, 6).map(pkg => Marketplace.createPackageCardHtml(pkg)).join('');
       },
 
       async renderPackageDetail(pkgId) {
@@ -804,12 +841,32 @@
         Router.navigate('marketplace');
       },
 
-      async renderCards() {
+      createSkeletonHtml(count = 6) {
+        return Array(count).fill(0).map(() => `
+          <div class="card package-card" style="pointer-events: none; border-color: var(--slate-200);">
+            <div class="skeleton-box" style="height: 180px; width: 100%;"></div>
+            <div class="package-body" style="padding: 16px;">
+              <div class="skeleton-box" style="height: 12px; width: 35%; margin-bottom: 8px;"></div>
+              <div class="skeleton-box" style="height: 18px; width: 85%; margin-bottom: 12px;"></div>
+              <div class="skeleton-box" style="height: 40px; width: 100%; margin-bottom: 14px;"></div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="skeleton-box" style="height: 22px; width: 35%;"></div>
+                <div class="skeleton-box" style="height: 28px; width: 25%;"></div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      },
+
+      async renderCards(showLoading = true) {
         const grid = document.getElementById('marketplace-grid');
         const countSpan = document.getElementById('package-count');
         if (!grid) return;
 
-        grid.innerHTML = '<div class="empty-state">Mengambil data GAS...</div>';
+        if (showLoading && (!ApiClient.db.packages || ApiClient.db.packages.length === 0)) {
+          grid.innerHTML = this.createSkeletonHtml(6);
+        }
+
         const packages = await ApiClient.fetchPackages();
 
         const filtered = packages.filter(p => {
@@ -820,7 +877,9 @@
         });
 
         if (countSpan) countSpan.textContent = filtered.length;
-        grid.innerHTML = filtered.map(pkg => this.createPackageCardHtml(pkg)).join('');
+        grid.innerHTML = filtered.length > 0
+          ? filtered.map(pkg => this.createPackageCardHtml(pkg)).join('')
+          : '<div class="empty-state">Tidak ada paket yang sesuai dengan filter pencarian.</div>';
       },
 
       createPackageCardHtml(pkg) {
@@ -1205,6 +1264,9 @@
       } else {
         Router.navigate('home');
       }
+
+      // Pre-warm data cache in background
+      ApiClient.fetchPackages();
     });
   </script>
 </body>

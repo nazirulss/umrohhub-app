@@ -99,6 +99,15 @@ global.PropertiesService = {
   })
 };
 
+const scriptCacheStore = {};
+global.CacheService = {
+  getScriptCache: () => ({
+    get: (key) => scriptCacheStore[key] || null,
+    put: (key, val, exp) => { scriptCacheStore[key] = val; },
+    remove: (key) => { delete scriptCacheStore[key]; }
+  })
+};
+
 let uuidInc = 7000;
 global.Utilities = {
   getUuid: () => "UUID-" + (++uuidInc),
