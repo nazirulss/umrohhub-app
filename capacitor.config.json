@@ -1,0 +1,13 @@
+{
+  "appId": "id.my.umrohpedia.app",
+  "appName": "Umrohpedia",
+  "webDir": ".",
+  "bundledWebRuntime": false,
+  "server": {
+    "url": "https://umrohpedia.my.id",
+    "cleartext": true
+  },
+  "android": {
+    "allowMixedContent": true
+  }
+}
