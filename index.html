@@ -1330,25 +1330,20 @@
       }
       .store-actions-row {
         width: 100%;
-        display: flex;
-        gap: 6px;
-        margin-top: 2px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+        margin: 4px 0 2px;
       }
       .store-actions-row .btn {
-        padding: 5px 8px;
+        padding: 4px 2px;
         font-size: 11px;
-        height: 28px;
-        flex: 1;
+        font-weight: 700;
+        height: 30px;
         text-align: center;
         justify-content: center;
         white-space: nowrap;
-      }
-      .store-actions-row .btn-icon-action {
-        flex: 0 0 30px;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        border-radius: var(--radius-sm);
       }
       .store-stats-right {
         width: 100%;
@@ -1393,32 +1388,38 @@
       margin: 12px 0 16px;
       box-shadow: var(--shadow-xs);
       display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .store-header-top-row {
+      display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 14px;
+      width: 100%;
     }
     .store-profile-left {
       display: flex;
       align-items: center;
       gap: 14px;
       flex: 1;
-      min-width: 280px;
+      min-width: 260px;
     }
     .store-profile-info {
       flex: 1;
       min-width: 0;
     }
     .store-avatar-big {
-      width: 58px;
-      height: 58px;
+      width: 52px;
+      height: 52px;
       border-radius: var(--radius-full);
       background: var(--primary-600);
       color: var(--white);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
+      font-size: 22px;
       box-shadow: var(--shadow-sm);
       flex-shrink: 0;
       border: 2px solid var(--primary-100);
@@ -1435,13 +1436,23 @@
     .store-location-sub {
       font-size: 11.5px;
       color: var(--slate-500);
-      margin-bottom: 8px;
+      margin-bottom: 0;
     }
     .store-actions-row {
-      display: flex;
-      align-items: center;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       gap: 8px;
-      flex-wrap: wrap;
+      width: 100%;
+    }
+    .store-actions-row .btn {
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      height: 32px;
+      text-align: center;
+      justify-content: center;
+      white-space: nowrap;
+      border-radius: var(--radius-sm);
     }
     .store-stats-right {
       display: flex;
@@ -2824,45 +2835,49 @@
 
             <!-- Official Store Header Box Ala Tokopedia -->
             <div class="store-header-box">
-              <div class="store-profile-left">
-                <div class="store-avatar-big">🕌</div>
-                <div class="store-profile-info">
-                  <h1 class="store-name-title">
-                    ${escapeHtml(travel.name)}
-                    <span class="verified-check" title="Terverifikasi PPIU Kemenag RI">✓</span>
-                    <span class="badge badge-verified" style="font-size:10px; vertical-align:middle;">Official Store PPIU</span>
-                  </h1>
-                  <div class="store-location-sub">
-                    📍 ${escapeHtml(travel.city || 'Jakarta Selatan')} &bull; No. SK: <strong>${escapeHtml(travel.skKemenag || 'PPIU No. 412/2021')}</strong> &bull; Akreditasi A
+              <div class="store-header-top-row">
+                <div class="store-profile-left">
+                  <div class="store-avatar-big">🕌</div>
+                  <div class="store-profile-info">
+                    <h1 class="store-name-title">
+                      ${escapeHtml(travel.name)}
+                      <span class="verified-check" title="Terverifikasi PPIU Kemenag RI">✓</span>
+                      <span class="badge badge-verified" style="font-size:10px; vertical-align:middle;">Official Store PPIU</span>
+                    </h1>
+                    <div class="store-location-sub">
+                      📍 ${escapeHtml(travel.city || 'Jakarta Selatan')} &bull; No. SK: <strong>${escapeHtml(travel.skKemenag || 'PPIU No. 412/2021')}</strong> &bull; Akreditasi A
+                    </div>
                   </div>
-                  <div class="store-actions-row">
-                    <button id="btn-follow-travel" class="btn ${isFollowed ? 'btn-outline' : 'btn-primary'} btn-sm" onclick="TravelStore.toggleFollow('${escapeHtml(travel.id)}')">
-                      ${isFollowed ? '✓ Mengikuti' : '+ Follow'}
-                    </button>
-                    <button class="btn btn-outline-primary btn-sm" onclick="ChatModal.open()">
-                      💬 Chat Penjual
-                    </button>
-                    <button class="btn btn-outline btn-sm btn-icon-action" title="Informasi Legalitas SK Kemenag" onclick="TravelStore.showLegalModal('${escapeHtml(travel.id)}')">
-                      📋
-                    </button>
-                    <button class="btn btn-outline btn-sm btn-icon-action" title="Bagikan Toko" onclick="navigator.clipboard.writeText(window.location.href); Toast.show('Link profil biro travel berhasil disalin!', 'success');">
-                      ↗
-                    </button>
+                </div>
+
+                <!-- Store Stats Right -->
+                <div class="store-stats-right">
+                  <div style="text-align:center;">
+                    <div class="stat-title" style="font-size: 1.1rem; font-weight: 800; color: var(--slate-900);">⭐ 4.9 <span style="font-size:11px; font-weight:600; color:var(--slate-500);">(2.916)</span></div>
+                    <div class="stat-sub" style="font-size: 10.5px; color: var(--slate-500);">Rating & Ulasan</div>
+                  </div>
+                  <div style="width: 1px; height: 26px; background: var(--slate-200);"></div>
+                  <div style="text-align:center;">
+                    <div class="stat-title" style="font-size: 1.1rem; font-weight: 800; color: var(--slate-900);">19 rb</div>
+                    <div class="stat-sub" style="font-size: 10.5px; color: var(--slate-500);">Jamaah Berangkat</div>
                   </div>
                 </div>
               </div>
 
-              <!-- Store Stats Right -->
-              <div class="store-stats-right">
-                <div style="text-align:center;">
-                  <div class="stat-title" style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900);">⭐ 4.9 <span style="font-size:11px; font-weight:600; color:var(--slate-500);">(2.916)</span></div>
-                  <div class="stat-sub" style="font-size: 11px; color: var(--slate-500);">Rating & Ulasan</div>
-                </div>
-                <div style="width: 1px; height: 28px; background: var(--slate-200);"></div>
-                <div style="text-align:center;">
-                  <div class="stat-title" style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900);">19 rb</div>
-                  <div class="stat-sub" style="font-size: 11px; color: var(--slate-500);">Jamaah Berangkat</div>
-                </div>
+              <!-- 4 Action Buttons in 1 Single Row -->
+              <div class="store-actions-row">
+                <button id="btn-follow-travel" class="btn ${isFollowed ? 'btn-outline' : 'btn-primary'} btn-sm" onclick="TravelStore.toggleFollow('${escapeHtml(travel.id)}')">
+                  ${isFollowed ? '✓ Mengikuti' : '+ Follow'}
+                </button>
+                <button class="btn btn-outline-primary btn-sm" onclick="ChatModal.open()">
+                  💬 Chat
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="TravelStore.showLegalModal('${escapeHtml(travel.id)}')">
+                  📋 Info
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="navigator.clipboard.writeText(window.location.href); Toast.show('Link profil biro travel berhasil disalin!', 'success');">
+                  ↗ Bagikan
+                </button>
               </div>
             </div>
 
