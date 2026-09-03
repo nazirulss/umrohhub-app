@@ -5079,41 +5079,158 @@
         const totalPax = bookings.reduce((sum, b) => sum + Number(b.paxCount || 0), 0) || bookings.length;
 
         root.innerHTML = `
-          <div class="dashboard-layout">
-            <aside class="dashboard-sidebar">
-              <div class="dashboard-profile-card">
-                <div class="profile-img" style="background:var(--gold-600);">TR</div>
-                <div><h4>Al-Falah Travel</h4><p style="font-size:0.75rem; color:var(--slate-500);">Biro PPIU Terverifikasi</p></div>
+          <div class="account-page-container">
+            <!-- Top Header Action Icons -->
+            <div class="account-top-header">
+              <button class="account-icon-btn" title="Pusat Bantuan & CS" onclick="ChatModal.open()">
+                😊
+              </button>
+              <button class="account-icon-btn" title="Pengaturan Akun & Ganti Role" onclick="Router.openSettingsModal()">
+                ⚙️
+              </button>
+            </div>
+
+            <!-- Profile Info Ala Tokopedia -->
+            <div class="account-profile-box">
+              <div class="account-avatar" style="background:var(--gold-600);">TR</div>
+              <div>
+                <h1 class="account-name-title">Al-Falah Tour &amp; Travel</h1>
+                <div class="account-tier-badge">
+                  <span>🕌 PPIU No. 412/2021</span>
+                  <span>&bull;</span>
+                  <span style="color:var(--primary-600); font-weight:700;">Akreditasi A</span>
+                </div>
               </div>
-              <button class="btn btn-primary btn-sm" onclick="Toast.show('Fitur pembuatan paket baru', 'info')" style="width:100%;">+ Buat Paket Baru</button>
-            </aside>
-            <section class="dashboard-main">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                <h2 style="font-size:1.3rem; font-weight:800;">Manajemen Operasional Biro PPIU</h2>
+            </div>
+
+            <!-- 2-Column Wallet / Revenue Card -->
+            <div class="account-wallet-grid">
+              <div class="account-wallet-card" onclick="Toast.show('Total perputaran booking masuk periode 1448H', 'info')">
+                <div class="account-wallet-sub">
+                  <span>Total Omset Musim Ini</span>
+                  <span>&rsaquo;</span>
+                </div>
+                <div class="account-wallet-val">Rp 1.425.000.000</div>
               </div>
-              <div class="kpi-grid">
-                <div class="kpi-card"><div class="kpi-value">${totalPax} Jamaah</div><p style="font-size:0.8rem; color:var(--slate-600);">Total Terdaftar</p></div>
-                <div class="kpi-card"><div class="kpi-value">${packages.length} Paket</div><p style="font-size:0.8rem; color:var(--slate-600);">Paket Aktif & Draft</p></div>
+              <div class="account-wallet-card account-card-plus" onclick="Router.navigate('travel-store', 'TRV-001')">
+                <div class="account-wallet-sub">
+                  <span style="font-weight:800; font-size:12px;">OFFICIAL STORE PPIU 👑</span>
+                </div>
+                <div class="account-wallet-val" style="font-size:12px; font-weight:700; line-height:1.25; margin-top:2px;">
+                  Status Toko Terverifikasi Aktif
+                </div>
               </div>
-              <div class="table-container" style="margin-top: 24px;">
-                <h3 style="margin-bottom: 12px; font-size: 14px;">Daftar Booking Masuk</h3>
-                <table class="data-table">
-                  <thead><tr><th>ID</th><th>Jamaah</th><th>Pax</th><th>Total</th><th>Status</th><th>Pembayaran</th></tr></thead>
-                  <tbody>
-                    ${bookings.map(b => `
-                      <tr>
-                        <td><strong>${escapeHtml(b.bookingCode || b.id)}</strong></td>
-                        <td>${escapeHtml(b.jamaahName)}<br><small style="color:var(--slate-500);">${escapeHtml(b.jamaahPhone)}</small></td>
-                        <td>${Number(b.paxCount || 1)} Pax</td>
-                        <td>Rp ${Number(b.totalPrice || 0).toLocaleString('id-ID')}</td>
-                        <td><span class="badge ${b.status === 'CONFIRMED' ? 'badge-verified' : 'badge-info'}">${escapeHtml(b.status || 'PENDING')}</span></td>
-                        <td><span class="badge ${b.paymentStatus === 'FULL_PAID' ? 'badge-verified' : 'badge-gold'}">${escapeHtml(b.paymentStatus || 'UNPAID')}</span></td>
-                      </tr>
-                    `).join('')}
-                  </tbody>
-                </table>
+            </div>
+
+            <!-- Quick Metric Strip -->
+            <div class="account-quick-strip">
+              <div class="account-quick-item" onclick="Toast.show('6 Paket Umroh Aktif Ditampilkan ke Jamaah', 'info')">
+                <div class="account-quick-icon">📦</div>
+                <div class="account-quick-num">${packages.length}</div>
+                <div class="account-quick-label">Paket Aktif</div>
               </div>
-            </section>
+              <div style="width:1px; height:24px; background:var(--slate-200);"></div>
+              <div class="account-quick-item" onclick="Toast.show('Total jamaah terdaftar di semua paket', 'info')">
+                <div class="account-quick-icon">👥</div>
+                <div class="account-quick-num">${totalPax}</div>
+                <div class="account-quick-label">Jamaah Terdaftar</div>
+              </div>
+              <div style="width:1px; height:24px; background:var(--slate-200);"></div>
+              <div class="account-quick-item" onclick="Toast.show('Dana aman di rekening escrow menunggu pelunasan', 'info')">
+                <div class="account-quick-icon">💳</div>
+                <div class="account-quick-num">Rp 57Jt</div>
+                <div class="account-quick-label">Dana Escrow</div>
+              </div>
+              <div style="width:1px; height:24px; background:var(--slate-200);"></div>
+              <div class="account-quick-item" onclick="Toast.show('Rating kepuasan jamaah terverifikasi 4.9/5.0', 'success')">
+                <div class="account-quick-icon">⭐</div>
+                <div class="account-quick-num">4.9</div>
+                <div class="account-quick-label">Rating Biro</div>
+              </div>
+            </div>
+
+            <!-- Promo Alert Bar -->
+            <div class="account-promo-alert">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span>📢</span>
+                <span>Musim Umroh 1448H dibuka: Silakan update kuota penerbangan!</span>
+              </div>
+            </div>
+
+            <!-- Section Transaksi & Booking (5 Status Shortcuts) -->
+            <div class="account-section-card">
+              <div class="account-section-title-row">
+                <h3>Booking &amp; Jamaah Masuk</h3>
+                <span style="font-size:12px; color:var(--primary-600); font-weight:700;">Total: ${bookings.length} &rsaquo;</span>
+              </div>
+              <div class="account-status-grid">
+                <div class="account-status-item" onclick="Toast.show('Menampilkan booking menunggu konfirmasi', 'info')">
+                  <div class="account-status-icon-circle">⏳</div>
+                  <div class="account-status-label">Booking Baru</div>
+                </div>
+                <div class="account-status-item" onclick="Toast.show('Menampilkan booking telah dikonfirmasi', 'info')">
+                  <div class="account-status-icon-circle">✅</div>
+                  <div class="account-status-label">Dikonfirmasi</div>
+                </div>
+                <div class="account-status-item" onclick="Toast.show('Menampilkan jamaah menunggu pelunasan', 'info')">
+                  <div class="account-status-icon-circle">💵</div>
+                  <div class="account-status-label">Pelunasan</div>
+                </div>
+                <div class="account-status-item" onclick="Toast.show('Menampilkan booking lunas', 'info')">
+                  <div class="account-status-icon-circle">🕋</div>
+                  <div class="account-status-label">Lunas</div>
+                </div>
+                <div class="account-status-item" onclick="Toast.show('Menampilkan booking dibatalkan', 'info')">
+                  <div class="account-status-icon-circle">❌</div>
+                  <div class="account-status-label">Dibatalkan</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section Menu Manajemen Biro (4 Action Shortcuts) -->
+            <div class="account-section-card">
+              <div class="account-section-title-row">
+                <h3>Manajemen Biro Travel</h3>
+              </div>
+              <div class="account-menu-grid">
+                <div class="account-menu-item" onclick="Toast.show('Modal form pembuatan paket baru', 'info')">
+                  <div class="account-menu-icon-circle">➕</div>
+                  <div class="account-menu-label">Tambah Paket</div>
+                </div>
+                <div class="account-menu-item" onclick="Toast.show('Atur tanggal dan kuota keberangkatan', 'info')">
+                  <div class="account-menu-icon-circle">📅</div>
+                  <div class="account-menu-label">Jadwal Flight</div>
+                </div>
+                <div class="account-menu-item" onclick="Toast.show('Laporan rekap finansial & pencairan escrow', 'info')">
+                  <div class="account-menu-icon-circle">💰</div>
+                  <div class="account-menu-label">Rekap Finansial</div>
+                </div>
+                <div class="account-menu-item" onclick="Router.navigate('travel-store', 'TRV-001')">
+                  <div class="account-menu-icon-circle">🏪</div>
+                  <div class="account-menu-label">Lihat Toko</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Daftar Booking Masuk Terkini -->
+            <div class="account-section-card">
+              <h3 style="font-size:13.5px; font-weight:800; margin-bottom:12px; color:var(--slate-900);">Daftar Booking Terkini</h3>
+              <div class="trx-list-wrapper">
+                ${bookings.map(b => `
+                  <div style="background:var(--slate-50); border:1px solid var(--slate-200); border-radius:var(--radius-sm); padding:12px; display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                      <strong style="font-size:12.5px; color:var(--slate-900);">${escapeHtml(b.bookingCode || b.id)}</strong>
+                      <div style="font-size:11px; color:var(--slate-600); margin-top:2px;">👤 ${escapeHtml(b.jamaahName)} &bull; ${Number(b.paxCount || 1)} Pax</div>
+                      <div style="font-size:11.5px; font-weight:800; color:var(--primary-700); margin-top:2px;">Rp ${Number(b.totalPrice || 0).toLocaleString('id-ID')}</div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
+                      <span class="badge ${b.status === 'CONFIRMED' ? 'badge-verified' : 'badge-gold'}">${escapeHtml(b.status || 'PENDING')}</span>
+                      <button class="btn btn-primary btn-sm" style="font-size:10px; padding:3px 8px; height:24px;" onclick="Toast.show('Booking ${escapeHtml(b.id)} dikonfirmasi!', 'success')">Konfirmasi</button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
           </div>
         `;
       }
@@ -5155,45 +5272,149 @@
           : Number(aff.unpaidCommission || 9000000);
 
         root.innerHTML = `
-          <div class="dashboard-layout">
-            <aside class="dashboard-sidebar">
-              <div class="dashboard-profile-card">
-                <div class="profile-img" style="background:var(--gold-500);">UA</div>
-                <div><h4>${escapeHtml(aff.name)}</h4><p style="font-size:0.75rem; color:var(--slate-500);">Mitra Affiliate Resmi</p></div>
+          <div class="account-page-container">
+            <!-- Top Header Action Icons -->
+            <div class="account-top-header">
+              <button class="account-icon-btn" title="Pusat Bantuan & CS" onclick="ChatModal.open()">
+                😊
+              </button>
+              <button class="account-icon-btn" title="Pengaturan Akun & Ganti Role" onclick="Router.openSettingsModal()">
+                ⚙️
+              </button>
+            </div>
+
+            <!-- Profile Info Ala Tokopedia -->
+            <div class="account-profile-box">
+              <div class="account-avatar" style="background:var(--gold-500);">UA</div>
+              <div>
+                <h1 class="account-name-title">${escapeHtml(aff.name)}</h1>
+                <div class="account-tier-badge">
+                  <span>🔗 Kode: <strong>${escapeHtml(aff.code)}</strong></span>
+                  <span>&bull;</span>
+                  <span style="color:var(--primary-600); font-weight:700;">Mitra Gold 1448H</span>
+                </div>
               </div>
-              <div style="background:var(--slate-50); padding:12px; border-radius:var(--radius-sm); border:1px solid var(--slate-200); font-size:12px;">
-                <strong>Link Referral Anda:</strong>
-                <input type="text" readonly value="https://umrohpedia.my.id/?ref=${aff.code}" class="form-control" style="margin-top:6px; font-size:11px; background:var(--white);">
-                <button class="btn btn-outline-primary btn-sm" onclick="navigator.clipboard.writeText('https://umrohpedia.my.id/?ref=${aff.code}'); Toast.show('Link referral disalin ke clipboard!', 'success');" style="margin-top:8px; width:100%;">Salin Link 📋</button>
+            </div>
+
+            <!-- 2-Column Wallet / Commission Card -->
+            <div class="account-wallet-grid">
+              <div class="account-wallet-card" onclick="Toast.show('Formulir penarikan saldo komisi ke rekening bank', 'info')">
+                <div class="account-wallet-sub">
+                  <span>Komisi Siap Cair</span>
+                  <span>&rsaquo;</span>
+                </div>
+                <div class="account-wallet-val">Rp ${unpaidComm.toLocaleString('id-ID')}</div>
               </div>
-            </aside>
-            <section class="dashboard-main">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                <h2 style="font-size:1.3rem; font-weight:800;">Dashboard Mitra Affiliate Umrohpedia</h2>
+              <div class="account-wallet-card account-card-plus" onclick="Toast.show('Tier Gold: Bonus Rp 1.500.000 per jamaah terdaftar!', 'success')">
+                <div class="account-wallet-sub">
+                  <span style="font-weight:800; font-size:12px;">TIER GOLD 👑</span>
+                </div>
+                <div class="account-wallet-val" style="font-size:12px; font-weight:700; line-height:1.25; margin-top:2px;">
+                  Komisi s/d Rp 1.5Jt / Jamaah
+                </div>
               </div>
-              <div class="kpi-grid">
-                <div class="kpi-card"><div class="kpi-value">${Number(aff.clicks || 342)}</div><p style="font-size:0.8rem; color:var(--slate-600);">Total Klik Link (30-Day Window)</p></div>
-                <div class="kpi-card"><div class="kpi-value">Rp ${unpaidComm.toLocaleString('id-ID')}</div><p style="font-size:0.8rem; color:var(--slate-600);">Komisi Akumulasi</p></div>
+            </div>
+
+            <!-- Quick Metric Strip -->
+            <div class="account-quick-strip">
+              <div class="account-quick-item" onclick="Toast.show('Total klik tautan referensi digital Anda', 'info')">
+                <div class="account-quick-icon">🔗</div>
+                <div class="account-quick-num">${Number(aff.clicks || 342)}</div>
+                <div class="account-quick-label">Klik Link</div>
               </div>
-              <div class="table-container" style="margin-top: 24px;">
-                <h3 style="margin-bottom: 12px; font-size: 14px;">Riwayat Komisi Afiliasi</h3>
-                <table class="data-table">
-                  <thead><tr><th>ID Komisi</th><th>Booking Ref</th><th>Jumlah</th><th>Status</th></tr></thead>
-                  <tbody>
-                    ${commissions.length > 0 ? commissions.map(c => `
-                      <tr>
-                        <td><strong>${escapeHtml(c.id)}</strong></td>
-                        <td>${escapeHtml(c.bookingId)}</td>
-                        <td>Rp ${Number(c.amount).toLocaleString('id-ID')}</td>
-                        <td><span class="badge ${c.status === 'APPROVED' || c.status === 'PAID' ? 'badge-verified' : 'badge-gold'}">${escapeHtml(c.status)}</span></td>
-                      </tr>
-                    `).join('') : `
-                      <tr><td colspan="4" style="text-align:center; color:var(--slate-500);">Belum ada klaim komisi aktif.</td></tr>
-                    `}
-                  </tbody>
-                </table>
+              <div style="width:1px; height:24px; background:var(--slate-200);"></div>
+              <div class="account-quick-item" onclick="Toast.show('12 Jamaah mendaftar melalui referral Anda', 'info')">
+                <div class="account-quick-icon">👥</div>
+                <div class="account-quick-num">12</div>
+                <div class="account-quick-label">Jamaah Daftar</div>
               </div>
-            </section>
+              <div style="width:1px; height:24px; background:var(--slate-200);"></div>
+              <div class="account-quick-item" onclick="Toast.show('Total komisi berhasil dicairkan musim ini', 'info')">
+                <div class="account-quick-icon">💰</div>
+                <div class="account-quick-num">Rp 9Jt</div>
+                <div class="account-quick-label">Saldo Komisi</div>
+              </div>
+              <div style="width:1px; height:24px; background:var(--slate-200);"></div>
+              <div class="account-quick-item" onclick="Toast.show('Rasio konversi klik menjadi booking 3.5%', 'success')">
+                <div class="account-quick-icon">📈</div>
+                <div class="account-quick-num">3.5%</div>
+                <div class="account-quick-label">Konversi</div>
+              </div>
+            </div>
+
+            <!-- Link Referral Copy Card -->
+            <div class="account-promo-alert" style="background:#f0fdf4; border-color:#bbf7d0; color:#166534;">
+              <div style="flex:1;">
+                <strong>Link Referral Utama Anda:</strong>
+                <div style="font-size:10.5px; opacity:0.9; margin-top:2px; word-break:break-all;">https://umrohpedia.my.id/?ref=${aff.code}</div>
+              </div>
+              <button class="btn btn-primary btn-sm" style="font-size:10.5px; padding:4px 10px; height:28px;" onclick="navigator.clipboard.writeText('https://umrohpedia.my.id/?ref=${aff.code}'); Toast.show('Link referral disalin ke clipboard!', 'success');">Salin 📋</button>
+            </div>
+
+            <!-- Section Status Komisi (5 Status Shortcuts) -->
+            <div class="account-section-card">
+              <div class="account-section-title-row">
+                <h3>Riwayat Komisi Afiliasi</h3>
+                <span style="font-size:12px; color:var(--primary-600); font-weight:700;">Total: ${commissions.length || 3} &rsaquo;</span>
+              </div>
+              <div class="account-status-grid">
+                <div class="account-status-item" onclick="Toast.show('Komisi menunggu pelunasan jamaah', 'info')">
+                  <div class="account-status-icon-circle">⏳</div>
+                  <div class="account-status-label">Pending</div>
+                </div>
+                <div class="account-status-item" onclick="Toast.show('Komisi siap dicairkan ke rekening', 'info')">
+                  <div class="account-status-icon-circle">✅</div>
+                  <div class="account-status-label">Siap Cair</div>
+                </div>
+                <div class="account-status-item" onclick="Toast.show('Komisi telah ditransfer ke rekening Anda', 'info')">
+                  <div class="account-status-icon-circle">💳</div>
+                  <div class="account-status-label">Sudah Cair</div>
+                </div>
+                <div class="account-status-item" onclick="Toast.show('Statistik klik & konversi 30 hari terakhir', 'info')">
+                  <div class="account-status-icon-circle">📊</div>
+                  <div class="account-status-label">Statistik</div>
+                </div>
+                <div class="account-status-item" onclick="Toast.show('Bonus reward umroh gratis untuk top affiliate!', 'success')">
+                  <div class="account-status-icon-circle">🎁</div>
+                  <div class="account-status-label">Reward</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section Menu Alat Bantu Promosi (4 Action Shortcuts) -->
+            <div class="account-section-card">
+              <div class="account-section-title-row">
+                <h3>Alat Bantu &amp; Materi Promosi</h3>
+              </div>
+              <div class="account-menu-grid">
+                <div class="account-menu-item" onclick="navigator.clipboard.writeText('https://umrohpedia.my.id/?ref=${aff.code}'); Toast.show('Link referral disalin ke clipboard!', 'success');">
+                  <div class="account-menu-icon-circle">📋</div>
+                  <div class="account-menu-label">Salin Link</div>
+                </div>
+                <div class="account-menu-item" onclick="Toast.show('Download materi flyer dan banner promo WhatsApp', 'info')">
+                  <div class="account-menu-icon-circle">🎨</div>
+                  <div class="account-menu-label">Materi Promo</div>
+                </div>
+                <div class="account-menu-item" onclick="Toast.show('Mengajukan pencairan komisi ke rekening bank', 'info')">
+                  <div class="account-menu-icon-circle">💵</div>
+                  <div class="account-menu-label">Tarik Saldo</div>
+                </div>
+                <div class="account-menu-item" onclick="Toast.show('Daftar status keberangkatan jamaah binaan Anda', 'info')">
+                  <div class="account-menu-icon-circle">👥</div>
+                  <div class="account-menu-label">Jamaah Binaan</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Rekomendasi Paket untuk Dipromosikan -->
+            <div style="margin-top: 8px;">
+              <h2 style="font-size: 14px; font-weight: 800; color: var(--slate-900); margin: 0 4px 12px;">
+                Paket Umroh Paling Laris Dipromosikan
+              </h2>
+              <div class="packages-grid">
+                ${ApiClient.db.packages.slice(0, 2).map(pkg => Marketplace.createPackageCardHtml(pkg)).join('')}
+              </div>
+            </div>
           </div>
         `;
       }
@@ -5245,39 +5466,154 @@
         if (!root || Router.currentRoute !== 'admin-dashboard') return;
 
         root.innerHTML = `
-          <div class="dashboard-layout">
-            <aside class="dashboard-sidebar">
-              <div class="dashboard-profile-card">
-                <div class="profile-img" style="background:var(--slate-900);">AD</div>
-                <div><h4>Platform Admin</h4><p style="font-size:0.75rem; color:var(--slate-500);">Pengawasan PPIU Kemenag</p></div>
+          <div class="account-page-container">
+            <!-- Top Header Action Icons -->
+            <div class="account-top-header">
+              <button class="account-icon-btn" title="Audit Log & Keamanan" onclick="Toast.show('Semua transaksi terlindungi protokol enkripsi & audit log GAS', 'info')">
+                🛡️
+              </button>
+              <button class="account-icon-btn" title="Pengaturan Akun & Ganti Role" onclick="Router.openSettingsModal()">
+                ⚙️
+              </button>
+            </div>
+
+            <!-- Profile Info Ala Tokopedia -->
+            <div class="account-profile-box">
+              <div class="account-avatar" style="background:var(--slate-900);">AD</div>
+              <div>
+                <h1 class="account-name-title">Super Admin Platform</h1>
+                <div class="account-tier-badge">
+                  <span>🛡️ Pengawasan Terpusat</span>
+                  <span>&bull;</span>
+                  <span style="color:var(--primary-600); font-weight:700;">Legalitas PPIU Kemenag</span>
+                </div>
               </div>
-            </aside>
-            <section class="dashboard-main">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                <h2 style="font-size:1.3rem; font-weight:800;">Pusat Kontrol & Pengawasan Legalitas PPIU</h2>
+            </div>
+
+            <!-- 2-Column Wallet / Escrow Card -->
+            <div class="account-wallet-grid">
+              <div class="account-wallet-card" onclick="Toast.show('Total dana booking jamaah diamankan di rekening penampung escrow', 'info')">
+                <div class="account-wallet-sub">
+                  <span>Total Dana Escrow</span>
+                  <span>&rsaquo;</span>
+                </div>
+                <div class="account-wallet-val">Rp 4.250.000.000</div>
               </div>
-              <div class="kpi-grid">
-                <div class="kpi-card"><div class="kpi-value">${travelsTotal} Biro</div><p style="font-size:0.8rem; color:var(--slate-600);">Terdaftar Platform</p></div>
-                <div class="kpi-card"><div class="kpi-value">${bookingsTotal} Booking</div><p style="font-size:0.8rem; color:var(--slate-600);">Transaksi Jamaah</p></div>
-                <div class="kpi-card"><div class="kpi-value">${commissionsTotal} Komisi</div><p style="font-size:0.8rem; color:var(--slate-600);">Klaim Afiliasi</p></div>
+              <div class="account-wallet-card account-card-plus" onclick="Toast.show('Audit Database Google Apps Script Berjalan Normal', 'success')">
+                <div class="account-wallet-sub">
+                  <span style="font-weight:800; font-size:12px;">ESCROW AMANAH 🛡️</span>
+                </div>
+                <div class="account-wallet-val" style="font-size:12px; font-weight:700; line-height:1.25; margin-top:2px;">
+                  Sistem Transaksi Terlindungi 100%
+                </div>
               </div>
-              <div class="table-container" style="margin-top: 24px;">
-                <h3 style="margin-bottom: 12px; font-size: 14px;">Status Legalitas PPIU Kemenag</h3>
-                <table class="data-table">
-                  <thead><tr><th>Nama Travel</th><th>No. Izin PPIU</th><th>Kota</th><th>Status Kemenag</th></tr></thead>
-                  <tbody>
-                    ${travelsList.map(t => `
-                      <tr>
-                        <td><strong>${escapeHtml(t.name)}</strong></td>
-                        <td>${escapeHtml(t.skKemenag)}</td>
-                        <td>${escapeHtml(t.city)}</td>
-                        <td><span class="badge ${t.status === 'VERIFIED' ? 'badge-verified' : (t.status === 'PENDING' ? 'badge-gold' : 'badge-danger')}">${escapeHtml(t.status)}</span></td>
-                      </tr>
-                    `).join('')}
-                  </tbody>
-                </table>
+            </div>
+
+            <!-- Quick Metric Strip -->
+            <div class="account-quick-strip">
+              <div class="account-quick-item" onclick="Toast.show('6 Biro PPIU Terverifikasi Kemenag RI', 'info')">
+                <div class="account-quick-icon">🕌</div>
+                <div class="account-quick-num">${travelsTotal}</div>
+                <div class="account-quick-label">Biro PPIU</div>
               </div>
-            </section>
+              <div style="width:1px; height:24px; background:var(--slate-200);"></div>
+              <div class="account-quick-item" onclick="Toast.show('18 Paket Umroh Aktif Berizin', 'info')">
+                <div class="account-quick-icon">📦</div>
+                <div class="account-quick-num">18</div>
+                <div class="account-quick-label">Paket Aktif</div>
+              </div>
+              <div style="width:1px; height:24px; background:var(--slate-200);"></div>
+              <div class="account-quick-item" onclick="Toast.show('35 Transaksi Jamaah Tercatat di Database', 'info')">
+                <div class="account-quick-icon">👥</div>
+                <div class="account-quick-num">${bookingsTotal}</div>
+                <div class="account-quick-label">Booking Jamaah</div>
+              </div>
+              <div style="width:1px; height:24px; background:var(--slate-200);"></div>
+              <div class="account-quick-item" onclick="Toast.show('12 Klaim Komisi Afiliasi Terdistribusi', 'success')">
+                <div class="account-quick-icon">💰</div>
+                <div class="account-quick-num">${commissionsTotal}</div>
+                <div class="account-quick-label">Klaim Komisi</div>
+              </div>
+            </div>
+
+            <!-- Promo Alert Bar -->
+            <div class="account-promo-alert" style="background:#eff6ff; border-color:#bfdbfe; color:#1e40af;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span>🛡️</span>
+                <span>Database Cloud GAS &amp; Proteksi XSS Berjalan dengan Amanah.</span>
+              </div>
+            </div>
+
+            <!-- Section Status Pengawasan (5 Status Shortcuts) -->
+            <div class="account-section-card">
+              <div class="account-section-title-row">
+                <h3>Pusat Kontrol &amp; Pengawasan</h3>
+                <span style="font-size:12px; color:var(--primary-600); font-weight:700;">Status Sistem &rsaquo;</span>
+              </div>
+              <div class="account-status-grid">
+                <div class="account-status-item" onclick="Toast.show('Verifikasi izin SK Kemenag biro travel baru', 'info')">
+                  <div class="account-status-icon-circle">⏳</div>
+                  <div class="account-status-label">Verifikasi SK</div>
+                </div>
+                <div class="account-status-item" onclick="Toast.show('Persetujuan pencairan komisi mitra afiliasi', 'info')">
+                  <div class="account-status-icon-circle">💰</div>
+                  <div class="account-status-label">Approve Komisi</div>
+                </div>
+                <div class="account-status-item" onclick="Toast.show('Status dana di rekening amanah escrow', 'info')">
+                  <div class="account-status-icon-circle">🛡️</div>
+                  <div class="account-status-label">Escrow Dana</div>
+                </div>
+                <div class="account-status-item" onclick="Toast.show('Log audit aktivitas sistem dan sinkronisasi spreadsheet', 'info')">
+                  <div class="account-status-icon-circle">📊</div>
+                  <div class="account-status-label">Log Audit</div>
+                </div>
+                <div class="account-status-item" onclick="Toast.show('Pengaduan jamaah & layanan perlindungan', 'info')">
+                  <div class="account-status-icon-circle">⚠️</div>
+                  <div class="account-status-label">Pengaduan</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section Menu Manajemen Admin (4 Action Shortcuts) -->
+            <div class="account-section-card">
+              <div class="account-section-title-row">
+                <h3>Aksi Kontrol Platform</h3>
+              </div>
+              <div class="account-menu-grid">
+                <div class="account-menu-item" onclick="Toast.show('Verifikasi izin biro PPIU baru', 'info')">
+                  <div class="account-menu-icon-circle">🕌</div>
+                  <div class="account-menu-label">Verifikasi Biro</div>
+                </div>
+                <div class="account-menu-item" onclick="Toast.show('Setujui komisi afiliasi pending', 'success')">
+                  <div class="account-menu-icon-circle">💳</div>
+                  <div class="account-menu-label">Setujui Komisi</div>
+                </div>
+                <div class="account-menu-item" onclick="Toast.show('Ekspor data rekap spreadsheet', 'info')">
+                  <div class="account-menu-icon-circle">📊</div>
+                  <div class="account-menu-label">Ekspor Data</div>
+                </div>
+                <div class="account-menu-item" onclick="Router.openSettingsModal()">
+                  <div class="account-menu-icon-circle">⚙️</div>
+                  <div class="account-menu-label">Pengaturan</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Daftar Biro PPIU Terdaftar -->
+            <div class="account-section-card">
+              <h3 style="font-size:13.5px; font-weight:800; margin-bottom:12px; color:var(--slate-900);">Daftar Biro PPIU Terdaftar</h3>
+              <div class="trx-list-wrapper">
+                ${travelsList.map(t => `
+                  <div style="background:var(--slate-50); border:1px solid var(--slate-200); border-radius:var(--radius-sm); padding:10px 12px; display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                      <strong style="font-size:12.5px; color:var(--slate-900);">${escapeHtml(t.name)}</strong>
+                      <div style="font-size:10.5px; color:var(--slate-500); margin-top:1px;">📜 ${escapeHtml(t.skKemenag || 'No. 412/2021')} &bull; ${escapeHtml(t.city || 'Jakarta')}</div>
+                    </div>
+                    <span class="badge ${t.status === 'VERIFIED' ? 'badge-verified' : 'badge-gold'}">${escapeHtml(t.status || 'VERIFIED')}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
           </div>
         `;
       }
