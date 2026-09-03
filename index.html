@@ -1285,9 +1285,120 @@
       .pdp-mobile-bottom-bar {
         display: flex;
       }
-      .mobile-bottom-nav {
-        display: none !important; /* Hide main bottom nav on PDP to give priority to booking bar */
+      .store-stats-right {
+        border-left: none;
+        padding-left: 0;
+        border-top: 1px solid var(--slate-100);
+        padding-top: 12px;
+        width: 100%;
+        justify-content: space-between;
       }
+      .store-header-box {
+        padding: 16px;
+      }
+    }
+
+    /* ==========================================================================
+       6B. TOKOPEDIA OFFICIAL STORE / BIRO TRAVEL PAGE
+       ========================================================================== */
+    .store-header-box {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      margin: 14px 0 20px;
+      box-shadow: var(--shadow-xs);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .store-profile-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .store-avatar-big {
+      width: 68px;
+      height: 68px;
+      border-radius: var(--radius-full);
+      background: var(--primary-600);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: var(--shadow-sm);
+      flex-shrink: 0;
+      border: 2px solid var(--primary-100);
+    }
+    .store-name-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--slate-900);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 3px;
+    }
+    .store-location-sub {
+      font-size: 12px;
+      color: var(--slate-500);
+      margin-bottom: 10px;
+    }
+    .store-actions-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .store-stats-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-left: 1px solid var(--slate-200);
+      padding-left: 20px;
+    }
+    .store-tabs-nav {
+      display: flex;
+      gap: 24px;
+      border-bottom: 2px solid var(--slate-200);
+      margin-bottom: 20px;
+      background: var(--white);
+      padding: 0 4px;
+    }
+    .store-tab-btn {
+      background: none;
+      border: none;
+      padding: 10px 4px;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--slate-600);
+      cursor: pointer;
+      position: relative;
+    }
+    .store-tab-btn.active {
+      color: var(--primary-600);
+    }
+    .store-tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--primary-600);
+    }
+    .store-voucher-strip {
+      background: linear-gradient(135deg, #005a30 0%, #008a4b 100%);
+      border-radius: var(--radius-md);
+      color: var(--white);
+      padding: 12px 18px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     /* ==========================================================================
@@ -2109,6 +2220,7 @@
           case 'marketplace': Marketplace.init(); break;
           case 'package-detail': this.renderPackageDetail(params); break;
           case 'travels': this.renderTravels(); break;
+          case 'travel-store': this.renderTravelStore(params); break;
           case 'affiliate-info': this.renderAffiliateInfo(); break;
           case 'customer-dashboard': CustomerDashboard.render(); break;
           case 'travel-dashboard': TravelDashboard.render(); break;
@@ -2463,7 +2575,7 @@
 
                 <!-- Biro PPIU Profile Card (Official Store Style) -->
                 <div class="travel-shop-box">
-                  <div class="travel-shop-info">
+                  <div class="travel-shop-info" style="cursor:pointer;" onclick="Router.navigate('travel-store', '${escapeHtml(pkg.travelId || pkg.travelName)}')" title="Kunjungi Toko Biro Travel">
                     <div class="travel-shop-avatar">🕋</div>
                     <div class="travel-shop-details">
                       <h4>${escapeHtml(pkg.travelName)} <span class="verified-check">✓</span></h4>
@@ -2471,7 +2583,7 @@
                     </div>
                   </div>
                   <div style="display:flex; gap:8px;">
-                    <button class="btn btn-outline btn-sm" onclick="Toast.show('Berhasil mengikuti pembaruan biro travel!', 'success')">+ Ikuti Biro</button>
+                    <button class="btn btn-outline btn-sm" onclick="Router.navigate('travel-store', '${escapeHtml(pkg.travelId || pkg.travelName)}')">Kunjungi Biro &rarr;</button>
                     <button class="btn btn-outline-primary btn-sm" onclick="ChatModal.open()">Chat Travel</button>
                   </div>
                 </div>
@@ -2591,6 +2703,112 @@
         Marketplace.paxCount = 1;
       },
 
+      async renderTravelStore(travelId) {
+        const root = document.getElementById('app-root');
+        root.innerHTML = '<div class="empty-state" style="padding:60px 0;"><div class="skeleton-box" style="height:350px; width:100%;"></div></div>';
+
+        let travel = ApiClient.db.travels.find(t => t.id === travelId || t.name === travelId) || ApiClient.db.travels[0];
+        let packages = [];
+
+        try {
+          const allPkgs = await ApiClient.fetchPackages();
+          packages = allPkgs.filter(p => p.travelId === travel.id || (p.travelName && travel.name && p.travelName.toLowerCase().trim() === travel.name.toLowerCase().trim()));
+          if (packages.length === 0) {
+            packages = allPkgs; // fallback
+          }
+        } catch (e) {
+          console.warn("Failed fetching store packages", e);
+          packages = ApiClient.db.packages;
+        }
+
+        const isFollowed = TravelStore.isFollowing(travel.id);
+
+        root.innerHTML = `
+          <div class="store-container" style="padding-bottom: 60px;">
+            <!-- Breadcrumbs -->
+            <div class="pdp-breadcrumbs">
+              <a href="#" onclick="Router.navigate('home')">Home</a> &rsaquo;
+              <a href="#" onclick="Router.navigate('travels')">Biro PPIU</a> &rsaquo;
+              <span>${escapeHtml(travel.name)}</span>
+            </div>
+
+            <!-- Official Store Header Box Ala Tokopedia -->
+            <div class="store-header-box">
+              <div class="store-profile-left">
+                <div class="store-avatar-big">🕌</div>
+                <div>
+                  <h1 class="store-name-title">
+                    ${escapeHtml(travel.name)}
+                    <span class="verified-check" title="Terverifikasi PPIU Kemenag RI">✓</span>
+                    <span class="badge badge-verified" style="font-size:10px; vertical-align:middle;">Official Store PPIU</span>
+                  </h1>
+                  <div class="store-location-sub">
+                    📍 ${escapeHtml(travel.city || 'Jakarta Selatan')} &bull; No. SK: <strong>${escapeHtml(travel.skKemenag || 'PPIU No. 412/2021')}</strong> &bull; Akreditasi A
+                  </div>
+                  <div class="store-actions-row">
+                    <button id="btn-follow-travel" class="btn ${isFollowed ? 'btn-outline' : 'btn-primary'} btn-sm" onclick="TravelStore.toggleFollow('${escapeHtml(travel.id)}')">
+                      ${isFollowed ? '✓ Mengikuti' : '+ Follow'}
+                    </button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="ChatModal.open()">
+                      💬 Chat Penjual
+                    </button>
+                    <button class="btn btn-outline btn-sm" onclick="TravelStore.showLegalModal('${escapeHtml(travel.id)}')">
+                      📋 Info Legalitas SK
+                    </button>
+                    <button class="btn btn-outline btn-sm" onclick="navigator.clipboard.writeText(window.location.href); Toast.show('Link profil biro travel berhasil disalin!', 'success');">
+                      ↗ Bagikan
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Store Stats Right -->
+              <div class="store-stats-right">
+                <div>
+                  <div style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900);">⭐ 4.9 <span style="font-size:12px; font-weight:600; color:var(--slate-500);">(2.916)</span></div>
+                  <div style="font-size: 11px; color: var(--slate-500);">Rating & Ulasan</div>
+                </div>
+                <div style="width: 1px; height: 32px; background: var(--slate-200);"></div>
+                <div>
+                  <div style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900);">19 rb</div>
+                  <div style="font-size: 11px; color: var(--slate-500);">Jamaah Berangkat</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Store Tabs Navigation -->
+            <div class="store-tabs-nav">
+              <button class="store-tab-btn active" onclick="TravelStore.switchTab(0, this)">Beranda</button>
+              <button class="store-tab-btn" onclick="TravelStore.switchTab(1, this)">Semua Paket (${packages.length})</button>
+              <button class="store-tab-btn" onclick="TravelStore.switchTab(2, this)">Tentang Legalitas</button>
+              <button class="store-tab-btn" onclick="TravelStore.switchTab(3, this)">Ulasan Jamaah (84)</button>
+            </div>
+
+            <!-- Store Tab Body -->
+            <div id="store-tab-body">
+              <!-- Tab 0: Beranda Toko -->
+              <div class="store-voucher-strip">
+                <div>
+                  <div style="font-size:13px; font-weight:800;">🎟️ Voucher Spesial Musim 1448H</div>
+                  <div style="font-size:11px; opacity:0.9;">Cashback langsung hingga Rp 1.500.000 untuk pendaftaran online di toko ini.</div>
+                </div>
+                <button class="btn btn-sm" style="background:var(--white); color:var(--primary-700); font-weight:700; font-size:11px;" onclick="Toast.show('Kode voucher UMROHBERKAH otomatis diterapkan saat checkout!', 'success')">Klaim Voucher</button>
+              </div>
+
+              <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--slate-900); margin-bottom: 14px;">Sesuai incaran kamu di biro ini</h2>
+                <div class="packages-grid">
+                  ${packages.map(pkg => Marketplace.createPackageCardHtml(pkg)).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        TravelStore.currentTravel = travel;
+        TravelStore.currentPackages = packages;
+      },
+
       async renderTravels() {
         const root = document.getElementById('app-root');
         root.innerHTML = '<div class="empty-state"><div class="skeleton-box" style="height:300px; width:100%;"></div></div>';
@@ -2614,12 +2832,12 @@
 
             <div class="packages-grid">
               ${travels.map(t => `
-                <div class="tokopedia-card" style="padding: 20px; text-align: center;">
+                <div class="tokopedia-card" style="padding: 20px; text-align: center; cursor:pointer;" onclick="Router.navigate('travel-store', '${escapeHtml(t.id)}')">
                   <div style="font-size: 2.8rem; margin-bottom: 8px;">🕌</div>
                   <h3 style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">${escapeHtml(t.name)}</h3>
                   <div class="badge badge-verified" style="margin-bottom: 8px;">Terverifikasi PPIU</div>
                   <p style="font-size: 11px; color: var(--slate-500); margin-bottom: 12px;">${escapeHtml(t.skKemenag || 'PPIU Resmi')} • ${escapeHtml(t.city || 'Indonesia')}</p>
-                  <button class="btn btn-outline-primary btn-sm btn-block" onclick="Router.navigate('marketplace')">Lihat Paket Travel &rarr;</button>
+                  <button class="btn btn-outline-primary btn-sm btn-block" onclick="event.stopPropagation(); Router.navigate('travel-store', '${escapeHtml(t.id)}')">Kunjungi Toko Biro &rarr;</button>
                 </div>
               `).join('')}
             </div>
@@ -2762,7 +2980,7 @@
               <button class="card-wishlist-btn ${isWish ? 'active' : ''}" onclick="event.stopPropagation(); AuthStore.toggleWishlist('${escapeHtml(pkg.id)}')" title="Simpan ke Wishlist">♥</button>
             </div>
             <div class="card-body">
-              <div class="card-travel-name">
+              <div class="card-travel-name" style="cursor:pointer;" onclick="event.stopPropagation(); Router.navigate('travel-store', '${escapeHtml(pkg.travelId || pkg.travelName)}')" title="Lihat Toko Biro Travel">
                 <span>🕌</span> ${escapeHtml(pkg.travelName)} <span class="verified-check">✓</span>
               </div>
               <h3 class="card-title">${escapeHtml(pkg.title)}</h3>
@@ -3003,6 +3221,135 @@
         }
 
         Router.navigate('customer-dashboard');
+      }
+    };
+
+    /* ==========================================================================
+       4B. TRAVEL STORE MODULE (TOKOPEDIA OFFICIAL STORE EXPERIENCE)
+       ========================================================================== */
+    const TravelStore = {
+      followedTravels: [],
+      currentTravel: null,
+      currentPackages: [],
+
+      isFollowing(travelId) {
+        return this.followedTravels.includes(travelId);
+      },
+
+      toggleFollow(travelId) {
+        const btn = document.getElementById('btn-follow-travel');
+        if (this.isFollowing(travelId)) {
+          this.followedTravels = this.followedTravels.filter(id => id !== travelId);
+          if (btn) {
+            btn.className = 'btn btn-primary btn-sm';
+            btn.textContent = '+ Follow';
+          }
+          Toast.show('Berhenti mengikuti biro travel ini.', 'info');
+        } else {
+          this.followedTravels.push(travelId);
+          if (btn) {
+            btn.className = 'btn btn-outline btn-sm';
+            btn.textContent = '✓ Mengikuti';
+          }
+          Toast.show('Berhasil mengikuti! Anda akan menerima notifikasi promo biro ini.', 'success');
+        }
+      },
+
+      switchTab(tabIndex, btnElem) {
+        const buttons = document.querySelectorAll('.store-tab-btn');
+        buttons.forEach(b => b.classList.remove('active'));
+        if (btnElem) btnElem.classList.add('active');
+
+        const body = document.getElementById('store-tab-body');
+        if (!body || !this.currentTravel) return;
+
+        const travel = this.currentTravel;
+        const packages = this.currentPackages || [];
+
+        if (tabIndex === 0) {
+          body.innerHTML = `
+            <div class="store-voucher-strip">
+              <div>
+                <div style="font-size:13px; font-weight:800;">🎟️ Voucher Spesial Musim 1448H</div>
+                <div style="font-size:11px; opacity:0.9;">Cashback langsung hingga Rp 1.500.000 untuk pendaftaran online di toko ini.</div>
+              </div>
+              <button class="btn btn-sm" style="background:var(--white); color:var(--primary-700); font-weight:700; font-size:11px;" onclick="Toast.show('Kode voucher UMROHBERKAH otomatis diterapkan saat checkout!', 'success')">Klaim Voucher</button>
+            </div>
+            <div style="margin-bottom: 24px;">
+              <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--slate-900); margin-bottom: 14px;">Sesuai incaran kamu di biro ini</h2>
+              <div class="packages-grid">
+                ${packages.map(pkg => Marketplace.createPackageCardHtml(pkg)).join('')}
+              </div>
+            </div>
+          `;
+        } else if (tabIndex === 1) {
+          body.innerHTML = `
+            <div style="margin-bottom: 24px;">
+              <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--slate-900); margin-bottom: 14px;">Semua Katalog Paket (${packages.length})</h2>
+              <div class="packages-grid">
+                ${packages.map(pkg => Marketplace.createPackageCardHtml(pkg)).join('')}
+              </div>
+            </div>
+          `;
+        } else if (tabIndex === 2) {
+          body.innerHTML = `
+            <div style="background:var(--white); border:1px solid var(--slate-200); border-radius:var(--radius-lg); padding:24px; max-width:800px;">
+              <h3 style="font-size:15px; font-weight:800; margin-bottom:14px; color:var(--slate-900);">Legalitas & Sertifikasi Resmi Biro Travel</h3>
+              <table class="pdp-spec-table">
+                <tbody>
+                  <tr><td class="pdp-spec-label">Nama Biro PPIU</td><td class="pdp-spec-val">🕌 ${escapeHtml(travel.name)}</td></tr>
+                  <tr><td class="pdp-spec-label">Nomor Izin SK Kemenag</td><td class="pdp-spec-val">📜 ${escapeHtml(travel.skKemenag || 'No. 412/2021 (Kemenag RI)')}</td></tr>
+                  <tr><td class="pdp-spec-label">Status Akreditasi</td><td class="pdp-spec-val">⭐ Akreditasi A (Sangat Baik)</td></tr>
+                  <tr><td class="pdp-spec-label">Kantor Operasional</td><td class="pdp-spec-val">📍 ${escapeHtml(travel.city || 'Jakarta Selatan, DKI Jakarta')}</td></tr>
+                  <tr><td class="pdp-spec-label">Jaminan Jamaah</td><td class="pdp-spec-val">🛡️ 5 Pasti Umroh Kemenag & Escrow Rekening Amanah</td></tr>
+                </tbody>
+              </table>
+            </div>
+          `;
+        } else if (tabIndex === 3) {
+          body.innerHTML = `
+            <div class="pdp-review-summary" style="max-width:850px;">
+              <h3 style="font-size:14px; font-weight:800; margin-bottom:14px;">ULASAN JAMAAH BIRO TRAVEL</h3>
+              <div class="review-score-grid">
+                <div style="text-align:center;">
+                  <div class="review-score-big">⭐ 4.9<span style="font-size:1.1rem; color:var(--slate-500); font-weight:600;">/5.0</span></div>
+                  <p style="font-size:11px; color:var(--slate-600); font-weight:700; margin-top:4px;">98% jamaah puas</p>
+                  <p style="font-size:10px; color:var(--slate-500);">2.916 rating &bull; 84 ulasan</p>
+                </div>
+                <div>
+                  <div class="review-bar-row"><span>5★</span><div class="review-bar-bg"><div class="review-bar-fill" style="width:94%;"></div></div><span>(2.740)</span></div>
+                  <div class="review-bar-row"><span>4★</span><div class="review-bar-bg"><div class="review-bar-fill" style="width:5%;"></div></div><span>(146)</span></div>
+                  <div class="review-bar-row"><span>3★</span><div class="review-bar-bg"><div class="review-bar-fill" style="width:1%;"></div></div><span>(30)</span></div>
+                  <div class="review-bar-row"><span>2★</span><div class="review-bar-bg"><div class="review-bar-fill" style="width:0%;"></div></div><span>(0)</span></div>
+                  <div class="review-bar-row"><span>1★</span><div class="review-bar-bg"><div class="review-bar-fill" style="width:0%;"></div></div><span>(0)</span></div>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      },
+
+      showLegalModal(travelId) {
+        const travel = this.currentTravel || ApiClient.db.travels.find(t => t.id === travelId) || ApiClient.db.travels[0];
+        ModalManager.open({
+          title: "Informasi Legalitas & Izin PPIU",
+          body: `
+            <div style="text-align:center; margin-bottom:16px;">
+              <div style="font-size:40px; margin-bottom:8px;">🕌</div>
+              <h3 style="font-size:16px; font-weight:800; color:var(--slate-900);">${escapeHtml(travel.name)}</h3>
+              <div class="badge badge-verified" style="margin-top:4px;">Izin PPIU Resmi Kemenag RI</div>
+            </div>
+            <table class="pdp-spec-table">
+              <tbody>
+                <tr><td class="pdp-spec-label">SK Kemenag</td><td class="pdp-spec-val"><strong>${escapeHtml(travel.skKemenag || 'No. 412/2021')}</strong></td></tr>
+                <tr><td class="pdp-spec-label">Kota Asal</td><td class="pdp-spec-val">${escapeHtml(travel.city || 'Jakarta')}</td></tr>
+                <tr><td class="pdp-spec-label">Sertifikasi</td><td class="pdp-spec-val">Terakreditasi A (Kemenag RI)</td></tr>
+                <tr><td class="pdp-spec-label">Garansi</td><td class="pdp-spec-val">Jaminan 5 Pasti Umroh</td></tr>
+              </tbody>
+            </table>
+          `,
+          footer: `<button class="btn btn-primary btn-block" onclick="ModalManager.close()">Tutup Informasi</button>`
+        });
       }
     };
 
