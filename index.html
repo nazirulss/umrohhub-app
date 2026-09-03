@@ -2719,9 +2719,12 @@
       .role-switcher-container { display: none; }
       .header-user-profile { display: none; }
       .top-utility-bar { display: none; }
-      .brand-logo { margin-left: 4px; }
-      .brand-logo-img { height: 32px; max-width: 145px; }
-      .header-actions { gap: 8px; }
+      .header-search-box { display: none !important; } /* Kolom pencarian atas dipindah khusus ke bawah banner slider */
+      .brand-logo { margin-left: 2px; }
+      .brand-logo-img { height: 32px; max-width: 140px; }
+      .header-actions { gap: 6px; }
+      .header-icon-btn { width: 34px; height: 34px; }
+      .search-btn span { display: none; }
       .packages-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .site-footer { padding-bottom: 80px; }
 
@@ -3549,7 +3552,12 @@
                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
               </svg>
               <input type="text" id="global-search-input-mobile" placeholder="Cari paket umroh, biro PPIU, kota, maskapai..." oninput="if(document.getElementById('global-search-input')) document.getElementById('global-search-input').value = this.value">
-              <button type="submit" class="search-btn" style="height:30px; padding: 0 12px; font-size:11px;">Cari</button>
+              <button type="submit" class="search-btn" aria-label="Cari" style="height:30px; padding: 0 10px; display:flex; align-items:center; justify-content:center;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </button>
             </form>
           </section>
 
