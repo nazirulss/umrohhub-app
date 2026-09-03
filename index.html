@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Umrohpedia - Marketplace & Portal Umroh Terverifikasi Kemenag</title>
   <!-- Favicons & Mobile App Icons -->
-  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
-  <link rel="shortcut icon" href="favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <meta name="apple-mobile-web-app-title" content="Umrohpedia" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="theme-color" content="#00AA5B" />
-  <link rel="manifest" href="site.webmanifest" />
+  <link rel="manifest" href="/site.webmanifest" />
 
   <!-- Open Graph / WhatsApp Sharing Meta Tags with Official Logo -->
   <meta property="og:type" content="website">
@@ -2801,6 +2801,60 @@
         padding: 1px 3px;
         min-width: 16px;
       }
+    }
+
+    /* Floating PWA Install Prompt Banner */
+    .pwa-install-banner {
+      position: fixed;
+      bottom: 72px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 24px);
+      max-width: 480px;
+      background: var(--slate-900);
+      color: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 10px 14px;
+      box-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.45);
+      z-index: 9999;
+      animation: agFadeUp 0.3s ease-out;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .pwa-install-inner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .pwa-install-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .pwa-install-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .pwa-install-text strong {
+      font-size: 13px;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .pwa-install-text span {
+      font-size: 11px;
+      color: var(--slate-400);
+      margin-top: 2px;
+    }
+    .pwa-install-close {
+      background: none;
+      border: none;
+      color: var(--slate-400);
+      font-size: 20px;
+      cursor: pointer;
+      padding: 0 4px;
+      line-height: 1;
     }
   </style>
 </head>
@@ -5873,10 +5927,49 @@
 
       // Register PWA Service Worker for App Installability
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js').catch(err => {
+        navigator.serviceWorker.register('/sw.js').catch(err => {
           console.warn('PWA SW registration skipped', err);
         });
       }
+
+      // PWA Install Prompt Capture for Android Chrome & Mobile Web
+      let deferredInstallPrompt = null;
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+        showPwaInstallBanner();
+      });
+
+      function showPwaInstallBanner() {
+        if (document.getElementById('pwa-install-banner')) return;
+        const banner = document.createElement('div');
+        banner.id = 'pwa-install-banner';
+        banner.className = 'pwa-install-banner';
+        banner.innerHTML = `
+          <div class="pwa-install-inner">
+            <img src="/favicon-96x96.png" alt="Umrohpedia Logo" class="pwa-install-icon">
+            <div class="pwa-install-text">
+              <strong>Instal Aplikasi Umrohpedia</strong>
+              <span>Akses cepat tanpa kuota & tanpa iklan</span>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="triggerPwaInstall()" style="font-size:11.5px; padding:6px 12px;">Instal</button>
+            <button class="pwa-install-close" onclick="this.parentElement.parentElement.remove()">&times;</button>
+          </div>
+        `;
+        document.body.appendChild(banner);
+      }
+
+      window.triggerPwaInstall = async function() {
+        if (deferredInstallPrompt) {
+          deferredInstallPrompt.prompt();
+          const { outcome } = await deferredInstallPrompt.userChoice;
+          console.log(`User choice PWA: ${outcome}`);
+          deferredInstallPrompt = null;
+          document.getElementById('pwa-install-banner')?.remove();
+        } else {
+          Toast.show("Buka menu Chrome (titik tiga ⠇) lalu pilih 'Instal Aplikasi'", "info");
+        }
+      };
 
       // Cek Referral URL Parameters (?ref=...&packageId=...)
       const urlParams = new URLSearchParams(window.location.search);
