@@ -171,17 +171,22 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      font-weight: 800;
-      font-size: 1.35rem;
-      color: var(--primary-600);
+      margin-left: 6px;
       white-space: nowrap;
       cursor: pointer;
       flex-shrink: 0;
+      text-decoration: none;
     }
-    .brand-logo span { color: var(--gold-500); }
-    .kaaba-icon {
-      font-size: 1.5rem;
-      line-height: 1;
+    .brand-logo-img {
+      height: 38px;
+      width: auto;
+      max-width: 175px;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+    .brand-logo:hover .brand-logo-img {
+      transform: scale(1.02);
     }
 
     /* Category Mega Menu Button */
@@ -2714,8 +2719,8 @@
       .role-switcher-container { display: none; }
       .header-user-profile { display: none; }
       .top-utility-bar { display: none; }
-      .header-search-box { display: none; } /* Pindah kolom pencarian ke bawah banner slider */
-      .brand-logo { font-size: 1.15rem; }
+      .brand-logo { margin-left: 4px; }
+      .brand-logo-img { height: 32px; max-width: 145px; }
       .header-actions { gap: 8px; }
       .packages-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .site-footer { padding-bottom: 80px; }
@@ -2811,9 +2816,8 @@
   <!-- 2. MAIN TOKOPEDIA HEADER -->
   <header class="main-header">
     <div class="container main-header-inner">
-      <a href="#" class="brand-logo" onclick="Router.navigate('home')">
-        <div class="kaaba-icon">🕋</div>
-        <div>Umroh<span>pedia</span></div>
+      <a href="#" class="brand-logo" onclick="Router.navigate('home')" title="Umrohpedia">
+        <img src="https://i.ibb.co.com/yBg6572v/Logo-Umrohpedia.png" alt="Logo Umrohpedia" class="brand-logo-img">
       </a>
 
       <!-- Category Mega Menu Dropdown -->
@@ -2911,9 +2915,8 @@
   <footer class="site-footer">
     <div class="container" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
       <div>
-        <div class="brand-logo" style="margin-bottom: 8px;">
-          <div class="kaaba-icon">🕋</div>
-          <div>Umroh<span>pedia</span></div>
+        <div class="brand-logo" style="margin-bottom: 8px; margin-left: 0; cursor: pointer;" onclick="Router.navigate('home')">
+          <img src="https://i.ibb.co.com/yBg6572v/Logo-Umrohpedia.png" alt="Logo Umrohpedia" class="brand-logo-img" style="height: 42px;">
         </div>
         <p style="max-width: 380px;">Marketplace agregator paket perjalanan ibadah Umroh resmi berizin PPIU Kementerian Agama RI dengan sistem perlindungan booking amanah.</p>
       </div>
