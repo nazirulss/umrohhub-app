@@ -384,18 +384,19 @@
        3. HERO PROMO BANNER SLIDER & SHORTCUTS (TOKOPEDIA HOMEPAGE)
        ========================================================================== */
     .hero-slider-section {
-      margin: 10px 0 12px;
+      margin: 0 -16px 12px;
+      width: calc(100% + 32px);
     }
     .hero-slider-container {
       position: relative;
-      border-radius: var(--radius-lg);
+      border-radius: 0;
       overflow: hidden;
-      box-shadow: var(--shadow-sm);
+      box-shadow: none;
       background: var(--slate-900);
       aspect-ratio: 3 / 1;
       width: 100%;
       min-height: 110px;
-      max-height: 280px;
+      max-height: 320px;
     }
     .slider-track {
       display: flex;
@@ -448,33 +449,6 @@
       color: var(--slate-200);
       margin-bottom: 10px;
     }
-
-    .slider-btn-prev, .slider-btn-next {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 32px;
-      height: 32px;
-      background: rgba(255, 255, 255, 0.85);
-      border: none;
-      border-radius: var(--radius-full);
-      font-size: 14px;
-      font-weight: bold;
-      color: var(--slate-800);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--shadow-md);
-      z-index: 5;
-      transition: all 0.2s;
-    }
-    .slider-btn-prev:hover, .slider-btn-next:hover {
-      background: var(--white);
-      color: var(--primary-600);
-    }
-    .slider-btn-prev { left: 10px; }
-    .slider-btn-next { right: 10px; }
 
     .slider-dots {
       position: absolute;
@@ -1386,11 +1360,15 @@
       .packages-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .site-footer { padding-bottom: 80px; }
 
-      /* Mobile 3:1 Banner Slider */
+      /* Mobile 3:1 Banner Slider (Full Bleed Edge-to-Edge) */
+      .hero-slider-section {
+        margin: 0 -16px 10px;
+        width: calc(100% + 32px);
+      }
       .hero-slider-container {
         aspect-ratio: 3 / 1;
         height: auto;
-        border-radius: var(--radius-md);
+        border-radius: 0;
       }
       .slider-slide {
         padding: 0 14px;
@@ -1413,13 +1391,6 @@
         font-size: 9.5px;
         border-radius: 4px;
       }
-      .slider-btn-prev, .slider-btn-next {
-        width: 22px;
-        height: 22px;
-        font-size: 11px;
-      }
-      .slider-btn-prev { left: 4px; }
-      .slider-btn-next { right: 4px; }
       .slider-dots { bottom: 4px; gap: 4px; }
       .slider-dot { width: 4px; height: 4px; }
       .slider-dot.active { width: 12px; }
@@ -1979,9 +1950,6 @@
                 </div>
               </div>
 
-              <button class="slider-btn-prev" onclick="Router.prevSlide()">‹</button>
-              <button class="slider-btn-next" onclick="Router.nextSlide()">›</button>
-
               <div class="slider-dots" id="home-slider-dots">
                 <div class="slider-dot active" onclick="Router.goToSlide(0)"></div>
                 <div class="slider-dot" onclick="Router.goToSlide(1)"></div>
@@ -2114,6 +2082,21 @@
         this.sliderInterval = setInterval(() => {
           this.nextSlide();
         }, 5000);
+
+        // Touch Swipe Event Listener (Mobile Friendly)
+        const track = document.getElementById('home-slider-track');
+        if (track) {
+          let touchStartX = 0;
+          let touchEndX = 0;
+          track.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+          }, { passive: true });
+          track.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) this.nextSlide(); // Swipe left -> next
+            if (touchEndX - touchStartX > 50) this.prevSlide(); // Swipe right -> prev
+          }, { passive: true });
+        }
       },
 
       goToSlide(index) {
