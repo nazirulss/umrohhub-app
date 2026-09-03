@@ -1285,16 +1285,100 @@
       .pdp-mobile-bottom-bar {
         display: flex;
       }
-      .store-stats-right {
-        border-left: none;
-        padding-left: 0;
-        border-top: 1px solid var(--slate-100);
-        padding-top: 12px;
-        width: 100%;
-        justify-content: space-between;
-      }
+      
+      /* Mobile Compact Store Header */
       .store-header-box {
-        padding: 16px;
+        padding: 12px 14px;
+        margin: 6px 0 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        border-radius: var(--radius-md);
+      }
+      .store-profile-left {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .store-avatar-big {
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+      .store-profile-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .store-name-title {
+        font-size: 13.5px;
+        font-weight: 800;
+        margin-bottom: 2px;
+        line-height: 1.25;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      .store-location-sub {
+        font-size: 10.5px;
+        color: var(--slate-500);
+        margin-bottom: 0;
+        line-height: 1.2;
+        white-space: normal;
+      }
+      .store-actions-row {
+        width: 100%;
+        display: flex;
+        gap: 6px;
+        margin-top: 2px;
+      }
+      .store-actions-row .btn {
+        padding: 5px 8px;
+        font-size: 11px;
+        height: 28px;
+        flex: 1;
+        text-align: center;
+        justify-content: center;
+        white-space: nowrap;
+      }
+      .store-actions-row .btn-icon-action {
+        flex: 0 0 30px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .store-stats-right {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid var(--slate-100);
+        padding: 6px 0 0;
+        margin-top: 2px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+      .store-stats-right .stat-title {
+        font-size: 11px !important;
+        font-weight: 800;
+      }
+      .store-stats-right .stat-sub {
+        font-size: 9.5px !important;
+      }
+      .store-tabs-nav {
+        overflow-x: auto;
+        white-space: nowrap;
+        gap: 14px;
+        margin-bottom: 12px;
+        padding: 0 2px;
+        -webkit-overflow-scrolling: touch;
+      }
+      .store-tab-btn {
+        padding: 8px 4px;
+        font-size: 12px;
+        flex-shrink: 0;
       }
     }
 
@@ -1305,47 +1389,53 @@
       background: var(--white);
       border: 1px solid var(--slate-200);
       border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      margin: 14px 0 20px;
+      padding: 16px 20px;
+      margin: 12px 0 16px;
       box-shadow: var(--shadow-xs);
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 14px;
     }
     .store-profile-left {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
+      flex: 1;
+      min-width: 280px;
+    }
+    .store-profile-info {
+      flex: 1;
+      min-width: 0;
     }
     .store-avatar-big {
-      width: 68px;
-      height: 68px;
+      width: 58px;
+      height: 58px;
       border-radius: var(--radius-full);
       background: var(--primary-600);
       color: var(--white);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 28px;
+      font-size: 24px;
       box-shadow: var(--shadow-sm);
       flex-shrink: 0;
       border: 2px solid var(--primary-100);
     }
     .store-name-title {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 800;
       color: var(--slate-900);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       margin-bottom: 3px;
     }
     .store-location-sub {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--slate-500);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .store-actions-row {
       display: flex;
@@ -1362,9 +1452,9 @@
     }
     .store-tabs-nav {
       display: flex;
-      gap: 24px;
+      gap: 20px;
       border-bottom: 2px solid var(--slate-200);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       background: var(--white);
       padding: 0 4px;
     }
@@ -1372,7 +1462,7 @@
       background: none;
       border: none;
       padding: 10px 4px;
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 700;
       color: var(--slate-600);
       cursor: pointer;
@@ -2736,7 +2826,7 @@
             <div class="store-header-box">
               <div class="store-profile-left">
                 <div class="store-avatar-big">🕌</div>
-                <div>
+                <div class="store-profile-info">
                   <h1 class="store-name-title">
                     ${escapeHtml(travel.name)}
                     <span class="verified-check" title="Terverifikasi PPIU Kemenag RI">✓</span>
@@ -2752,11 +2842,11 @@
                     <button class="btn btn-outline-primary btn-sm" onclick="ChatModal.open()">
                       💬 Chat Penjual
                     </button>
-                    <button class="btn btn-outline btn-sm" onclick="TravelStore.showLegalModal('${escapeHtml(travel.id)}')">
-                      📋 Info Legalitas SK
+                    <button class="btn btn-outline btn-sm btn-icon-action" title="Informasi Legalitas SK Kemenag" onclick="TravelStore.showLegalModal('${escapeHtml(travel.id)}')">
+                      📋
                     </button>
-                    <button class="btn btn-outline btn-sm" onclick="navigator.clipboard.writeText(window.location.href); Toast.show('Link profil biro travel berhasil disalin!', 'success');">
-                      ↗ Bagikan
+                    <button class="btn btn-outline btn-sm btn-icon-action" title="Bagikan Toko" onclick="navigator.clipboard.writeText(window.location.href); Toast.show('Link profil biro travel berhasil disalin!', 'success');">
+                      ↗
                     </button>
                   </div>
                 </div>
@@ -2764,14 +2854,14 @@
 
               <!-- Store Stats Right -->
               <div class="store-stats-right">
-                <div>
-                  <div style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900);">⭐ 4.9 <span style="font-size:12px; font-weight:600; color:var(--slate-500);">(2.916)</span></div>
-                  <div style="font-size: 11px; color: var(--slate-500);">Rating & Ulasan</div>
+                <div style="text-align:center;">
+                  <div class="stat-title" style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900);">⭐ 4.9 <span style="font-size:11px; font-weight:600; color:var(--slate-500);">(2.916)</span></div>
+                  <div class="stat-sub" style="font-size: 11px; color: var(--slate-500);">Rating & Ulasan</div>
                 </div>
-                <div style="width: 1px; height: 32px; background: var(--slate-200);"></div>
-                <div>
-                  <div style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900);">19 rb</div>
-                  <div style="font-size: 11px; color: var(--slate-500);">Jamaah Berangkat</div>
+                <div style="width: 1px; height: 28px; background: var(--slate-200);"></div>
+                <div style="text-align:center;">
+                  <div class="stat-title" style="font-size: 1.15rem; font-weight: 800; color: var(--slate-900);">19 rb</div>
+                  <div class="stat-sub" style="font-size: 11px; color: var(--slate-500);">Jamaah Berangkat</div>
                 </div>
               </div>
             </div>
