@@ -3215,7 +3215,7 @@
         Toast.show(`Sesi beralih ke role: ${escapeHtml(newRole.toUpperCase())}`, "info");
         this.renderAuthButton();
         if (['travel', 'affiliate', 'admin'].includes(newRole)) Router.navigate(`${newRole}-dashboard`);
-        else Router.navigate('home');
+        else Router.navigate('account');
       },
 
       renderAuthButton() {
@@ -3224,7 +3224,7 @@
 
         let initials = "AF";
         let roleLabel = "Jamaah";
-        let targetRoute = "customer-dashboard";
+        let targetRoute = "account";
 
         if (this.currentUser.role === 'travel') {
           initials = "TR";
