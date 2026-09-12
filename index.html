@@ -2020,7 +2020,7 @@
     }
 
     /* ==========================================================================
-       6D. TOKOPEDIA MOBILE BOTTOM NAVIGATION BAR
+       6D. MODERN CURVED MOBILE DOCK NAVIGATION WITH CENTER ELEVATED FAB
        ========================================================================== */
     .mobile-bottom-nav {
       display: none;
@@ -2032,13 +2032,18 @@
         bottom: 0;
         left: 0;
         right: 0;
-        height: 56px;
-        background: var(--white);
-        border-top: 1px solid var(--slate-200);
+        height: 62px;
+        background: rgba(255, 255, 255, 0.97);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border-top: 1px solid rgba(0, 0, 0, 0.07);
+        border-top-left-radius: 28px;
+        border-top-right-radius: 28px;
         z-index: 999;
         justify-content: space-around;
         align-items: center;
-        box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        box-shadow: 0 -4px 22px rgba(0, 0, 0, 0.08);
+        padding: 0 6px;
       }
       .bottom-nav-item {
         display: flex;
@@ -2046,27 +2051,406 @@
         align-items: center;
         justify-content: center;
         color: var(--slate-500);
-        font-size: 9.5px;
+        font-size: 10px;
         font-weight: 600;
         cursor: pointer;
-        padding: 4px 8px;
+        padding: 4px 6px;
         text-decoration: none;
         flex: 1;
-        transition: color 0.15s ease;
+        height: 100%;
+        gap: 2px;
+        transition: color 0.18s ease, transform 0.18s ease;
       }
       .bottom-nav-item svg {
         margin-bottom: 2px;
-        transition: transform 0.15s ease;
+        transition: transform 0.18s ease, stroke 0.18s ease;
       }
       .bottom-nav-item.active {
         color: var(--primary-600);
         font-weight: 800;
       }
       .bottom-nav-item.active svg {
-        transform: scale(1.1);
+        transform: scale(1.15);
         stroke: var(--primary-600);
       }
+
+      /* Center Elevated Floating Action Button (FAB ala Kuliner Demak) */
+      .bottom-nav-fab-wrapper {
+        position: relative;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+      .bottom-nav-fab {
+        position: absolute;
+        top: -20px;
+        width: 52px;
+        height: 52px;
+        border-radius: var(--radius-full);
+        background: linear-gradient(135deg, #00aa5b 0%, #007a41 100%);
+        border: 4px solid #ffffff;
+        box-shadow: 0 8px 20px rgba(0, 170, 91, 0.42);
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s;
+        z-index: 1001;
+      }
+      .bottom-nav-fab:hover, .bottom-nav-fab:active, .bottom-nav-fab.active {
+        transform: scale(1.08) translateY(-2px);
+        box-shadow: 0 12px 26px rgba(0, 170, 91, 0.55);
+      }
+      .bottom-nav-fab-label {
+        font-size: 9.5px;
+        font-weight: 700;
+        color: var(--primary-800);
+        margin-top: 30px;
+        letter-spacing: -0.2px;
+      }
+
+      /* ========================================================================
+         ADAPTIVE HORIZONTAL ROW-CARD DI MOBILE (ALA KULINER DEMAK)
+         ======================================================================== */
+      .packages-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .tokopedia-card {
+        flex-direction: row;
+        border-radius: var(--radius-lg);
+        background: var(--white);
+        border: 1px solid var(--slate-200);
+        box-shadow: 0 2px 8px rgba(49, 53, 59, 0.06);
+        overflow: hidden;
+        position: relative;
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        min-height: 122px;
+        align-items: stretch;
+      }
+      .tokopedia-card:active {
+        transform: scale(0.985);
+      }
+      .tokopedia-card .card-thumb-wrapper {
+        width: 124px;
+        min-width: 124px;
+        max-width: 124px;
+        height: auto;
+        aspect-ratio: auto;
+        position: relative;
+        overflow: hidden;
+        background: var(--slate-100);
+      }
+      .tokopedia-card .card-thumb {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .tokopedia-card .badge-ppiu {
+        top: 6px;
+        left: 6px;
+        font-size: 8.5px;
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+      .tokopedia-card .card-wishlist-btn {
+        top: 6px;
+        right: 6px;
+        width: 26px;
+        height: 26px;
+        font-size: 11px;
+      }
+      .tokopedia-card .card-body {
+        padding: 10px 12px;
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .tokopedia-card .card-travel-name {
+        font-size: 10px;
+        font-weight: 700;
+        color: var(--slate-500);
+        margin-bottom: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .tokopedia-card .card-title {
+        font-size: 12.5px;
+        font-weight: 800;
+        color: var(--slate-900);
+        line-height: 1.25;
+        margin-bottom: 4px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .tokopedia-card .card-price-row {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 3px;
+      }
+      .tokopedia-card .card-price {
+        font-size: 14.5px;
+        font-weight: 800;
+        color: var(--primary-900);
+      }
+      .tokopedia-card .badge-cashback {
+        font-size: 9px;
+        padding: 2px 6px;
+        border-radius: 4px;
+        background: var(--gold-100);
+        color: var(--gold-600);
+        font-weight: 700;
+      }
+      .tokopedia-card .card-specs-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-top: 2px;
+      }
+      .tokopedia-card .spec-pill {
+        font-size: 9.5px;
+        padding: 2px 6px;
+        background: var(--slate-100);
+        border-radius: 4px;
+        color: var(--slate-600);
+        font-weight: 600;
+      }
+      .tokopedia-card .card-footer-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 9.5px;
+        color: var(--slate-500);
+        margin-top: 5px;
+        padding-top: 4px;
+        border-top: 1px dashed var(--slate-200);
+      }
     }
+
+    /* ==========================================================================
+       SEGMENTED QUICK FILTER TABS (ALA KULINER DEMAK)
+       ========================================================================== */
+    .home-rec-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .home-rec-title-wrap {
+      border-left: 4px solid var(--primary-600);
+      padding-left: 10px;
+    }
+    .home-rec-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--slate-900);
+      line-height: 1.2;
+    }
+    .home-rec-subtitle {
+      font-size: 11px;
+      color: var(--slate-500);
+      margin-top: 2px;
+    }
+    .segmented-pills-container {
+      margin-bottom: 14px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding: 2px 0 6px;
+    }
+    .segmented-pills-container::-webkit-scrollbar { display: none; }
+    .segmented-pills-row {
+      display: inline-flex;
+      align-items: center;
+      background: var(--slate-100);
+      padding: 4px;
+      border-radius: var(--radius-full);
+      gap: 4px;
+      border: 1px solid var(--slate-200);
+    }
+    .seg-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 14px;
+      border-radius: var(--radius-full);
+      font-size: 11.5px;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      color: var(--slate-600);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .seg-pill-btn:hover {
+      color: var(--primary-700);
+    }
+    .seg-pill-btn.active {
+      background: var(--primary-600);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 170, 91, 0.28);
+    }
+
+    /* ==========================================================================
+       MOBILE SLIDE-OVER DRAWER MENU (OFF-CANVAS ALA KULINER DEMAK)
+       ========================================================================== */
+    .mobile-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.52);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 9998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .mobile-drawer-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      width: 82%;
+      max-width: 320px;
+      background: var(--white);
+      z-index: 9999;
+      box-shadow: -8px 0 28px rgba(0, 0, 0, 0.22);
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .mobile-drawer.active {
+      transform: translateX(0);
+    }
+    .mobile-drawer-header {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--slate-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--slate-50);
+    }
+    .mobile-drawer-close {
+      background: none;
+      border: none;
+      font-size: 26px;
+      color: var(--slate-500);
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 4px;
+    }
+    .mobile-drawer-close:hover { color: var(--danger-600); }
+    .drawer-user-card {
+      padding: 14px 18px;
+      background: linear-gradient(135deg, var(--primary-50) 0%, #e6f9f0 100%);
+      border-bottom: 1px solid var(--slate-200);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+    .drawer-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-full);
+      background: var(--primary-600);
+      color: var(--white);
+      font-weight: 800;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+      flex-shrink: 0;
+    }
+    .drawer-user-info {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .drawer-user-info strong {
+      font-size: 13.5px;
+      color: var(--slate-900);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .drawer-user-role {
+      font-size: 11px;
+      color: var(--primary-700);
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .drawer-nav {
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+    .drawer-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      color: var(--slate-800);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .drawer-nav-item:hover, .drawer-nav-item:active {
+      background: var(--primary-50);
+      color: var(--primary-700);
+    }
+    .drawer-nav-icon {
+      font-size: 16px;
+      width: 22px;
+      text-align: center;
+    }
+    .drawer-footer {
+      padding: 14px 18px 24px;
+      border-top: 1px solid var(--slate-200);
+      background: var(--slate-50);
+    }
+    .drawer-five-pasti {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      font-size: 10px;
+      color: var(--slate-600);
+      line-height: 1.4;
+    }
+    .drawer-five-pasti strong {
+      color: var(--primary-700);
+      display: block;
+      margin-bottom: 2px;
+    }
+
 
     /* ==========================================================================
        6E. TOKOPEDIA MOBILE ACCOUNT PAGE ("AKUN SAYA")
@@ -2666,45 +3050,8 @@
       color: var(--slate-500);
     }
 
-    /* Mobile Bottom Navigation Bar Ala Tokopedia */
-    .mobile-bottom-nav {
+    .header-icon-btn.mobile-drawer-btn {
       display: none;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 56px;
-      background: var(--white);
-      border-top: 1px solid var(--slate-200);
-      z-index: 999;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-      align-items: center;
-      justify-content: space-around;
-      padding: 0 4px;
-    }
-    .bottom-nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--slate-500);
-      text-decoration: none;
-      flex: 1;
-      height: 100%;
-      gap: 3px;
-      transition: color 0.15s;
-    }
-    .bottom-nav-item.active {
-      color: var(--primary-600);
-      font-weight: 700;
-    }
-    .bottom-nav-item svg {
-      transition: transform 0.15s;
-    }
-    .bottom-nav-item.active svg {
-      transform: scale(1.1);
     }
 
     /* Responsive */
@@ -2715,8 +3062,8 @@
       .dashboard-layout { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
-      body { padding-bottom: 64px; }
-      .mobile-bottom-nav { display: flex; }
+      body { padding-bottom: 84px; }
+      .header-icon-btn.mobile-drawer-btn { display: flex; }
       .category-btn { display: none; }
       .role-switcher-container { display: none; }
       .header-user-profile { display: none; }
@@ -2727,8 +3074,7 @@
       .header-actions { gap: 6px; }
       .header-icon-btn { width: 34px; height: 34px; }
       .search-btn span { display: none; }
-      .packages-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .site-footer { padding-bottom: 80px; }
+      .site-footer { padding-bottom: 90px; }
 
       /* Mobile 3:1 Banner Slider (Full Bleed Edge-to-Edge) */
       .hero-slider-section {
@@ -2927,6 +3273,15 @@
           <span class="icon-badge-count" id="cart-counter">1</span>
         </button>
 
+        <!-- Mobile Menu Hamburger Button (ala Kuliner Demak) -->
+        <button class="header-icon-btn mobile-drawer-btn" onclick="MobileDrawer.open()" title="Menu Navigasi">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
         <!-- Role Mode Switcher -->
         <div class="role-switcher-container">
           <label for="role-select">Mode:</label>
@@ -2946,20 +3301,25 @@
   <!-- 3. MAIN ROUTE OUTLET -->
   <main id="app-root" class="container ag-fade-up"></main>
 
-  <!-- MOBILE BOTTOM NAVIGATION BAR (TOKOPEDIA MOBILE STYLE) -->
+  <!-- MODERN CURVED MOBILE DOCK NAVIGATION WITH CENTER ELEVATED FAB (ALA KULINER DEMAK) -->
   <nav class="mobile-bottom-nav" id="mobile-bottom-nav">
     <a href="#" class="bottom-nav-item active" id="bnav-home" onclick="Router.navigate('home')">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-      <span>Home</span>
-    </a>
-    <a href="#" class="bottom-nav-item" id="bnav-marketplace" onclick="Router.navigate('marketplace')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
-      <span>Paket</span>
+      <span>Beranda</span>
     </a>
     <a href="#" class="bottom-nav-item" id="bnav-travels" onclick="Router.navigate('travels')">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
       <span>Biro PPIU</span>
     </a>
+    
+    <!-- Floating Center Button (Arahkan ke pencarian & perbandingan katalog paket) -->
+    <div class="bottom-nav-fab-wrapper">
+      <button class="bottom-nav-fab" id="bnav-fab" onclick="Router.navigate('marketplace')" title="Cari & Eksplor Paket Umroh">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </button>
+      <span class="bottom-nav-fab-label">Cari Paket</span>
+    </div>
+
     <a href="#" class="bottom-nav-item" id="bnav-transaksi" onclick="Router.navigate('customer-dashboard')">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
       <span>Transaksi</span>
@@ -2999,48 +3359,62 @@
     </div>
   </footer>
 
-  <!-- 4B. TOKOPEDIA MOBILE BOTTOM NAVIGATION -->
-  <nav class="mobile-bottom-nav">
-    <a class="bottom-nav-item active" id="bnav-home" onclick="Router.navigate('home')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-      </svg>
-      <span>Home</span>
-    </a>
-    <a class="bottom-nav-item" id="bnav-marketplace" onclick="Router.navigate('marketplace')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polygon points="5 3 19 12 5 21 5 3"></polygon>
-      </svg>
-      <span>Paket</span>
-    </a>
-    <a class="bottom-nav-item" id="bnav-travels" onclick="Router.navigate('travels')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 21h18"></path>
-        <path d="M5 21V10l7-5 7 5v11"></path>
-        <path d="M9 21v-6a3 3 0 0 1 6 0v6"></path>
-        <circle cx="12" cy="3" r="1"></circle>
-      </svg>
-      <span>Biro PPIU</span>
-    </a>
-    <a class="bottom-nav-item" id="bnav-transaksi" onclick="Router.navigate('customer-dashboard')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-        <polyline points="14 2 14 8 20 8"></polyline>
-        <line x1="16" y1="13" x2="8" y2="13"></line>
-        <line x1="16" y1="17" x2="8" y2="17"></line>
-        <polyline points="10 9 9 9 8 9"></polyline>
-      </svg>
-      <span>Transaksi</span>
-    </a>
-    <a class="bottom-nav-item" id="bnav-akun" onclick="Router.navigate('account')">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-        <circle cx="12" cy="7" r="4"></circle>
-      </svg>
-      <span>Akun</span>
-    </a>
-  </nav>
+  <!-- MOBILE SLIDE-OVER DRAWER MENU (OFF-CANVAS ALA KULINER DEMAK) -->
+  <div id="mobile-drawer-overlay" class="mobile-drawer-overlay" onclick="MobileDrawer.close()"></div>
+  <aside id="mobile-drawer" class="mobile-drawer">
+    <div class="mobile-drawer-header">
+      <div class="mobile-drawer-brand">
+        <img src="https://i.ibb.co.com/yBg6572v/Logo-Umrohpedia.png" alt="Umrohpedia" style="height: 32px;">
+      </div>
+      <button class="mobile-drawer-close" onclick="MobileDrawer.close()">&times;</button>
+    </div>
+
+    <!-- Active User & Role Card -->
+    <div class="drawer-user-card" onclick="Router.openSettingsModal(); MobileDrawer.close();">
+      <div class="drawer-avatar" id="drawer-avatar">AF</div>
+      <div class="drawer-user-info">
+        <strong id="drawer-user-name">Ahmad Fauzi</strong>
+        <span class="drawer-user-role" id="drawer-user-role">Jamaah • Ganti Peran ⚙️</span>
+      </div>
+    </div>
+
+    <nav class="drawer-nav">
+      <a href="#" class="drawer-nav-item" onclick="Router.navigate('home'); MobileDrawer.close();">
+        <span class="drawer-nav-icon">🏠</span> Beranda
+      </a>
+      <a href="#" class="drawer-nav-item" onclick="Router.navigate('marketplace'); MobileDrawer.close();">
+        <span class="drawer-nav-icon">🔍</span> Cari & Bandingkan Paket
+      </a>
+      <a href="#" class="drawer-nav-item" onclick="Router.navigate('travels'); MobileDrawer.close();">
+        <span class="drawer-nav-icon">🕌</span> Direktori Biro PPIU Kemenag
+      </a>
+      <a href="#" class="drawer-nav-item" onclick="Router.navigate('customer-dashboard'); MobileDrawer.close();">
+        <span class="drawer-nav-icon">📋</span> Transaksi & Riwayat Booking
+      </a>
+      <a href="#" class="drawer-nav-item" onclick="Router.navigate('affiliate-info'); MobileDrawer.close();">
+        <span class="drawer-nav-icon">🎁</span> Program Mitra Afiliasi
+      </a>
+      <a href="https://haji.kemenag.go.id" target="_blank" rel="noopener" class="drawer-nav-item">
+        <span class="drawer-nav-icon">🛡️</span> Cek Izin SK Kemenag RI ↗
+      </a>
+      <a href="#" class="drawer-nav-item" onclick="ChatModal.open(); MobileDrawer.close();">
+        <span class="drawer-nav-icon">💬</span> Konsultasi & Bantuan CS
+      </a>
+      <a href="#" class="drawer-nav-item" onclick="triggerPwaInstall(); MobileDrawer.close();">
+        <span class="drawer-nav-icon">📲</span> Instal Aplikasi Umrohpedia
+      </a>
+    </nav>
+
+    <div class="drawer-footer">
+      <div class="drawer-five-pasti">
+        <strong>Jaminan 5 Pasti Umroh Kemenag:</strong>
+        <span>1. Pasti Travel • 2. Pasti Jadwal • 3. Pasti Terbang • 4. Pasti Hotel • 5. Pasti Visa</span>
+      </div>
+      <button class="btn btn-outline btn-block btn-sm" onclick="Router.openSettingsModal(); MobileDrawer.close();" style="margin-top: 10px;">
+        ⚙️ Mode & Pengaturan Akun
+      </button>
+    </div>
+  </aside>
 
   <!-- 5. GLOBAL MODAL CONTAINER -->
   <div class="modal-backdrop" id="global-modal" onclick="ModalManager.handleBackdropClick(event)">
@@ -3353,9 +3727,11 @@
         root.innerHTML = '<div class="empty-state" style="padding:60px 0;"><div class="skeleton-box" style="height:200px; width:100%; max-width:800px; margin:0 auto;"></div></div>';
 
         // Update active state on mobile bottom navigation
-        document.querySelectorAll('.bottom-nav-item').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.bottom-nav-item, .bottom-nav-fab').forEach(el => el.classList.remove('active'));
         if (route === 'home') document.getElementById('bnav-home')?.classList.add('active');
-        else if (route === 'marketplace' || route === 'package-detail') document.getElementById('bnav-marketplace')?.classList.add('active');
+        else if (route === 'marketplace' || route === 'package-detail') {
+          document.getElementById('bnav-fab')?.classList.add('active');
+        }
         else if (route === 'travels' || route === 'travel-store') document.getElementById('bnav-travels')?.classList.add('active');
         else if (route === 'customer-dashboard') document.getElementById('bnav-transaksi')?.classList.add('active');
         else if (route === 'account' || route.includes('-dashboard')) document.getElementById('bnav-akun')?.classList.add('active');
@@ -3699,15 +4075,37 @@
             <button class="btn btn-sm" style="background:var(--white); color:var(--danger-600); font-weight:700; font-size:11px; padding:3px 9px; border-radius:var(--radius-sm); border:none; white-space:nowrap;" onclick="Router.navigate('marketplace')">Lihat &gt;</button>
           </section>
 
-          <!-- Featured Package Grid -->
+          <!-- Featured Package Grid with Segmented Quick Tabs ala Kuliner Demak -->
           <section style="margin-bottom: 36px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-              <div>
-                <h2 style="font-size: 13.5px; font-weight: 800; color: var(--slate-900);">Rekomendasi Paket Umroh Pilihan</h2>
-                <p style="font-size: 10.5px; color: var(--slate-500);">Koleksi paket keberangkatan terfavorit dengan izin resmi PPIU.</p>
+            <div class="home-rec-header">
+              <div class="home-rec-title-wrap">
+                <h2 class="home-rec-title">Rekomendasi Teratas</h2>
+                <p class="home-rec-subtitle">Koleksi paket keberangkatan terfavorit berizin resmi PPIU Kemenag RI</p>
               </div>
-              <button class="btn btn-outline btn-sm" style="font-size:11px; padding:3px 9px; font-weight:600;" onclick="Router.navigate('marketplace')">Lihat &gt;</button>
+              <button class="btn btn-outline btn-sm" style="font-size:11px; padding:3px 9px; font-weight:700;" onclick="Router.navigate('marketplace')">Lihat Semua &rsaquo;</button>
             </div>
+
+            <!-- Segmented Quick Pills ala Kuliner Demak -->
+            <div class="segmented-pills-container">
+              <div class="segmented-pills-row">
+                <button class="seg-pill-btn active" id="home-seg-populer" onclick="Router.switchHomeFilter('recommended', this)">
+                  🔥 Paling Sesuai
+                </button>
+                <button class="seg-pill-btn" id="home-seg-terdekat" onclick="Router.switchHomeFilter('departure_asc', this)">
+                  🗓️ Berangkat Terdekat
+                </button>
+                <button class="seg-pill-btn" id="home-seg-termurah" onclick="Router.switchHomeFilter('price_asc', this)">
+                  💰 Harga Terendah
+                </button>
+                <button class="seg-pill-btn" id="home-seg-vip" onclick="Router.switchHomeFilter('vip', this)">
+                  ⭐ VIP Bintang 5
+                </button>
+                <button class="seg-pill-btn" id="home-seg-cashback" onclick="Router.switchHomeFilter('cashback', this)">
+                  🎁 Ada Cashback
+                </button>
+              </div>
+            </div>
+
             <div class="packages-grid" id="featured-packages-grid">
               ${Marketplace.createSkeletonHtml(4)}
             </div>
@@ -3722,6 +4120,34 @@
         if (grid) {
           grid.innerHTML = packages.slice(0, 8).map(pkg => Marketplace.createPackageCardHtml(pkg)).join('');
         }
+      },
+
+      switchHomeFilter(type, btn) {
+        document.querySelectorAll('.segmented-pills-row .seg-pill-btn').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+
+        const grid = document.getElementById('featured-packages-grid');
+        if (!grid) return;
+
+        let packages = [...(ApiClient.db.packages || [])];
+
+        if (type === 'price_asc') {
+          packages.sort((a, b) => Number(a.price) - Number(b.price));
+        } else if (type === 'departure_asc') {
+          packages.sort((a, b) => {
+            const dateA = new Date(a.departureDate || '2099-01-01').getTime();
+            const dateB = new Date(b.departureDate || '2099-01-01').getTime();
+            return (isNaN(dateA) ? 9999999999999 : dateA) - (isNaN(dateB) ? 9999999999999 : dateB);
+          });
+        } else if (type === 'vip') {
+          packages = packages.filter(p => (p.category || '').toLowerCase().includes('vip') || (p.hotelMakkah || '').includes('5'));
+        } else if (type === 'cashback') {
+          packages = packages.filter(p => Number(p.commissionAffiliate) > 0);
+        } else {
+          packages.sort((a, b) => Number(b.rating || 0) - Number(a.rating || 0));
+        }
+
+        grid.innerHTML = packages.slice(0, 8).map(pkg => Marketplace.createPackageCardHtml(pkg)).join('');
       },
 
       startSliderAuto() {
@@ -4229,6 +4655,27 @@
               </button>
             </div>
 
+            <!-- Segmented Quick Tabs ala Kuliner Demak -->
+            <div class="segmented-pills-container" style="margin-bottom: 8px;">
+              <div class="segmented-pills-row">
+                <button class="seg-pill-btn ${this.filters.sortBy === 'recommended' && !this.filters.cashbackOnly && this.filters.category !== 'VIP' ? 'active' : ''}" onclick="Marketplace.applyQuickSortPill('recommended', this)">
+                  🔥 Paling Sesuai
+                </button>
+                <button class="seg-pill-btn ${this.filters.sortBy === 'departure_asc' ? 'active' : ''}" onclick="Marketplace.applyQuickSortPill('departure_asc', this)">
+                  🗓️ Berangkat Terdekat
+                </button>
+                <button class="seg-pill-btn ${this.filters.sortBy === 'price_asc' ? 'active' : ''}" onclick="Marketplace.applyQuickSortPill('price_asc', this)">
+                  💰 Harga Terendah
+                </button>
+                <button class="seg-pill-btn ${this.filters.category === 'VIP' ? 'active' : ''}" onclick="Marketplace.applyQuickSortPill('vip', this)">
+                  ⭐ VIP Bintang 5
+                </button>
+                <button class="seg-pill-btn ${this.filters.cashbackOnly ? 'active' : ''}" onclick="Marketplace.applyQuickSortPill('cashback', this)">
+                  🎁 Ada Cashback
+                </button>
+              </div>
+            </div>
+
             <!-- Quick Filter Bar (Scrollable Pills ala Tokopedia) -->
             <div class="quick-filter-strip">
               <button class="q-filter-btn ${this.hasActiveFilters() ? 'active' : ''}" onclick="Marketplace.openFilterModal()">
@@ -4663,6 +5110,12 @@
           filtered.sort((a, b) => Number(b.price) - Number(a.price));
         } else if (this.filters.sortBy === 'rating_desc') {
           filtered.sort((a, b) => Number(b.rating || 0) - Number(a.rating || 0));
+        } else if (this.filters.sortBy === 'departure_asc') {
+          filtered.sort((a, b) => {
+            const dateA = new Date(a.departureDate || '2099-01-01').getTime();
+            const dateB = new Date(b.departureDate || '2099-01-01').getTime();
+            return (isNaN(dateA) ? 9999999999999 : dateA) - (isNaN(dateB) ? 9999999999999 : dateB);
+          });
         }
 
         if (countSpan) countSpan.textContent = filtered.length;
@@ -4715,6 +5168,20 @@
         this.filters.category = tag;
         this.filters.activeTab = 'packages';
         Router.navigate('marketplace');
+      },
+
+      applyQuickSortPill(type, btn) {
+        document.querySelectorAll('.search-results-page .seg-pill-btn').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+
+        if (type === 'vip') {
+          this.filters.category = this.filters.category === 'VIP' ? '' : 'VIP';
+        } else if (type === 'cashback') {
+          this.filters.cashbackOnly = !this.filters.cashbackOnly;
+        } else {
+          this.filters.sortBy = type;
+        }
+        this.renderCards(false);
       },
 
       handleSearchInput() {
@@ -5916,6 +6383,42 @@
           `,
           footer: `<button class="btn btn-outline" onclick="ModalManager.close()">Tutup</button>`
         });
+      }
+    };
+
+    /* ==========================================================================
+       6.2 MOBILE SLIDE-OVER DRAWER CONTROLLER (ALA KULINER DEMAK)
+       ========================================================================== */
+    const MobileDrawer = {
+      open() {
+        const overlay = document.getElementById('mobile-drawer-overlay');
+        const drawer = document.getElementById('mobile-drawer');
+        if (!overlay || !drawer) return;
+
+        // Sync active user credentials
+        const user = AuthStore.currentUser;
+        const initials = user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'AF';
+        const avatar = document.getElementById('drawer-avatar');
+        const name = document.getElementById('drawer-user-name');
+        const role = document.getElementById('drawer-user-role');
+        if (avatar) avatar.textContent = initials;
+        if (name) name.textContent = user.name;
+        if (role) {
+          const roleLabels = { customer: 'Jamaah', travel: 'Biro Travel PPIU', affiliate: 'Mitra Afiliasi', admin: 'Platform Admin' };
+          role.textContent = (roleLabels[user.role] || user.role) + ' • Ganti Peran ⚙️';
+        }
+
+        overlay.classList.add('active');
+        drawer.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      },
+
+      close() {
+        const overlay = document.getElementById('mobile-drawer-overlay');
+        const drawer = document.getElementById('mobile-drawer');
+        if (overlay) overlay.classList.remove('active');
+        if (drawer) drawer.classList.remove('active');
+        document.body.style.overflow = '';
       }
     };
 
