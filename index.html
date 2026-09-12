@@ -2632,9 +2632,6 @@
       color: var(--slate-500);
       display: none;
     }
-    @media (max-width: 900px) {
-      .excel-scroll-hint { display: inline; }
-    }
     .excel-table-scroll {
       width: 100%;
       overflow-x: auto;
@@ -2645,7 +2642,6 @@
       width: 100%;
       border-collapse: collapse;
       font-size: 12px;
-      white-space: nowrap;
       text-align: left;
     }
     .excel-grid-table thead th {
@@ -2734,6 +2730,69 @@
       display: flex;
       gap: 6px;
       align-items: center;
+    }
+    .excel-header-mobile {
+      display: none;
+    }
+    .mobile-stack-item {
+      display: none;
+    }
+
+    /* Mobile Adaptive Zero-Horizontal-Scroll Table Styles */
+    @media (max-width: 768px) {
+      .excel-scroll-hint {
+        display: none !important;
+      }
+      .excel-table-scroll {
+        overflow-x: hidden !important;
+      }
+      .excel-grid-table {
+        table-layout: fixed !important;
+        width: 100% !important;
+        font-size: 11px;
+      }
+      .excel-header-desktop {
+        display: none !important;
+      }
+      .excel-header-mobile {
+        display: table-row !important;
+      }
+      .excel-grid-table thead th {
+        padding: 8px 6px;
+        font-size: 10px;
+        letter-spacing: 0;
+      }
+      .excel-grid-table td {
+        padding: 8px 6px;
+        word-break: break-word;
+        overflow-wrap: break-word;
+      }
+      .col-dt-biro,
+      .col-dt-quota,
+      .col-dt-detail {
+        display: none !important;
+      }
+      .mobile-stack-item {
+        display: block !important;
+      }
+      .excel-date-main {
+        font-size: 11px;
+      }
+      .excel-day-sub {
+        font-size: 9.5px;
+      }
+      .excel-pkg-title {
+        font-size: 11.5px;
+        line-height: 1.25;
+      }
+      .excel-price-val {
+        font-size: 11.5px;
+        text-align: right;
+      }
+      .excel-quota-tag {
+        font-size: 9.5px;
+        padding: 1px 4px;
+      }
     }
 
     /* ==========================================================================
@@ -5400,21 +5459,28 @@
                   <span class="excel-status-tag">📊 SPREADSHEET JADWAL</span>
                   <span>Menampilkan <strong>${departureItems.length}</strong> baris jadwal keberangkatan</span>
                 </div>
-                <div class="excel-scroll-hint">
-                  👉 Geser tabel ke kanan untuk melihat rincian kolom
+                <div style="font-size:11px; color:var(--primary-700); font-weight:700;">
+                  ✓ PPIU Kemenag Resmi
                 </div>
               </div>
 
               <div class="excel-table-scroll">
                 <table class="excel-grid-table">
                   <thead>
-                    <tr>
-                      <th style="min-width:140px;">Tgl Berangkat</th>
-                      <th style="min-width:240px;">Paket Umroh</th>
-                      <th style="min-width:180px;">Biro PPIU</th>
-                      <th style="min-width:110px; text-align:center;">Sisa Kuota</th>
-                      <th style="min-width:140px; text-align:right;">Harga Paket</th>
-                      <th style="min-width:100px; text-align:center;">Detail</th>
+                    <!-- Desktop Header (6 Kolom Lengkap) -->
+                    <tr class="excel-header-desktop">
+                      <th style="width:18%;">Tgl Berangkat</th>
+                      <th style="width:28%;">Paket Umroh</th>
+                      <th style="width:20%;">Biro PPIU</th>
+                      <th style="width:12%; text-align:center;">Sisa Kuota</th>
+                      <th style="width:14%; text-align:right;">Harga Paket</th>
+                      <th style="width:8%; text-align:center;">Detail</th>
+                    </tr>
+                    <!-- Mobile Header (3 Kolom Proporsional 100% Fit-to-Width) -->
+                    <tr class="excel-header-mobile">
+                      <th style="width:28%;">Jadwal &amp; Kuota</th>
+                      <th style="width:44%;">Paket &amp; Biro</th>
+                      <th style="width:28%; text-align:right;">Harga &amp; Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -5429,30 +5495,54 @@
 
                       return `
                         <tr>
-                          <td>
+                          <!-- Kolom 1: Jadwal (+ Kuota di Mobile) -->
+                          <td class="col-schedule-main">
                             <div class="excel-date-main">📅 ${dateFormatted}</div>
                             <span class="excel-day-sub">${dayName}</span>
+                            <div class="mobile-stack-item" style="margin-top:4px;">
+                              <span class="excel-quota-tag">Sisa ${quotaLeft}</span>
+                            </div>
                           </td>
-                          <td>
+
+                          <!-- Kolom 2: Paket (+ Biro di Mobile) -->
+                          <td class="col-package-main">
                             <div class="excel-pkg-title" onclick="Router.navigate('package-detail', '${escapeHtml(pkg.id)}')">
                               ${escapeHtml(pkg.title)}
                             </div>
-                            <div style="font-size:10.5px; color:var(--slate-500);">⏳ Durasi: ${Number(pkg.durationDays)} Hari</div>
+                            <div style="font-size:10px; color:var(--slate-500); margin:2px 0;">⏳ Durasi: ${Number(pkg.durationDays)} Hari</div>
+                            <div class="mobile-stack-item" style="margin-top:3px;">
+                              <div class="excel-travel-badge" style="cursor:pointer; font-size:10.5px;" onclick="Router.navigate('travel-store', '${escapeHtml(pkg.travelId || pkg.travelName)}')">
+                                <span>🕌</span> <strong>${escapeHtml(pkg.travelName)}</strong> <span style="color:var(--primary-600);">✓</span>
+                              </div>
+                            </div>
                           </td>
-                          <td>
+
+                          <!-- Kolom 3: Biro PPIU (Desktop Only) -->
+                          <td class="col-dt-biro">
                             <div class="excel-travel-badge" style="cursor:pointer;" onclick="Router.navigate('travel-store', '${escapeHtml(pkg.travelId || pkg.travelName)}')">
                               <span>🕌</span> <strong>${escapeHtml(pkg.travelName)}</strong> <span style="color:var(--primary-600);">✓</span>
                             </div>
                             <div style="font-size:10px; color:var(--slate-500);">${escapeHtml(pkg.skKemenag || 'Izin PPIU Resmi')}</div>
                           </td>
-                          <td class="excel-cell-center">
+
+                          <!-- Kolom 4: Sisa Kuota (Desktop Only) -->
+                          <td class="excel-cell-center col-dt-quota">
                             <span class="excel-quota-tag">Sisa ${quotaLeft} / ${item.quotaTotal}</span>
                           </td>
-                          <td class="excel-cell-right">
+
+                          <!-- Kolom 5: Harga Paket (+ Tombol Detail di Mobile) -->
+                          <td class="excel-cell-right col-price-main">
                             <div class="excel-price-val">Rp ${item.price.toLocaleString('id-ID')}</div>
-                            <div style="font-size:10px; color:var(--primary-600); font-weight:600;">/ jamaah</div>
+                            <div style="font-size:9.5px; color:var(--primary-600); font-weight:600;">/ jamaah</div>
+                            <div class="mobile-stack-item" style="margin-top:5px;">
+                              <button class="btn btn-outline-primary btn-sm" style="font-size:10px; padding:3px 8px; font-weight:700; width:100%; border-radius:4px;" onclick="Router.navigate('package-detail', '${escapeHtml(pkg.id)}')">
+                                Detail &rarr;
+                              </button>
+                            </div>
                           </td>
-                          <td class="excel-cell-center">
+
+                          <!-- Kolom 6: Detail (Desktop Only) -->
+                          <td class="excel-cell-center col-dt-detail">
                             <button class="btn btn-outline-primary btn-sm" style="font-size:11px; padding:4px 12px; font-weight:700;" onclick="Router.navigate('package-detail', '${escapeHtml(pkg.id)}')">
                               Detail &rarr;
                             </button>
