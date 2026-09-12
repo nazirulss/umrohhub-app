@@ -5409,21 +5409,16 @@
                 <table class="excel-grid-table">
                   <thead>
                     <tr>
-                      <th style="width:40px; text-align:center;">#</th>
-                      <th style="min-width:130px;">Tgl Berangkat</th>
-                      <th style="min-width:90px;">Hari</th>
+                      <th style="min-width:140px;">Tgl Berangkat</th>
                       <th style="min-width:240px;">Paket Umroh</th>
                       <th style="min-width:180px;">Biro PPIU</th>
-                      <th style="min-width:130px;">Embarkasi</th>
-                      <th style="min-width:170px;">Penerbangan</th>
-                      <th style="min-width:200px;">Hotel Makkah / Madinah</th>
                       <th style="min-width:110px; text-align:center;">Sisa Kuota</th>
-                      <th style="min-width:130px; text-align:right;">Harga Paket</th>
-                      <th style="min-width:130px; text-align:center;">Aksi</th>
+                      <th style="min-width:140px; text-align:right;">Harga Paket</th>
+                      <th style="min-width:100px; text-align:center;">Detail</th>
                     </tr>
                   </thead>
                   <tbody>
-                    ${departureItems.length > 0 ? departureItems.map((item, idx) => {
+                    ${departureItems.length > 0 ? departureItems.map((item) => {
                       const d = new Date(item.date);
                       const dayName = isNaN(d.getTime()) ? 'Senin' : dayNames[d.getDay()];
                       const dateNum = isNaN(d.getTime()) ? '15' : d.getDate();
@@ -5434,11 +5429,8 @@
 
                       return `
                         <tr>
-                          <td class="excel-cell-center" style="color:var(--slate-500); font-weight:700;">${idx + 1}</td>
                           <td>
                             <div class="excel-date-main">📅 ${dateFormatted}</div>
-                          </td>
-                          <td>
                             <span class="excel-day-sub">${dayName}</span>
                           </td>
                           <td>
@@ -5453,18 +5445,6 @@
                             </div>
                             <div style="font-size:10px; color:var(--slate-500);">${escapeHtml(pkg.skKemenag || 'Izin PPIU Resmi')}</div>
                           </td>
-                          <td>
-                            <span>🛫 ${escapeHtml(item.city)}</span>
-                          </td>
-                          <td>
-                            <span>✈️ ${escapeHtml(pkg.airline || 'Saudia Airlines')}</span>
-                          </td>
-                          <td>
-                            <div style="font-size:11px; line-height:1.3;">
-                              <div>🕋 ${escapeHtml(pkg.hotelMakkah || '★5')}</div>
-                              <div style="color:var(--slate-500);">🕌 ${escapeHtml(pkg.hotelMadinah || '★4')}</div>
-                            </div>
-                          </td>
                           <td class="excel-cell-center">
                             <span class="excel-quota-tag">Sisa ${quotaLeft} / ${item.quotaTotal}</span>
                           </td>
@@ -5473,20 +5453,15 @@
                             <div style="font-size:10px; color:var(--primary-600); font-weight:600;">/ jamaah</div>
                           </td>
                           <td class="excel-cell-center">
-                            <div class="excel-action-group">
-                              <button class="btn btn-outline btn-sm" style="font-size:10.5px; padding:3px 8px;" onclick="Router.navigate('package-detail', '${escapeHtml(pkg.id)}')">
-                                Detail
-                              </button>
-                              <button class="btn btn-primary btn-sm" style="font-size:10.5px; padding:3px 10px;" onclick="BookingModal.open('${escapeHtml(pkg.id)}', '${escapeHtml(item.departureId)}')">
-                                Pesan
-                              </button>
-                            </div>
+                            <button class="btn btn-outline-primary btn-sm" style="font-size:11px; padding:4px 12px; font-weight:700;" onclick="Router.navigate('package-detail', '${escapeHtml(pkg.id)}')">
+                              Detail &rarr;
+                            </button>
                           </td>
                         </tr>
                       `;
                     }).join('') : `
                       <tr>
-                        <td colspan="11" style="padding:48px 16px; text-align:center;">
+                        <td colspan="6" style="padding:48px 16px; text-align:center;">
                           <div style="font-size:36px; margin-bottom:8px;">📊</div>
                           <h4 style="font-weight:800; font-size:14px; margin-bottom:4px;">Tidak ada jadwal yang cocok</h4>
                           <p style="font-size:12px; color:var(--slate-500); margin-bottom:12px;">Coba ganti filter bulan, kota, atau hapus kata kunci pencarian.</p>
