@@ -111,6 +111,11 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+
     body {
       font-family: var(--font-main);
       background-color: var(--slate-50);
@@ -1001,198 +1006,281 @@
       font-weight: 700;
     }
 
-    /* Product Grid */
+    /* ==========================================================================
+       GRABFOOD-INSPIRED CATALOG PRODUCT CARD (DESKTOP & BASE)
+       ========================================================================== */
     .packages-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
       gap: 16px;
     }
 
-    /* Tokopedia Style Card */
+    .grab-card,
     .tokopedia-card {
       background: var(--white);
       border: 1px solid var(--slate-200);
-      border-radius: var(--radius-md);
-      overflow: hidden;
+      border-radius: var(--radius-lg);
+      padding: 12px;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      align-items: stretch;
+      gap: 14px;
       transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
       box-shadow: var(--shadow-xs);
       cursor: pointer;
       position: relative;
+      overflow: visible;
     }
+    .grab-card:hover,
     .tokopedia-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-card-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
       border-color: var(--primary-600);
     }
+    .grab-card:active,
+    .tokopedia-card:active {
+      transform: scale(0.988);
+    }
 
+    /* Left Thumbnail & Badges */
+    .grab-card-thumb-container {
+      flex-shrink: 0;
+      position: relative;
+    }
+    .grab-card-thumb-wrapper,
     .card-thumb-wrapper {
       position: relative;
-      width: 100%;
-      aspect-ratio: 4/3;
+      width: 104px;
+      height: 104px;
+      border-radius: var(--radius-md);
+      overflow: visible;
       background: var(--slate-100);
-      overflow: hidden;
-      border-top-left-radius: var(--radius-md);
-      border-top-right-radius: var(--radius-md);
     }
+    .grab-card-thumb,
     .card-thumb {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1), filter 0.4s ease;
+      border-radius: var(--radius-md);
+      display: block;
+      transition: transform 0.3s ease;
     }
-    .card-thumb-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0.6) 100%);
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-    .card-thumb-chip {
-      position: absolute;
-      bottom: 8px;
-      left: 8px;
-      background: rgba(15, 23, 42, 0.72);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      color: #ffffff;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: var(--radius-full);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      z-index: 2;
-    }
+    .grab-card:hover .grab-card-thumb,
     .tokopedia-card:hover .card-thumb {
-      transform: scale(1.06);
-      filter: brightness(1.03);
+      transform: scale(1.04);
     }
 
-    /* Badges */
-    .badge-ppiu {
+    /* GrabFood-style Top-Left Green "Promo" Badge */
+    .grab-badge-promo {
       position: absolute;
-      top: 8px;
-      left: 8px;
-      background: var(--primary-600);
-      color: var(--white);
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: var(--radius-xs);
-      box-shadow: var(--shadow-xs);
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      top: 6px;
+      left: 6px;
+      background: #00b14f;
+      color: #ffffff;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      z-index: 2;
+      line-height: 1.2;
     }
-    .card-wishlist-btn {
+
+    /* GrabFood-style Bottom-Right Verified Circular Checkmark Badge */
+    .grab-badge-verified {
       position: absolute;
-      top: 8px;
-      right: 8px;
-      background: rgba(255, 255, 255, 0.88);
-      border: none;
-      width: 28px;
-      height: 28px;
-      border-radius: var(--radius-full);
+      bottom: -4px;
+      right: -4px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #00b14f;
+      color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--slate-500);
-      cursor: pointer;
-      transition: all 0.2s;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 5px rgba(0, 177, 79, 0.4);
+      z-index: 3;
     }
-    .card-wishlist-btn.active { color: var(--danger-600); background: var(--white); }
-    .card-wishlist-btn:hover { color: var(--danger-600); }
 
+    /* Right Details Content */
+    .grab-card-content,
     .card-body {
-      padding: 12px;
+      flex: 1;
+      min-width: 0;
       display: flex;
       flex-direction: column;
-      flex: 1;
+      justify-content: space-between;
+      padding: 0;
     }
-    .card-travel-name {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--slate-500);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      margin-bottom: 4px;
-    }
-    .verified-check { color: var(--primary-600); font-weight: bold; }
 
+    .grab-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .grab-card-title,
     .card-title {
+      flex: 1;
+      min-width: 0;
       font-size: 13px;
       font-weight: 600;
       color: var(--slate-900);
-      line-height: 1.35;
-      margin-bottom: 8px;
+      line-height: 1.3;
+      margin: 0;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      height: 35px;
     }
 
-    .card-price-row {
-      margin-top: auto;
-      padding-top: 6px;
-    }
-    .card-price {
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--slate-900);
-    }
-    .badge-cashback {
-      display: inline-block;
-      background: var(--warning-100);
-      color: var(--warning-600);
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 6px;
-      border-radius: var(--radius-xs);
-      margin-top: 4px;
-    }
-
-    .card-specs-strip {
+    /* Wishlist button in header (right side, outside photo) */
+    .grab-wishlist-btn {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: var(--radius-full);
+      background: transparent;
+      border: none;
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      color: var(--slate-400);
+      transition: all 0.2s ease;
+    }
+    .grab-wishlist-btn:hover {
+      background: var(--slate-100);
+      color: var(--danger-600);
+      transform: scale(1.1);
+    }
+    .grab-wishlist-btn:active {
+      transform: scale(0.92);
+    }
+    .grab-wishlist-btn.active svg {
+      fill: #e02954;
+      stroke: #e02954;
+    }
+
+    /* Travel Name Subtitle (below product title) */
+    .grab-card-subtitle {
+      font-size: 11.5px;
+      color: var(--slate-600);
+      font-weight: 600;
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.35;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .grab-card-subtitle:hover .grab-travel-name {
+      color: var(--primary-700);
+      text-decoration: underline;
+    }
+    .grab-travel-icon {
+      font-size: 11px;
+    }
+    .grab-travel-name {
+      color: var(--slate-700);
+      font-weight: 600;
+    }
+    .grab-travel-check {
+      color: var(--primary-600);
+      font-weight: 800;
+      font-size: 10.5px;
+    }
+
+    /* Meta Info Row: Rating • Duration • Airline • City */
+    .grab-card-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
       font-size: 11px;
       color: var(--slate-600);
-      border-top: 1px solid var(--slate-100);
-      padding-top: 8px;
+      margin-top: 4px;
+      flex-wrap: wrap;
     }
-    .spec-pill {
-      background: var(--slate-50);
-      padding: 2px 6px;
-      border-radius: var(--radius-xs);
+    .grab-meta-rating {
       display: inline-flex;
       align-items: center;
       gap: 3px;
+      color: var(--slate-900);
+      white-space: nowrap;
     }
-
-    .card-footer-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 8px;
-      font-size: 11px;
-      color: var(--slate-500);
+    .grab-meta-rating strong {
+      font-weight: 700;
     }
-    .card-rating {
-      display: flex;
+    .grab-meta-dot {
+      color: var(--slate-300);
+      font-size: 10px;
+    }
+    .grab-meta-item {
+      display: inline-flex;
       align-items: center;
       gap: 3px;
-      font-weight: 600;
-      color: var(--slate-700);
+      color: var(--slate-600);
+      font-weight: 500;
+      white-space: nowrap;
     }
-    .star-icon { color: #f5a623; }
+
+    /* Footer Row: Price, Quota & Cashback */
+    .grab-card-footer {
+      margin-top: 6px;
+      padding-top: 5px;
+      border-top: 1px dashed var(--slate-200);
+      width: 100%;
+    }
+    .grab-card-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      width: 100%;
+    }
+    .grab-card-price,
+    .card-price {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary-800);
+      white-space: nowrap;
+      letter-spacing: -0.1px;
+      flex-shrink: 0;
+    }
+    .grab-card-cashback,
+    .badge-cashback {
+      font-size: 9px;
+      font-weight: 600;
+      background: var(--gold-100);
+      color: var(--gold-600);
+      padding: 1.5px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .grab-card-quota {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--slate-500);
+      white-space: nowrap;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .grab-card-quota.urgent {
+      color: var(--danger-600);
+      font-weight: 700;
+    }
 
     /* ==========================================================================
        6. TOKOPEDIA PRODUCT DETAIL PAGE (PDP)
@@ -2145,140 +2233,217 @@
       }
 
       /* ========================================================================
-         ADAPTIVE HORIZONTAL ROW-CARD DI MOBILE (ALA KULINER DEMAK)
+         GRABFOOD-STYLE CATALOG PRODUCT CARD (MOBILE ADAPTIVE - FULL BLEED)
          ======================================================================== */
       .packages-grid {
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 0;
+        margin-left: -16px;
+        margin-right: -16px;
+        width: auto;
       }
+      .grab-card,
       .tokopedia-card {
         flex-direction: row;
-        border-radius: var(--radius-lg);
+        border-radius: 0;
         background: var(--white);
-        border: 1px solid var(--slate-200);
-        box-shadow: 0 2px 8px rgba(49, 53, 59, 0.06);
-        overflow: hidden;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: 1px solid #f1f5f9;
+        box-shadow: none;
+        padding: 8px 12px;
         position: relative;
         cursor: pointer;
-        transition: transform 0.15s ease, box-shadow 0.15s ease;
-        min-height: 122px;
+        transition: background 0.15s ease;
         align-items: stretch;
+        gap: 10px;
+        width: 100%;
+        box-sizing: border-box;
       }
+      .grab-card:active,
       .tokopedia-card:active {
-        transform: scale(0.985);
+        background: #f8fafc;
       }
+      .grab-card-thumb-container {
+        flex-shrink: 0;
+        position: relative;
+      }
+      .grab-card-thumb-wrapper,
       .tokopedia-card .card-thumb-wrapper {
-        width: 124px;
-        min-width: 124px;
-        max-width: 124px;
-        height: auto;
-        min-height: 128px;
-        aspect-ratio: auto;
+        width: 88px;
+        min-width: 88px;
+        max-width: 88px;
+        height: 88px;
+        min-height: 88px;
+        border-radius: 8px;
         position: relative;
         overflow: hidden;
         background: var(--slate-100);
-        border-radius: 12px 0 0 12px;
       }
-      .tokopedia-card .card-thumb-chip {
-        bottom: 6px;
-        left: 6px;
-        font-size: 8px;
-        padding: 2px 5px;
-        gap: 3px;
-      }
+      .grab-card-thumb,
       .tokopedia-card .card-thumb {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        border-radius: 8px;
         display: block;
       }
-      .tokopedia-card .badge-ppiu {
-        top: 6px;
-        left: 6px;
-        font-size: 8.5px;
-        padding: 2px 6px;
-        border-radius: 4px;
+      .grab-badge-promo {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        font-size: 8px;
+        font-weight: 800;
+        padding: 2px 4px;
+        border-radius: 3px;
+        background: #00b14f;
+        color: #ffffff;
+        text-transform: uppercase;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+        z-index: 2;
+        line-height: 1.1;
       }
-      .tokopedia-card .card-wishlist-btn {
-        top: 6px;
-        right: 6px;
-        width: 26px;
-        height: 26px;
-        font-size: 11px;
+      .grab-badge-verified {
+        position: absolute;
+        bottom: 4px;
+        right: 4px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #00b14f;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1.5px solid #ffffff;
+        box-shadow: 0 1px 3px rgba(0, 177, 79, 0.4);
+        z-index: 3;
       }
+      .grab-card-content,
       .tokopedia-card .card-body {
-        padding: 10px 12px;
+        padding: 0;
         flex: 1;
         min-width: 0;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
       }
-      .tokopedia-card .card-travel-name {
-        font-size: 10px;
-        font-weight: 700;
-        color: var(--slate-500);
-        margin-bottom: 2px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+      .grab-card-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 4px;
       }
+      .grab-card-title,
       .tokopedia-card .card-title {
-        font-size: 12.5px;
-        font-weight: 800;
-        color: var(--slate-900);
+        flex: 1;
+        min-width: 0;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--slate-850, #1e293b);
         line-height: 1.25;
-        margin-bottom: 4px;
+        margin-bottom: 2px;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
       }
-      .tokopedia-card .card-price-row {
+      .grab-wishlist-btn {
         display: flex;
-        align-items: baseline;
-        gap: 6px;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 22px;
+        height: 22px;
+        border-radius: var(--radius-full);
+        background: transparent;
+        border: none;
+        color: var(--slate-400);
+        cursor: pointer;
+        padding: 0;
+      }
+      .grab-wishlist-btn.active svg {
+        fill: #e02954;
+        stroke: #e02954;
+      }
+      .grab-card-subtitle {
+        font-size: 10.5px;
+        color: var(--slate-500);
+        font-weight: 500;
+        margin-top: 1px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.2;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        cursor: pointer;
+      }
+      .grab-card-meta-row {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 10px;
+        color: var(--slate-500);
+        margin-top: 2px;
         flex-wrap: wrap;
-        margin-bottom: 3px;
       }
+      .grab-meta-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+        white-space: nowrap;
+      }
+      .grab-card-footer {
+        margin-top: 4px;
+        padding-top: 3px;
+        border-top: 1px dashed var(--slate-200);
+        width: 100%;
+      }
+      .grab-card-price-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 4px;
+        width: 100%;
+      }
+      .grab-card-price,
       .tokopedia-card .card-price {
-        font-size: 14.5px;
-        font-weight: 800;
-        color: var(--primary-900);
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--primary-800);
+        white-space: nowrap;
+        letter-spacing: -0.1px;
+        flex-shrink: 0;
       }
+      .grab-card-cashback,
       .tokopedia-card .badge-cashback {
-        font-size: 9px;
-        padding: 2px 6px;
-        border-radius: 4px;
+        font-size: 8px;
+        padding: 1px 4px;
+        border-radius: 3px;
         background: var(--gold-100);
         color: var(--gold-600);
-        font-weight: 700;
-      }
-      .tokopedia-card .card-specs-strip {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 4px;
-        margin-top: 2px;
-      }
-      .tokopedia-card .spec-pill {
-        font-size: 9.5px;
-        padding: 2px 6px;
-        background: var(--slate-100);
-        border-radius: 4px;
-        color: var(--slate-600);
         font-weight: 600;
-      }
-      .tokopedia-card .card-footer-info {
-        display: flex;
-        justify-content: space-between;
+        white-space: nowrap;
+        display: inline-flex;
         align-items: center;
+        flex-shrink: 0;
+      }
+      .grab-card-quota {
         font-size: 9.5px;
+        font-weight: 500;
         color: var(--slate-500);
-        margin-top: 5px;
-        padding-top: 4px;
-        border-top: 1px dashed var(--slate-200);
+        white-space: nowrap;
+        text-align: right;
+        flex-shrink: 0;
+      }
+      .grab-card-quota.urgent {
+        color: var(--danger-600);
+        font-weight: 700;
       }
     }
 
@@ -2376,13 +2541,17 @@
       z-index: 9999;
       box-shadow: -8px 0 28px rgba(0, 0, 0, 0.22);
       transform: translateX(100%);
-      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      visibility: hidden;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.3s ease;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
     }
     .mobile-drawer.active {
       transform: translateX(0);
+      visibility: visible;
+      pointer-events: auto;
     }
     .mobile-drawer-header {
       padding: 16px 18px;
@@ -4684,74 +4853,6 @@
             </form>
           </section>
 
-          <!-- 6 Category Shortcuts in 1 Unified Horizontal Card -->
-          <section class="quick-categories-card">
-            <div class="quick-categories-row">
-              <div class="category-icon-item" onclick="Marketplace.quickFilterTag('Reguler')">
-                <div class="category-icon-circle" style="background: linear-gradient(135deg, #e5f9f0 0%, #c4f2dc 100%); color: #008a4b;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 21h18"></path>
-                    <path d="M5 21V10l7-5 7 5v11"></path>
-                    <path d="M9 21v-6a3 3 0 0 1 6 0v6"></path>
-                    <circle cx="12" cy="3" r="1"></circle>
-                  </svg>
-                </div>
-                <div class="category-icon-label">Umroh Reguler</div>
-              </div>
-
-              <div class="category-icon-item" onclick="Marketplace.quickFilterTag('VIP')">
-                <div class="category-icon-circle" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); color: #b45309;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                  </svg>
-                </div>
-                <div class="category-icon-label">VIP Bintang 5</div>
-              </div>
-
-              <div class="category-icon-item" onclick="Marketplace.quickFilterTag('Turki')">
-                <div class="category-icon-circle" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); color: #0284c7;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="2" y1="12" x2="22" y2="12"></line>
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                  </svg>
-                </div>
-                <div class="category-icon-label">Plus Turki &amp; Dubai</div>
-              </div>
-
-              <div class="category-icon-item" onclick="Marketplace.quickFilterTag('Ramadhan')">
-                <div class="category-icon-circle" style="background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%); color: #7e22ce;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    <circle cx="17" cy="7" r="1.5" fill="currentColor"></circle>
-                  </svg>
-                </div>
-                <div class="category-icon-label">Spesial Ramadhan</div>
-              </div>
-
-              <div class="category-icon-item" onclick="Router.navigate('travels')">
-                <div class="category-icon-circle" style="background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%); color: #0f766e;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                    <polyline points="9 12 11 14 15 10"></polyline>
-                  </svg>
-                </div>
-                <div class="category-icon-label">Cek SK Kemenag</div>
-              </div>
-
-              <div class="category-icon-item" onclick="Router.navigate('affiliate-info')">
-                <div class="category-icon-circle" style="background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%); color: #c2410c;">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="9"></circle>
-                    <path d="M12 6v12"></path>
-                    <path d="M17 10a5 5 0 0 0-5-4 5 5 0 0 0-5 4c0 3 4 3 6 4 3 1 4 2 4 4a5 5 0 0 1-5 4 5 5 0 0 1-5-4"></path>
-                  </svg>
-                </div>
-                <div class="category-icon-label">Komisi Afiliasi</div>
-              </div>
-            </div>
-          </section>
-
           <!-- Flash Deals / Keberangkatan Terdekat Strip -->
           <section class="flash-deals-box">
             <div class="flash-deals-header">
@@ -4768,14 +4869,6 @@
 
           <!-- Featured Package Grid with Segmented Quick Tabs ala Kuliner Demak -->
           <section style="margin-bottom: 36px;">
-            <div class="home-rec-header">
-              <div class="home-rec-title-wrap">
-                <h2 class="home-rec-title">Rekomendasi Teratas</h2>
-                <p class="home-rec-subtitle">Koleksi paket keberangkatan terfavorit berizin resmi PPIU Kemenag RI</p>
-              </div>
-              <button class="btn btn-outline btn-sm" style="font-size:11px; padding:3px 9px; font-weight:700;" onclick="Router.navigate('marketplace')">Lihat Semua &rsaquo;</button>
-            </div>
-
             <!-- Segmented Quick Pills ala Kuliner Demak -->
             <div class="segmented-pills-container">
               <div class="segmented-pills-row">
@@ -6198,13 +6291,18 @@
 
       createSkeletonHtml(count = 6) {
         return Array(count).fill(0).map(() => `
-          <div class="tokopedia-card" style="pointer-events: none;">
-            <div class="skeleton-box" style="aspect-ratio: 4/3; width: 100%;"></div>
-            <div class="card-body">
-              <div class="skeleton-box" style="height: 12px; width: 40%; margin-bottom: 8px;"></div>
-              <div class="skeleton-box" style="height: 18px; width: 90%; margin-bottom: 12px;"></div>
-              <div class="skeleton-box" style="height: 20px; width: 60%; margin-bottom: 8px;"></div>
-              <div class="skeleton-box" style="height: 32px; width: 100%; margin-top: auto;"></div>
+          <div class="grab-card tokopedia-card" style="pointer-events: none;">
+            <div class="grab-card-thumb-container">
+              <div class="grab-card-thumb-wrapper skeleton-box" style="border-radius: 10px;"></div>
+            </div>
+            <div class="grab-card-content" style="padding: 2px 0;">
+              <div class="skeleton-box" style="height: 15px; width: 85%; margin-bottom: 6px; border-radius: 4px;"></div>
+              <div class="skeleton-box" style="height: 11px; width: 65%; margin-bottom: 8px; border-radius: 4px;"></div>
+              <div class="skeleton-box" style="height: 11px; width: 45%; margin-bottom: 10px; border-radius: 4px;"></div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:4px; border-top:1px dashed var(--slate-200);">
+                <div class="skeleton-box" style="height: 16px; width: 38%; border-radius: 4px;"></div>
+                <div class="skeleton-box" style="height: 11px; width: 22%; border-radius: 4px;"></div>
+              </div>
             </div>
           </div>
         `).join('');
@@ -6291,45 +6389,104 @@
 
       createPackageCardHtml(pkg) {
         const isWish = AuthStore.wishlist.includes(pkg.id);
-        const cashbackStr = pkg.commissionAffiliate ? `Komisi Rp ${(pkg.commissionAffiliate / 1000).toFixed(0)} Rb` : "Cashback Spesial";
+        const cashbackStr = pkg.commissionAffiliate ? `Rp ${(pkg.commissionAffiliate / 1000).toFixed(0)} Rb` : "";
         const quotaLeft = Math.max(0, Number(pkg.quotaTotal || 40) - Number(pkg.quotaTaken || 0));
         const airlineShort = (pkg.airline || 'Saudia').split(' ')[0];
+        const departureShort = (pkg.departureCity || 'Jakarta').split(' ')[0];
+        const displayTitle = pkg.title || 'Paket Umroh';
+
+        // Format tanggal keberangkatan dd/mm/yy
+        let departureDateFormatted = '15/10/26';
+        if (pkg.departureDate) {
+          const parts = String(pkg.departureDate).split('-');
+          if (parts.length === 3) {
+            departureDateFormatted = `${parts[2].padStart(2, '0')}/${parts[1].padStart(2, '0')}/${parts[0].slice(-2)}`;
+          } else {
+            const d = new Date(pkg.departureDate);
+            if (!isNaN(d.getTime())) {
+              departureDateFormatted = `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getFullYear()).slice(-2)}`;
+            }
+          }
+        }
 
         return `
-          <div class="tokopedia-card" onclick="Router.navigate('package-detail', '${escapeHtml(pkg.id)}')">
-            <div class="card-thumb-wrapper">
-              <img src="${safeUrl(pkg.image)}" class="card-thumb" alt="${escapeHtml(pkg.title)}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?auto=format&fit=crop&w=800&q=80'">
-              <div class="card-thumb-overlay"></div>
-              <span class="badge-ppiu">✓ PPIU Resmi</span>
-              <button class="card-wishlist-btn ${isWish ? 'active' : ''}" onclick="event.stopPropagation(); AuthStore.toggleWishlist('${escapeHtml(pkg.id)}')" title="Simpan ke Wishlist">♥</button>
-              <div class="card-thumb-chip">
-                <span>⏳ ${Number(pkg.durationDays)}H</span>
-                <span>•</span>
-                <span>✈️ ${escapeHtml(airlineShort)}</span>
+          <div class="grab-card tokopedia-card" onclick="Router.navigate('package-detail', '${escapeHtml(pkg.id)}')">
+            <!-- Left: Squarish Thumbnail with GrabFood-style badges -->
+            <div class="grab-card-thumb-container">
+              <div class="grab-card-thumb-wrapper">
+                <img src="${safeUrl(pkg.image)}" class="grab-card-thumb" alt="${escapeHtml(displayTitle)}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?auto=format&fit=crop&w=800&q=80'">
+                <!-- Top-Left Green Badge (GrabFood "Promo" style) -->
+                <span class="grab-badge-promo">Promo</span>
+                <!-- Bottom-Right Circular Verified Badge (GrabFood checkmark style) -->
+                <span class="grab-badge-verified" title="Biro Resmi PPIU Terverifikasi Kemenag RI">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </span>
               </div>
             </div>
-            <div class="card-body">
-              <div class="card-travel-name" style="cursor:pointer;" onclick="event.stopPropagation(); Router.navigate('travel-store', '${escapeHtml(pkg.travelId || pkg.travelName)}')" title="Lihat Toko Biro Travel">
-                <span>🕌</span> ${escapeHtml(pkg.travelName)} <span class="verified-check">✓</span>
-              </div>
-              <h3 class="card-title">${escapeHtml(pkg.title)}</h3>
-              
-              <div class="card-price-row">
-                <div class="card-price">Rp ${Number(pkg.price).toLocaleString('id-ID')}</div>
-                <span class="badge-cashback">💰 ${cashbackStr}</span>
+
+            <!-- Right: Content Details -->
+            <div class="grab-card-content">
+              <!-- Top Row: Title & Wishlist Button (di sebelah kanan, diluar foto produk) -->
+              <div class="grab-card-header">
+                <h3 class="grab-card-title" title="${escapeHtml(displayTitle)}">
+                  ${escapeHtml(displayTitle)}
+                </h3>
+                <button class="grab-wishlist-btn ${isWish ? 'active' : ''}" onclick="event.stopPropagation(); AuthStore.toggleWishlist('${escapeHtml(pkg.id)}')" title="Simpan ke Wishlist">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="${isWish ? '#e02954' : 'none'}" stroke="${isWish ? '#e02954' : '#94a3b8'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                  </svg>
+                </button>
               </div>
 
-              <div class="card-specs-strip">
-                <span class="spec-pill">⏳ ${Number(pkg.durationDays)} Hari</span>
-                <span class="spec-pill">✈️ ${escapeHtml(pkg.departureCity.split(' ')[0])}</span>
-                <span class="spec-pill">🏨 ★5</span>
+              <!-- Subtitle: Nama Travel di bawah Judul Produk -->
+              <div class="grab-card-subtitle" title="Biro Travel: ${escapeHtml(pkg.travelName)}" onclick="event.stopPropagation(); Router.navigate('travel-store', '${escapeHtml(pkg.travelId || pkg.travelName)}')">
+                <span class="grab-travel-icon">🕌</span>
+                <span class="grab-travel-name">${escapeHtml(pkg.travelName)}</span>
+                <span class="grab-travel-check" title="Biro Berizin Resmi PPIU Kemenag RI">✓</span>
               </div>
 
-              <div class="card-footer-info">
-                <div class="card-rating">
-                  <span class="star-icon">★</span> ${escapeHtml(pkg.rating)} (125+)
+              <!-- Meta Info Row: Tgl Keberangkatan (dd/mm/yy) • Duration • City • Airline -->
+              <div class="grab-card-meta-row">
+                <span class="grab-meta-item" title="Tanggal Keberangkatan">
+                  <svg width="10.5" height="10.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                  ${departureDateFormatted}
+                </span>
+                <span class="grab-meta-dot">•</span>
+                <span class="grab-meta-item">
+                  <svg width="10.5" height="10.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  ${Number(pkg.durationDays)} Hari
+                </span>
+                <span class="grab-meta-dot">•</span>
+                <span class="grab-meta-item">
+                  <svg width="10.5" height="10.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  ${escapeHtml(departureShort)}
+                </span>
+                <span class="grab-meta-dot">•</span>
+                <span class="grab-meta-item">
+                  ✈️ ${escapeHtml(airlineShort)}
+                </span>
+              </div>
+
+              <!-- Footer Row: Price, Cashback di tengah2, & Sisa Quota di kanan -->
+              <div class="grab-card-footer">
+                <div class="grab-card-price-row">
+                  <span class="grab-card-price">Rp ${Number(pkg.price).toLocaleString('id-ID')}</span>
+                  ${cashbackStr ? `<span class="grab-card-cashback">🎁 ${cashbackStr}</span>` : ''}
+                  <span class="grab-card-quota ${quotaLeft <= 5 ? 'urgent' : ''}">Sisa ${quotaLeft}</span>
                 </div>
-                <div style="color:var(--danger-600); font-weight:600;">Sisa ${quotaLeft} kursi</div>
               </div>
             </div>
           </div>
