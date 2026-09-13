@@ -2665,37 +2665,56 @@
        6F. SCHEDULE & DEPARTURE CALENDAR MODULE STYLES
        ========================================================================== */
     .schedule-page-container {
-      padding: 16px 0 60px;
+      padding: 14px 0 60px;
       max-width: 1080px;
       margin: 0 auto;
     }
     .schedule-header {
-      margin-bottom: 20px;
+      margin-bottom: 12px;
+    }
+    .schedule-header-compact {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .schedule-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
     .schedule-title {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 800;
       color: var(--slate-900);
-      margin-bottom: 4px;
+      margin: 0;
     }
-    .schedule-subtitle {
-      font-size: 12.5px;
-      color: var(--slate-600);
+    .schedule-count-pill {
+      display: inline-flex;
+      align-items: center;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
     }
     .schedule-month-tabs {
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      padding: 4px 2px 14px;
+      padding: 2px 2px 10px;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
+      margin-bottom: 8px;
     }
     .schedule-month-tabs::-webkit-scrollbar { display: none; }
     .schedule-month-tab {
       display: inline-flex;
       flex-direction: column;
       align-items: center;
-      padding: 8px 16px;
+      padding: 6px 14px;
       background: var(--white);
       border: 1.5px solid var(--slate-200);
       border-radius: var(--radius-md);
@@ -2711,7 +2730,7 @@
       font-size: 10px;
       font-weight: 500;
       color: var(--slate-500);
-      margin-top: 2px;
+      margin-top: 1px;
     }
     .schedule-month-tab:hover {
       border-color: var(--primary-500);
@@ -2728,13 +2747,19 @@
     }
     .schedule-filter-bar {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 20px;
+      margin-bottom: 12px;
       align-items: center;
     }
+    .schedule-filter-subgroup {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
     .schedule-filter-select {
-      padding: 8px 14px;
+      padding: 7px 12px;
       background: var(--white);
       border: 1px solid var(--slate-200);
       border-radius: var(--radius-sm);
@@ -2745,7 +2770,7 @@
       cursor: pointer;
     }
     .schedule-search-input {
-      padding: 8px 14px;
+      padding: 7px 12px;
       background: var(--white);
       border: 1px solid var(--slate-200);
       border-radius: var(--radius-sm);
@@ -2761,6 +2786,12 @@
     .schedule-search-input:focus {
       border-color: var(--primary-500);
       box-shadow: 0 0 0 2px rgba(0, 170, 91, 0.15);
+    }
+    .schedule-reset-btn {
+      padding: 7px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
     }
 
     /* Excel-Style Table Wrapper */
@@ -2909,6 +2940,77 @@
 
     /* Mobile Adaptive Zero-Horizontal-Scroll Table Styles */
     @media (max-width: 768px) {
+      .schedule-page-container {
+        padding: 8px 0 50px !important;
+      }
+      .schedule-header {
+        margin-bottom: 8px !important;
+      }
+      .schedule-title {
+        font-size: 15px !important;
+        font-weight: 800 !important;
+        margin-bottom: 0 !important;
+      }
+      .schedule-count-pill {
+        font-size: 10px !important;
+        padding: 2px 7px !important;
+      }
+      .schedule-month-tabs {
+        padding: 0 0 6px !important;
+        margin-bottom: 6px !important;
+        gap: 5px !important;
+      }
+      .schedule-month-tab {
+        padding: 4px 10px !important;
+        font-size: 11px !important;
+        border-radius: 14px !important;
+        flex-direction: row !important;
+        gap: 3px !important;
+        height: 28px !important;
+        border-width: 1px !important;
+      }
+      .schedule-month-tab span.month-sub {
+        display: none !important;
+      }
+      .schedule-filter-bar {
+        margin-bottom: 8px !important;
+        gap: 5px !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+      }
+      .schedule-search-input {
+        min-width: 100% !important;
+        max-width: 100% !important;
+        height: 32px !important;
+        font-size: 11.5px !important;
+        padding: 5px 10px !important;
+      }
+      .schedule-filter-subgroup {
+        display: flex !important;
+        width: 100% !important;
+        gap: 5px !important;
+      }
+      .schedule-filter-select {
+        flex: 1 !important;
+        min-width: 0 !important;
+        height: 30px !important;
+        font-size: 11px !important;
+        padding: 2px 4px !important;
+      }
+      .schedule-reset-btn {
+        height: 30px !important;
+        padding: 2px 8px !important;
+        font-size: 10.5px !important;
+      }
+      .excel-table-card {
+        border-radius: 8px !important;
+        margin-bottom: 12px !important;
+        box-shadow: none !important;
+        border: 1px solid var(--slate-200) !important;
+      }
+      .excel-status-bar {
+        display: none !important;
+      }
       .excel-scroll-hint {
         display: none !important;
       }
@@ -2918,7 +3020,7 @@
       .excel-grid-table {
         table-layout: fixed !important;
         width: 100% !important;
-        font-size: 11px;
+        font-size: 10.5px !important;
       }
       .excel-header-desktop {
         display: none !important;
@@ -2927,12 +3029,12 @@
         display: table-row !important;
       }
       .excel-grid-table thead th {
-        padding: 8px 6px;
-        font-size: 10px;
-        letter-spacing: 0;
+        padding: 6px 5px !important;
+        font-size: 9.5px !important;
+        letter-spacing: 0 !important;
       }
       .excel-grid-table td {
-        padding: 8px 6px;
+        padding: 6px 5px !important;
         word-break: break-word;
         overflow-wrap: break-word;
       }
@@ -2945,22 +3047,276 @@
         display: block !important;
       }
       .excel-date-main {
-        font-size: 11px;
+        font-size: 10.5px !important;
+        font-weight: 700 !important;
       }
       .excel-day-sub {
-        font-size: 9.5px;
-      }
-      .excel-pkg-title {
-        font-size: 11.5px;
-        line-height: 1.25;
-      }
-      .excel-price-val {
-        font-size: 11.5px;
-        text-align: right;
+        font-size: 9px !important;
       }
       .excel-quota-tag {
-        font-size: 9.5px;
-        padding: 1px 4px;
+        font-size: 8.5px !important;
+        padding: 1px 4px !important;
+      }
+      .excel-pkg-title {
+        font-size: 11px !important;
+        line-height: 1.25 !important;
+      }
+      .excel-price-val {
+        font-size: 11.5px !important;
+        font-weight: 700 !important;
+        text-align: right !important;
+      }
+
+      /* Biro Directory Mobile */
+      .biro-page-container {
+        padding: 8px 0 50px !important;
+      }
+      .biro-directory-card {
+        padding: 10px 12px !important;
+      }
+      .biro-avatar {
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 17px !important;
+      }
+      .biro-name {
+        font-size: 12.5px !important;
+      }
+    }
+
+    /* ==========================================================================
+       6F-2. BIRO AGEN / TRAVEL DIRECTORY STYLES (MINIMALIST & ELEGANT)
+       ========================================================================== */
+    .biro-page-container {
+      padding: 14px 0 60px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .biro-header {
+      margin-bottom: 12px;
+    }
+    .biro-header-compact {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .biro-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .biro-page-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin: 0;
+    }
+    .biro-count-badge {
+      display: inline-flex;
+      align-items: center;
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+    }
+    .biro-page-subtitle {
+      font-size: 12px;
+      color: var(--slate-500);
+      margin-top: 2px;
+    }
+    .biro-search-box {
+      margin-bottom: 8px;
+    }
+    .biro-search-input {
+      width: 100%;
+      height: 34px;
+      padding: 6px 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--slate-200);
+      background: var(--white);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--slate-800);
+      outline: none;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+    .biro-search-input:focus {
+      border-color: var(--primary-500);
+      box-shadow: 0 0 0 2px rgba(0, 170, 91, 0.15);
+    }
+    .biro-city-chips {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 2px 0 8px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 6px;
+    }
+    .biro-city-chips::-webkit-scrollbar { display: none; }
+    .biro-city-chip {
+      padding: 4px 12px;
+      border-radius: 16px;
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--slate-600);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+    .biro-city-chip:hover {
+      border-color: var(--primary-500);
+      color: var(--primary-700);
+    }
+    .biro-city-chip.active {
+      background: var(--primary-600);
+      border-color: var(--primary-600);
+      color: #ffffff;
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(0, 170, 91, 0.25);
+    }
+    .biro-directory-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .biro-directory-card {
+      background: var(--white);
+      border: 1px solid #f1f5f9;
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: all 0.18s cubic-bezier(0.25, 1, 0.5, 1);
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+    .biro-directory-card:hover {
+      border-color: var(--primary-500);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+    .biro-directory-card:active {
+      background: #f8fafc;
+    }
+    .biro-card-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 0;
+    }
+    .biro-avatar-wrapper {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .biro-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      color: #047857;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      border: 1px solid rgba(0, 170, 91, 0.15);
+    }
+    .biro-verified-pin {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: #00aa5b;
+      color: #ffffff;
+      font-size: 9px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .biro-card-body {
+      flex: 1;
+      min-width: 0;
+    }
+    .biro-card-title-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 2px;
+    }
+    .biro-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--slate-900);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+      line-height: 1.3;
+    }
+    .biro-sk-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10.5px;
+      color: var(--slate-600);
+      margin-bottom: 3px;
+      flex-wrap: wrap;
+    }
+    .biro-sk-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      color: #065f46;
+      background: #d1fae5;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-weight: 600;
+      font-size: 9.5px;
+    }
+    .biro-city {
+      color: var(--slate-500);
+      font-weight: 500;
+    }
+    .biro-stats-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10px;
+      color: var(--slate-500);
+    }
+    .biro-meta-dot {
+      color: var(--slate-300);
+    }
+    .biro-visit-btn {
+      flex-shrink: 0;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 16px;
+      white-space: nowrap;
+    }
+    @media (min-width: 769px) {
+      .biro-directory-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
       }
     }
 
@@ -3857,6 +4213,314 @@
       padding: 0 4px;
       line-height: 1;
     }
+
+    /* ==========================================================================
+       BIRO AGEN DIRECTORY (MINIMALIST & ELEGANT)
+       ========================================================================== */
+    .biro-page-container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 14px 0 40px;
+    }
+    .biro-header {
+      margin-bottom: 14px;
+    }
+    .biro-header-compact {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .biro-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .biro-page-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+    .biro-count-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #ecfdf5;
+      color: #047857;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 20px;
+      border: 1px solid #a7f3d0;
+    }
+    .biro-page-subtitle {
+      font-size: 12px;
+      color: var(--slate-500);
+      margin-top: 4px;
+      margin-bottom: 0;
+    }
+    .biro-search-box {
+      margin-top: 12px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .biro-search-input {
+      width: 100%;
+      height: 40px;
+      padding: 0 16px 0 38px;
+      background: var(--white);
+      border: 1.5px solid var(--slate-200);
+      border-radius: 12px;
+      font-size: 12.5px;
+      color: var(--slate-800);
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .biro-search-box::before {
+      content: '🔍';
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .biro-search-input:focus {
+      outline: none;
+      border-color: var(--primary-600);
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
+    }
+    .biro-city-chips {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin-bottom: 14px;
+      scrollbar-width: none;
+    }
+    .biro-city-chips::-webkit-scrollbar {
+      display: none;
+    }
+    .biro-city-chip {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 20px;
+      padding: 4px 11px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--slate-600);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .biro-city-chip:hover {
+      border-color: var(--slate-300);
+      background: var(--slate-50);
+    }
+    .biro-city-chip.active {
+      background: var(--slate-900);
+      color: var(--white);
+      border-color: var(--slate-900);
+    }
+    .biro-directory-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .biro-directory-card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .biro-directory-card:hover {
+      border-color: var(--primary-400);
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.08);
+      transform: translateY(-1px);
+    }
+    .biro-card-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      flex: 1;
+      overflow: hidden;
+    }
+    .biro-avatar-wrapper {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .biro-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .biro-verified-pin {
+      position: absolute;
+      bottom: -3px;
+      right: -3px;
+      background: #10b981;
+      color: #ffffff;
+      font-size: 9px;
+      font-weight: 800;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--white);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+    .biro-card-body {
+      min-width: 0;
+      flex: 1;
+      overflow: hidden;
+    }
+    .biro-card-title-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 3px;
+    }
+    .biro-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--slate-900);
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.3;
+    }
+    .biro-sk-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      gap: 6px;
+      margin-bottom: 3px;
+      font-size: 10.5px;
+    }
+    .biro-sk-badge {
+      display: inline-flex;
+      align-items: center;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: var(--slate-600);
+      padding: 1px 6px;
+      border-radius: 5px;
+      font-weight: 600;
+      font-size: 10px;
+      max-width: 130px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .biro-city {
+      color: var(--slate-500);
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .biro-stats-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10.5px;
+      color: var(--slate-500);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .biro-stat-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 2.5px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .biro-meta-dot {
+      color: var(--slate-300);
+      flex-shrink: 0;
+    }
+    .biro-visit-btn {
+      flex-shrink: 0;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+      background: #f0fdf4;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+    .biro-visit-btn:hover {
+      background: #047857;
+      color: #ffffff;
+      border-color: #047857;
+    }
+
+    @media (min-width: 768px) {
+      .biro-directory-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+    }
+    @media (max-width: 480px) {
+      .biro-page-container {
+        padding: 8px 0 20px;
+      }
+      .biro-directory-card {
+        padding: 10px 12px;
+        gap: 8px;
+      }
+      .biro-avatar {
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
+      }
+      .biro-name {
+        font-size: 13px;
+      }
+      .biro-sk-badge {
+        max-width: 105px;
+      }
+      .biro-stats-row {
+        font-size: 9.5px;
+        gap: 3.5px;
+      }
+      .biro-visit-btn {
+        padding: 5px 10px;
+        font-size: 10.5px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -4576,6 +5240,9 @@
 
       navigate(route, params = null) {
         this.currentRoute = route;
+        if (!window.location.hash || window.location.hash.substring(1) !== route) {
+          try { history.replaceState(null, '', '#' + route); } catch (e) {}
+        }
         window.scrollTo({ top: 0, behavior: 'smooth' });
         const root = document.getElementById('app-root');
         root.innerHTML = '<div class="empty-state" style="padding:60px 0;"><div class="skeleton-box" style="height:200px; width:100%; max-width:800px; margin:0 auto;"></div></div>';
@@ -5354,9 +6021,13 @@
         TravelStore.currentPackages = packages;
       },
 
+      allTravels: [],
+      travelSearchQuery: '',
+      travelSelectedCity: 'all',
+
       async renderTravels() {
         const root = document.getElementById('app-root');
-        root.innerHTML = '<div class="empty-state"><div class="skeleton-box" style="height:300px; width:100%;"></div></div>';
+        root.innerHTML = '<div class="empty-state" style="padding:40px 0;"><div class="skeleton-box" style="height:250px; width:100%; max-width:800px; margin:0 auto;"></div></div>';
 
         let travels = ApiClient.db.travels;
         try {
@@ -5368,23 +6039,121 @@
           console.warn("Failed fetching live travels, using fallback", e);
         }
 
+        Router.allTravels = travels;
+        Router.travelSearchQuery = Router.travelSearchQuery || '';
+        Router.travelSelectedCity = Router.travelSelectedCity || 'all';
+        Router.renderTravelsView();
+      },
+
+      filterTravels(query) {
+        Router.travelSearchQuery = query;
+        Router.renderTravelsView();
+        const inp = document.getElementById('biro-search-input');
+        if (inp) {
+          inp.focus();
+          inp.setSelectionRange(query.length, query.length);
+        }
+      },
+
+      filterTravelCity(city) {
+        Router.travelSelectedCity = city;
+        Router.renderTravelsView();
+      },
+
+      renderTravelsView() {
+        const root = document.getElementById('app-root');
+        if (!root) return;
+
+        let travels = Router.allTravels || ApiClient.db.travels || [];
+        const query = (Router.travelSearchQuery || '').toLowerCase().trim();
+        const cityFilter = Router.travelSelectedCity || 'all';
+
+        if (cityFilter !== 'all') {
+          travels = travels.filter(t => (t.city || '').toLowerCase().includes(cityFilter.toLowerCase()));
+        }
+
+        if (query) {
+          travels = travels.filter(t => 
+            (t.name || '').toLowerCase().includes(query) ||
+            (t.city || '').toLowerCase().includes(query) ||
+            (t.skKemenag || '').toLowerCase().includes(query)
+          );
+        }
+
+        const cities = [
+          { key: 'all', label: 'Semua Kota' },
+          { key: 'Jakarta', label: 'Jakarta' },
+          { key: 'Surabaya', label: 'Surabaya' },
+          { key: 'Bandung', label: 'Bandung' },
+          { key: 'Solo', label: 'Solo' },
+          { key: 'Semarang', label: 'Semarang' }
+        ];
+
         root.innerHTML = `
-          <div style="padding: 24px 0 50px;">
-            <div style="margin-bottom: 24px;">
-              <h1 style="font-size: 1.6rem; font-weight: 800; color: var(--slate-900);">Direktori Biro Travel Resmi Berizin PPIU Kemenag</h1>
-              <p style="color: var(--slate-600);">Semua biro penyelenggara telah terakreditasi resmi dan dipantau secara berkala.</p>
+          <div class="biro-page-container">
+            <div class="biro-header">
+              <div class="biro-header-compact">
+                <div class="biro-title-wrap">
+                  <h1 class="biro-page-title">🕌 Direktori Biro PPIU</h1>
+                  <span class="biro-count-badge">${travels.length} Biro Terverifikasi</span>
+                </div>
+              </div>
+              <p class="biro-page-subtitle">Biro penyelenggara resmi berizin SK Kemenag RI dengan reputasi amanah.</p>
             </div>
 
-            <div class="packages-grid">
-              ${travels.map(t => `
-                <div class="tokopedia-card" style="padding: 20px; text-align: center; cursor:pointer;" onclick="Router.navigate('travel-store', '${escapeHtml(t.id)}')">
-                  <div style="font-size: 2.8rem; margin-bottom: 8px;">🕌</div>
-                  <h3 style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">${escapeHtml(t.name)}</h3>
-                  <div class="badge badge-verified" style="margin-bottom: 8px;">Terverifikasi PPIU</div>
-                  <p style="font-size: 11px; color: var(--slate-500); margin-bottom: 12px;">${escapeHtml(t.skKemenag || 'PPIU Resmi')} • ${escapeHtml(t.city || 'Indonesia')}</p>
-                  <button class="btn btn-outline-primary btn-sm btn-block" onclick="event.stopPropagation(); Router.navigate('travel-store', '${escapeHtml(t.id)}')">Kunjungi Toko Biro &rarr;</button>
-                </div>
+            <div class="biro-search-box">
+              <input type="text" id="biro-search-input" class="biro-search-input" placeholder="Cari nama biro travel, kota, atau nomor izin..." value="${escapeHtml(Router.travelSearchQuery || '')}" oninput="Router.filterTravels(this.value)">
+            </div>
+
+            <div class="biro-city-chips">
+              ${cities.map(c => `
+                <button class="biro-city-chip ${cityFilter === c.key ? 'active' : ''}" onclick="Router.filterTravelCity('${c.key}')">
+                  ${escapeHtml(c.label)}
+                </button>
               `).join('')}
+            </div>
+
+            <div class="biro-directory-list">
+              ${travels.length > 0 ? travels.map(t => {
+                const pkgCount = (ApiClient.db.packages || []).filter(p => p.travelId === t.id || (p.travelName && t.name && p.travelName.toLowerCase().trim() === t.name.toLowerCase().trim())).length || t.packagesCount || 3;
+                const cityShort = (t.city || 'Indonesia').split(' ')[0];
+                return `
+                  <div class="biro-directory-card" onclick="Router.navigate('travel-store', '${escapeHtml(t.id)}')">
+                    <div class="biro-card-left">
+                      <div class="biro-avatar-wrapper">
+                        <div class="biro-avatar">🕌</div>
+                        <span class="biro-verified-pin" title="Biro Terverifikasi Kemenag RI">✓</span>
+                      </div>
+                      <div class="biro-card-body">
+                        <div class="biro-card-title-row">
+                          <h3 class="biro-name" title="${escapeHtml(t.name)}">${escapeHtml(t.name)}</h3>
+                        </div>
+                        <div class="biro-sk-row">
+                          <span class="biro-sk-badge">🛡️ ${escapeHtml(t.skKemenag || 'Resmi PPIU')}</span>
+                          <span class="biro-city">📍 ${escapeHtml(cityShort)}</span>
+                        </div>
+                        <div class="biro-stats-row">
+                          <span class="biro-stat-item">⭐ ${Number(t.rating || 4.9).toFixed(1)}</span>
+                          <span class="biro-meta-dot">•</span>
+                          <span class="biro-stat-item">👥 ${t.jamaahTotal ? (t.jamaahTotal >= 1000 ? Math.floor(t.jamaahTotal/1000) + ' rb+' : t.jamaahTotal) : '1 rb+'}</span>
+                          <span class="biro-meta-dot">•</span>
+                          <span class="biro-stat-item">📦 ${pkgCount} Paket</span>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="biro-visit-btn" onclick="event.stopPropagation(); Router.navigate('travel-store', '${escapeHtml(t.id)}')">
+                      Lihat &rsaquo;
+                    </button>
+                  </div>
+                `;
+              }).join('') : `
+                <div class="empty-state" style="padding: 40px 16px; text-align: center; background: var(--white); border-radius: 12px; border: 1px dashed var(--slate-200);">
+                  <div style="font-size: 32px; margin-bottom: 8px;">🔍</div>
+                  <h4 style="font-size: 13.5px; font-weight: 700; color: var(--slate-800); margin-bottom: 4px;">Biro tidak ditemukan</h4>
+                  <p style="font-size: 11px; color: var(--slate-500); margin-bottom: 10px;">Coba gunakan kata kunci pencarian lain atau pilih Semua Kota.</p>
+                  <button class="btn btn-outline-primary btn-sm" onclick="Router.travelSearchQuery=''; Router.travelSelectedCity='all'; Router.renderTravelsView();">Reset Filter</button>
+                </div>
+              `}
             </div>
           </div>
         `;
@@ -5497,14 +6266,11 @@
         root.innerHTML = `
           <div class="schedule-page-container">
             <div class="schedule-header">
-              <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
-                <div>
+              <div class="schedule-header-compact">
+                <div class="schedule-title-wrap">
                   <h1 class="schedule-title">📅 Jadwal Keberangkatan Umroh 1448H</h1>
-                  <p class="schedule-subtitle">Daftar jadwal keberangkatan terverifikasi resmi PPIU Kemenag RI disajikan dalam format kolom spreadsheet terperinci.</p>
+                  <span class="schedule-count-pill">${departureItems.length} Jadwal</span>
                 </div>
-                <button class="btn btn-outline-primary btn-sm" onclick="Router.navigate('marketplace')">
-                  🔍 Cari di Marketplace &rarr;
-                </button>
               </div>
             </div>
 
@@ -5520,29 +6286,31 @@
 
             <!-- Filter Controls Bar with Live Search -->
             <div class="schedule-filter-bar">
-              <input type="text" class="schedule-search-input" placeholder="🔍 Cari paket, biro, hotel, kota..." value="${escapeHtml(this.searchQuery)}" oninput="ScheduleModule.onSearch(this.value)">
+              <input type="text" class="schedule-search-input" placeholder="🔍 Cari paket, biro, kota..." value="${escapeHtml(this.searchQuery)}" oninput="ScheduleModule.onSearch(this.value)">
 
-              <select class="schedule-filter-select" onchange="ScheduleModule.selectCity(this.value)">
-                <option value="all" ${this.selectedCity === 'all' ? 'selected' : ''}>Semua Embarkasi</option>
-                <option value="Jakarta" ${this.selectedCity === 'Jakarta' ? 'selected' : ''}>Jakarta (CGK)</option>
-                <option value="Surabaya" ${this.selectedCity === 'Surabaya' ? 'selected' : ''}>Surabaya (SUB)</option>
-                <option value="Solo" ${this.selectedCity === 'Solo' ? 'selected' : ''}>Solo (SOC)</option>
-                <option value="Bandung" ${this.selectedCity === 'Bandung' ? 'selected' : ''}>Bandung (BDO/KJT)</option>
-                <option value="Semarang" ${this.selectedCity === 'Semarang' ? 'selected' : ''}>Semarang (SRG)</option>
-              </select>
+              <div class="schedule-filter-subgroup">
+                <select class="schedule-filter-select" onchange="ScheduleModule.selectCity(this.value)">
+                  <option value="all" ${this.selectedCity === 'all' ? 'selected' : ''}>Semua Embarkasi</option>
+                  <option value="Jakarta" ${this.selectedCity === 'Jakarta' ? 'selected' : ''}>Jakarta (CGK)</option>
+                  <option value="Surabaya" ${this.selectedCity === 'Surabaya' ? 'selected' : ''}>Surabaya (SUB)</option>
+                  <option value="Solo" ${this.selectedCity === 'Solo' ? 'selected' : ''}>Solo (SOC)</option>
+                  <option value="Bandung" ${this.selectedCity === 'Bandung' ? 'selected' : ''}>Bandung (BDO)</option>
+                  <option value="Semarang" ${this.selectedCity === 'Semarang' ? 'selected' : ''}>Semarang (SRG)</option>
+                </select>
 
-              <select class="schedule-filter-select" onchange="ScheduleModule.selectAirline(this.value)">
-                <option value="all" ${this.selectedAirline === 'all' ? 'selected' : ''}>Semua Maskapai</option>
-                <option value="Saudia" ${this.selectedAirline === 'Saudia' ? 'selected' : ''}>Saudia Airlines</option>
-                <option value="Garuda" ${this.selectedAirline === 'Garuda' ? 'selected' : ''}>Garuda Indonesia</option>
-                <option value="Emirates" ${this.selectedAirline === 'Emirates' ? 'selected' : ''}>Emirates</option>
-                <option value="Turkish" ${this.selectedAirline === 'Turkish' ? 'selected' : ''}>Turkish Airlines</option>
-                <option value="Lion" ${this.selectedAirline === 'Lion' ? 'selected' : ''}>Lion Air Charter</option>
-              </select>
+                <select class="schedule-filter-select" onchange="ScheduleModule.selectAirline(this.value)">
+                  <option value="all" ${this.selectedAirline === 'all' ? 'selected' : ''}>Semua Maskapai</option>
+                  <option value="Saudia" ${this.selectedAirline === 'Saudia' ? 'selected' : ''}>Saudia Airlines</option>
+                  <option value="Garuda" ${this.selectedAirline === 'Garuda' ? 'selected' : ''}>Garuda Indonesia</option>
+                  <option value="Emirates" ${this.selectedAirline === 'Emirates' ? 'selected' : ''}>Emirates</option>
+                  <option value="Turkish" ${this.selectedAirline === 'Turkish' ? 'selected' : ''}>Turkish Airlines</option>
+                  <option value="Lion" ${this.selectedAirline === 'Lion' ? 'selected' : ''}>Lion Air Charter</option>
+                </select>
 
-              <button class="btn btn-outline btn-sm" onclick="ScheduleModule.resetFilters()" title="Reset Semua Filter" style="font-size:11px; padding:7px 12px;">
-                ↺ Reset
-              </button>
+                <button class="btn btn-outline btn-sm schedule-reset-btn" onclick="ScheduleModule.resetFilters()" title="Reset Semua Filter">
+                  ↺ Reset
+                </button>
+              </div>
             </div>
 
             <!-- Excel-Style Column Spreadsheet Container -->
@@ -7824,9 +8592,18 @@
 
       if (targetPackageId) {
         Router.navigate('package-detail', targetPackageId);
+      } else if (window.location.hash && window.location.hash.length > 1) {
+        Router.navigate(window.location.hash.substring(1));
       } else {
         Router.navigate('home');
       }
+
+      window.addEventListener('hashchange', () => {
+        const hash = window.location.hash.substring(1);
+        if (hash && Router.currentRoute !== hash) {
+          Router.navigate(hash);
+        }
+      });
 
       // Pre-warm data cache in background
       ApiClient.fetchPackages();
