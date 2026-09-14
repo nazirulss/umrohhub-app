@@ -569,49 +569,62 @@
     }
 
     /* ==========================================================================
-       4. FLASH DEALS / "KEBERANGKATAN TERDEKAT" STRIP
+       4. HOME QUICK FILTER BAR (DURASI, LOKASI, PESAWAT)
        ========================================================================== */
-    .flash-deals-box {
-      background: linear-gradient(135deg, #e02954 0%, #b8143d 100%);
-      border-radius: var(--radius-lg);
-      padding: 8px 12px;
-      color: var(--white);
-      margin-bottom: 16px;
+    .home-quick-filters-bar {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 6px;
-      box-shadow: var(--shadow-xs);
+      margin-bottom: 14px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding: 1px 0 4px;
     }
-    .flash-deals-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .flash-title {
+    .home-quick-filters-bar::-webkit-scrollbar { display: none; }
+    .home-filter-select {
+      padding: 6px 11px;
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-full, 9999px);
       font-size: 11.5px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      font-weight: 600;
+      color: var(--slate-700);
+      outline: none;
+      cursor: pointer;
       white-space: nowrap;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     }
-    .flash-countdown {
-      display: flex;
-      align-items: center;
-      gap: 3px;
-      font-size: 9.5px;
+    .home-filter-select:hover,
+    .home-filter-select:focus {
+      border-color: var(--primary-500);
+      color: var(--primary-800);
     }
-    .countdown-digit {
-      background: rgba(0, 0, 0, 0.35);
-      color: var(--white);
-      font-weight: 800;
-      font-size: 9.5px;
-      padding: 2px 4px;
-      border-radius: var(--radius-xs);
-      min-width: 18px;
-      text-align: center;
+    .home-filter-select.has-value {
+      background: #f0fdf4;
+      border-color: #86efac;
+      color: #166534;
+      font-weight: 700;
+    }
+    .home-filter-reset-btn {
+      padding: 6px 12px;
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-full, 9999px);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--slate-500);
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+    .home-filter-reset-btn:hover {
+      background: #fee2e2;
+      color: #b91c1c;
+      border-color: #fca5a5;
     }
 
     /* ==========================================================================
@@ -1133,13 +1146,15 @@
       font-size: 13.5px;
       font-weight: 700;
       color: var(--slate-900);
-      line-height: 1.3;
+      line-height: 1.25;
       margin: 0;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      text-overflow: clip;
+      word-break: break-word;
     }
 
     /* Wishlist button in header (right side, outside photo) */
@@ -1207,11 +1222,14 @@
     .grab-card-meta-row {
       display: flex;
       align-items: center;
-      gap: 5px;
-      font-size: 11px;
-      color: var(--slate-600);
-      margin-top: 4px;
-      flex-wrap: wrap;
+      gap: 4px;
+      font-size: 9.5px;
+      color: var(--slate-500);
+      margin-top: 2px;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 100%;
     }
     .grab-meta-rating {
       display: inline-flex;
@@ -2343,8 +2361,9 @@
       .tokopedia-card .card-title {
         flex: 1;
         min-width: 0;
-        font-size: 12px;
-        font-weight: 600;
+        width: 100%;
+        font-size: 12.5px;
+        font-weight: 700;
         color: var(--slate-850, #1e293b);
         line-height: 1.25;
         margin-bottom: 2px;
@@ -2353,6 +2372,8 @@
         line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        text-overflow: clip;
+        word-break: break-word;
       }
       .grab-wishlist-btn {
         display: flex;
@@ -2389,17 +2410,21 @@
       .grab-card-meta-row {
         display: flex;
         align-items: center;
-        gap: 4px;
-        font-size: 10px;
+        gap: 3.5px;
+        font-size: 9.5px;
         color: var(--slate-500);
         margin-top: 2px;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%;
       }
       .grab-meta-item {
         display: inline-flex;
         align-items: center;
         gap: 2px;
         white-space: nowrap;
+        flex-shrink: 0;
       }
       .grab-card-footer {
         margin-top: 4px;
@@ -2416,8 +2441,8 @@
       }
       .grab-card-price,
       .tokopedia-card .card-price {
-        font-size: 12px;
-        font-weight: 600;
+        font-size: 14px;
+        font-weight: 800;
         color: var(--primary-800);
         white-space: nowrap;
         letter-spacing: -0.1px;
@@ -5571,21 +5596,7 @@
             </form>
           </section>
 
-          <!-- Flash Deals / Keberangkatan Terdekat Strip -->
-          <section class="flash-deals-box">
-            <div class="flash-deals-header">
-              <div class="flash-title">⚡ Keberangkatan Terdekat</div>
-              <div class="flash-countdown">
-                <span style="font-size: 10px; font-weight:700; opacity:0.9;">Berakhir:</span>
-                <span class="countdown-digit" id="cd-hours">06</span> :
-                <span class="countdown-digit" id="cd-minutes">42</span> :
-                <span class="countdown-digit" id="cd-seconds">19</span>
-              </div>
-            </div>
-            <button class="btn btn-sm" style="background:var(--white); color:var(--danger-600); font-weight:700; font-size:11px; padding:3px 9px; border-radius:var(--radius-sm); border:none; white-space:nowrap;" onclick="Router.navigate('marketplace')">Lihat &gt;</button>
-          </section>
-
-          <!-- Featured Package Grid with Segmented Quick Tabs ala Kuliner Demak -->
+          <!-- Featured Package Grid with Segmented Quick Tabs & Quick Filters -->
           <section style="margin-bottom: 36px;">
             <!-- Segmented Quick Pills ala Kuliner Demak -->
             <div class="segmented-pills-container">
@@ -5608,6 +5619,43 @@
               </div>
             </div>
 
+            <!-- Quick Filter Bar (Durasi, Lokasi, Pesawat) -->
+            <div class="home-quick-filters-bar">
+              <select class="home-filter-select" id="home-filter-duration" onchange="Router.applyHomeFilters()" aria-label="Filter Durasi">
+                <option value="all">⏱️ Durasi: Semua</option>
+                <option value="9">9 Hari</option>
+                <option value="10">10 Hari</option>
+                <option value="12">12 Hari</option>
+                <option value="14">14 Hari</option>
+                <option value="16">16 Hari</option>
+              </select>
+
+              <select class="home-filter-select" id="home-filter-city" onchange="Router.applyHomeFilters()" aria-label="Filter Lokasi Keberangkatan">
+                <option value="all">📍 Lokasi: Semua</option>
+                <option value="Jakarta">Jakarta</option>
+                <option value="Surabaya">Surabaya</option>
+                <option value="Solo">Solo</option>
+                <option value="Semarang">Semarang</option>
+                <option value="Bandung">Bandung</option>
+                <option value="Makassar">Makassar</option>
+                <option value="Medan">Medan</option>
+              </select>
+
+              <select class="home-filter-select" id="home-filter-airline" onchange="Router.applyHomeFilters()" aria-label="Filter Maskapai Pesawat">
+                <option value="all">✈️ Pesawat: Semua</option>
+                <option value="Saudia">Saudia Airlines</option>
+                <option value="Garuda">Garuda Indonesia</option>
+                <option value="Emirates">Emirates</option>
+                <option value="Qatar">Qatar Airways</option>
+                <option value="Turkish">Turkish Airlines</option>
+                <option value="Lion">Lion Air</option>
+              </select>
+
+              <button class="home-filter-reset-btn" onclick="Router.resetHomeFilters()" title="Reset Filter Cepat">
+                ↺ Reset
+              </button>
+            </div>
+
             <div class="packages-grid" id="featured-packages-grid">
               ${Marketplace.createSkeletonHtml(4)}
             </div>
@@ -5615,7 +5663,6 @@
         `;
 
         this.startSliderAuto();
-        this.startCountdownTimer();
 
         const packages = await ApiClient.fetchPackages();
         const grid = document.getElementById('featured-packages-grid');
@@ -5624,15 +5671,51 @@
         }
       },
 
+      activeHomeSort: 'recommended',
+
       switchHomeFilter(type, btn) {
+        this.activeHomeSort = type;
         document.querySelectorAll('.segmented-pills-row .seg-pill-btn').forEach(b => b.classList.remove('active'));
         if (btn) btn.classList.add('active');
+        this.applyHomeFilters();
+      },
 
+      applyHomeFilters() {
         const grid = document.getElementById('featured-packages-grid');
         if (!grid) return;
 
+        const durationSel = document.getElementById('home-filter-duration');
+        const citySel = document.getElementById('home-filter-city');
+        const airlineSel = document.getElementById('home-filter-airline');
+
+        const durVal = durationSel ? durationSel.value : 'all';
+        const cityVal = citySel ? citySel.value : 'all';
+        const airVal = airlineSel ? airlineSel.value : 'all';
+
+        if (durationSel) durationSel.classList.toggle('has-value', durVal !== 'all');
+        if (citySel) citySel.classList.toggle('has-value', cityVal !== 'all');
+        if (airlineSel) airlineSel.classList.toggle('has-value', airVal !== 'all');
+
         let packages = [...(ApiClient.db.packages || [])];
 
+        // Filter: Durasi
+        if (durVal !== 'all') {
+          const durNum = parseInt(durVal, 10);
+          packages = packages.filter(p => Number(p.durationDays) === durNum);
+        }
+
+        // Filter: Lokasi Keberangkatan
+        if (cityVal !== 'all') {
+          packages = packages.filter(p => (p.departureCity || '').toLowerCase().includes(cityVal.toLowerCase()));
+        }
+
+        // Filter: Maskapai Pesawat
+        if (airVal !== 'all') {
+          packages = packages.filter(p => (p.airline || '').toLowerCase().includes(airVal.toLowerCase()));
+        }
+
+        // Sort: Sesuai segmented tab aktif
+        const type = this.activeHomeSort || 'recommended';
         if (type === 'price_asc') {
           packages.sort((a, b) => Number(a.price) - Number(b.price));
         } else if (type === 'departure_asc') {
@@ -5649,7 +5732,28 @@
           packages.sort((a, b) => Number(b.rating || 0) - Number(a.rating || 0));
         }
 
-        grid.innerHTML = packages.slice(0, 8).map(pkg => Marketplace.createPackageCardHtml(pkg)).join('');
+        if (packages.length === 0) {
+          grid.innerHTML = `
+            <div class="empty-state" style="grid-column: 1/-1; padding: 32px 16px; text-align:center; background:var(--white); border-radius:12px; border:1px dashed var(--slate-200); margin: 8px 0; width:100%;">
+              <div style="font-size:32px; margin-bottom:6px;">🔍</div>
+              <h4 style="font-weight:800; font-size:13.5px; margin-bottom:4px;">Tidak ada paket yang cocok</h4>
+              <p style="font-size:11.5px; color:var(--slate-500); margin-bottom:12px;">Coba ubah pilihan durasi, lokasi keberangkatan, atau maskapai pesawat.</p>
+              <button class="btn btn-primary btn-sm" onclick="Router.resetHomeFilters()">Reset Filter</button>
+            </div>
+          `;
+        } else {
+          grid.innerHTML = packages.slice(0, 8).map(pkg => Marketplace.createPackageCardHtml(pkg)).join('');
+        }
+      },
+
+      resetHomeFilters() {
+        const durationSel = document.getElementById('home-filter-duration');
+        const citySel = document.getElementById('home-filter-city');
+        const airlineSel = document.getElementById('home-filter-airline');
+        if (durationSel) durationSel.value = 'all';
+        if (citySel) citySel.value = 'all';
+        if (airlineSel) airlineSel.value = 'all';
+        this.applyHomeFilters();
       },
 
       startSliderAuto() {
@@ -5690,23 +5794,6 @@
         this.goToSlide((this.currentSlide - 1 + 3) % 3);
       },
 
-      startCountdownTimer() {
-        setInterval(() => {
-          const s = document.getElementById('cd-seconds');
-          const m = document.getElementById('cd-minutes');
-          if (s) {
-            let val = parseInt(s.textContent, 10) - 1;
-            if (val < 0) {
-              val = 59;
-              if (m) {
-                let mVal = parseInt(m.textContent, 10) - 1;
-                m.textContent = mVal < 10 ? '0' + mVal : mVal;
-              }
-            }
-            s.textContent = val < 10 ? '0' + val : val;
-          }
-        }, 1000);
-      },
 
       async renderPackageDetail(pkgId) {
         const root = document.getElementById('app-root');
@@ -6386,9 +6473,9 @@
         const airlineShort = (pkg.airline || 'Saudia').split(' ')[0];
         const departureShort = (item.city || pkg.departureCity || 'Jakarta').split(' ')[0];
         
-        // Judul maksimal rata kanan kiri
+        // Judul produk tampil maksimal tanpa tanda (...)
         const rawTitle = pkg.title || 'Paket Umroh';
-        const displayTitle = rawTitle.length > 35 ? (rawTitle.slice(0, 35).trim() + '...') : rawTitle;
+        const displayTitle = rawTitle;
 
         // Format tanggal keberangkatan: (icon kalender) Senin, 14 Sept 2026
         const dayNamesIndo = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
@@ -6450,8 +6537,8 @@
                 </div>
               </div>
 
-              <!-- Baris 2: Judul Paket (Font 13.5px Bold, Rata Kanan Kiri Penuh) -->
-              <h3 class="grab-card-title" style="font-size:13.5px; font-weight:700; line-height:1.25; margin:1px 0 0 0; width:100%;" title="${escapeHtml(rawTitle)}">
+              <!-- Baris 2: Judul Paket (Tampil Maksimal Tanpa (...)) -->
+              <h3 class="grab-card-title" style="font-size:12.5px; font-weight:700; line-height:1.25; margin:1px 0 2px 0; width:100%; display:-webkit-box; -webkit-line-clamp:2; line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; text-overflow:clip; word-break:break-word;" title="${escapeHtml(rawTitle)}">
                 ${escapeHtml(displayTitle)}
               </h3>
 
@@ -6469,8 +6556,8 @@
                 <span class="grab-travel-check" style="font-size:9px;" title="Biro Berizin Resmi PPIU Kemenag RI">✓</span>
               </div>
 
-              <!-- Baris 4: Meta Info Row: Durasi • Kota • Maskapai (Font & Ikon Diperkecil) -->
-              <div class="grab-card-meta-row" style="font-size:9px; margin:0 0 1px 0; gap:3.5px; line-height:1.2;">
+              <!-- Baris 4: Meta Info Row: Durasi • Kota • Maskapai (1 Baris Fleksibel) -->
+              <div class="grab-card-meta-row" style="font-size:9px; margin:0 0 1px 0; gap:3.5px; line-height:1.2; flex-wrap:nowrap; white-space:nowrap; overflow:hidden; width:100%;">
                 <span class="grab-meta-item" style="font-size:9px; gap:2px;">
                   <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10"></circle>
@@ -7237,9 +7324,9 @@
         const quotaLeft = Math.max(0, Number(pkg.quotaTotal || 40) - Number(pkg.quotaTaken || 0));
         const airlineShort = (pkg.airline || 'Saudia').split(' ')[0];
         const departureShort = (pkg.departureCity || 'Jakarta').split(' ')[0];
-        // Judul maksimal rata kanan kiri
+        // Judul produk tampil maksimal tanpa tanda (...)
         const rawTitle = pkg.title || 'Paket Umroh';
-        const displayTitle = rawTitle.length > 35 ? (rawTitle.slice(0, 35).trim() + '...') : rawTitle;
+        const displayTitle = rawTitle;
 
         // Format tanggal keberangkatan dd/mm/yy
         let departureDateFormatted = '15/10/26';
@@ -7275,9 +7362,9 @@
 
             <!-- Right: Content Details -->
             <div class="grab-card-content">
-              <!-- Top Row: Title (Maksimal rata kanan kiri, tanpa wishlist button) -->
+              <!-- Top Row: Title (Tampil Maksimal Tanpa (...)) -->
               <div class="grab-card-header" style="width:100%; margin:0;">
-                <h3 class="grab-card-title" style="font-size:13.5px; font-weight:700; line-height:1.3; width:100%;" title="${escapeHtml(rawTitle)}">
+                <h3 class="grab-card-title" style="font-size:12.5px; font-weight:700; line-height:1.25; width:100%; display:-webkit-box; -webkit-line-clamp:2; line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; text-overflow:clip; word-break:break-word;" title="${escapeHtml(rawTitle)}">
                   ${escapeHtml(displayTitle)}
                 </h3>
               </div>
@@ -7289,10 +7376,10 @@
                 <span class="grab-travel-check" title="Biro Berizin Resmi PPIU Kemenag RI">✓</span>
               </div>
 
-              <!-- Meta Info Row: Tgl Keberangkatan (dd/mm/yy) • Duration • City • Airline -->
-              <div class="grab-card-meta-row">
-                <span class="grab-meta-item" title="Tanggal Keberangkatan">
-                  <svg width="10.5" height="10.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <!-- Meta Info Row: Tgl Keberangkatan (dd/mm/yy) • Duration • City • Airline (1 Baris Fleksibel) -->
+              <div class="grab-card-meta-row" style="display:flex; align-items:center; flex-wrap:nowrap; white-space:nowrap; overflow:hidden; width:100%; gap:3.5px; font-size:9.5px; margin-top:2px;">
+                <span class="grab-meta-item" style="display:inline-flex; align-items:center; gap:2px; flex-shrink:0; font-size:9.5px;" title="Tanggal Keberangkatan">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                     <line x1="16" y1="2" x2="16" y2="6"></line>
                     <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -7300,24 +7387,24 @@
                   </svg>
                   ${departureDateFormatted}
                 </span>
-                <span class="grab-meta-dot">•</span>
-                <span class="grab-meta-item">
-                  <svg width="10.5" height="10.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <span class="grab-meta-dot" style="flex-shrink:0; font-size:7px;">•</span>
+                <span class="grab-meta-item" style="display:inline-flex; align-items:center; gap:2px; flex-shrink:0; font-size:9.5px;">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 16 14"></polyline>
                   </svg>
                   ${Number(pkg.durationDays)} Hari
                 </span>
-                <span class="grab-meta-dot">•</span>
-                <span class="grab-meta-item">
-                  <svg width="10.5" height="10.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <span class="grab-meta-dot" style="flex-shrink:0; font-size:7px;">•</span>
+                <span class="grab-meta-item" style="display:inline-flex; align-items:center; gap:2px; flex-shrink:0; font-size:9.5px;">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                     <circle cx="12" cy="10" r="3"></circle>
                   </svg>
                   ${escapeHtml(departureShort)}
                 </span>
-                <span class="grab-meta-dot">•</span>
-                <span class="grab-meta-item">
+                <span class="grab-meta-dot" style="flex-shrink:0; font-size:7px;">•</span>
+                <span class="grab-meta-item" style="display:inline-flex; align-items:center; gap:2px; flex-shrink:0; font-size:9.5px;">
                   ✈️ ${escapeHtml(airlineShort)}
                 </span>
               </div>
