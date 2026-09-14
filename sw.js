@@ -1,4 +1,4 @@
-const CACHE_NAME = 'umrohpedia-pwa-v30';
+const CACHE_NAME = 'umrohpedia-pwa-v31';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',

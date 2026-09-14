@@ -1743,75 +1743,101 @@
         margin: 6px 0 12px;
         display: flex;
         flex-direction: column;
-        gap: 8px;
+        gap: 10px;
         border-radius: var(--radius-md);
+      }
+      .store-header-top-row {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
       }
       .store-profile-left {
         width: 100%;
         display: flex;
-        align-items: center;
-        gap: 10px;
+        align-items: flex-start;
+        gap: 12px;
       }
       .store-avatar-big {
         width: 44px;
         height: 44px;
         font-size: 20px;
         flex-shrink: 0;
+        margin-top: 2px;
       }
       .store-profile-info {
         flex: 1;
         min-width: 0;
       }
       .store-name-title {
-        font-size: 13.5px;
+        font-size: 14px;
         font-weight: 800;
-        margin-bottom: 2px;
+        margin-bottom: 4px;
         line-height: 1.25;
         display: flex;
         align-items: center;
         flex-wrap: wrap;
         gap: 4px;
       }
-      .store-location-sub {
-        font-size: 10.5px;
-        color: var(--slate-500);
-        margin-bottom: 0;
-        line-height: 1.2;
-        white-space: normal;
-      }
-      .store-actions-row {
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 5px;
-        margin: 4px 0 2px;
-      }
-      .store-actions-row .btn {
-        padding: 4px 2px;
-        font-size: 11px;
-        font-weight: 700;
-        height: 30px;
-        text-align: center;
-        justify-content: center;
-        white-space: nowrap;
-        border-radius: var(--radius-sm);
-      }
-      .store-stats-right {
-        width: 100%;
-        border-left: none;
-        border-top: 1px solid var(--slate-100);
-        padding: 6px 0 0;
-        margin-top: 2px;
+      .store-info-details {
         display: flex;
-        justify-content: space-around;
+        flex-direction: column;
+        gap: 2.5px;
+        margin-top: 3px;
+      }
+      .store-info-line {
+        font-size: 10.5px;
+        color: var(--slate-600);
+        display: flex;
         align-items: center;
+        gap: 4px;
+        line-height: 1.25;
       }
-      .store-stats-right .stat-title {
-        font-size: 11px !important;
-        font-weight: 800;
+      .store-info-line strong {
+        color: var(--slate-800);
+        font-weight: 600;
       }
-      .store-stats-right .stat-sub {
-        font-size: 9.5px !important;
+      .store-info-icon {
+        font-size: 11px;
+        flex-shrink: 0;
+      }
+      .store-actions-wrapper {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding-top: 8px;
+        border-top: 1px solid var(--slate-100);
+      }
+      .store-follow-btn {
+        flex: 1;
+        height: 32px !important;
+        font-size: 11.5px !important;
+        padding: 0 14px !important;
+        border-radius: var(--radius-full) !important;
+      }
+      .store-icon-actions {
+        display: flex;
+        gap: 6px;
+      }
+      .store-icon-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 13.5px;
+        border-radius: var(--radius-full);
+        background: var(--white);
+        border: 1px solid var(--slate-200);
+        color: var(--slate-700);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .store-icon-btn:hover {
+        background: var(--slate-50);
+        border-color: var(--primary-500);
       }
       .store-tabs-nav {
         overflow-x: auto;
@@ -1884,33 +1910,66 @@
       gap: 6px;
       margin-bottom: 3px;
     }
-    .store-location-sub {
+    .store-info-details {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-top: 5px;
+    }
+    .store-info-line {
       font-size: 11.5px;
-      color: var(--slate-500);
-      margin-bottom: 0;
-    }
-    .store-actions-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      width: 100%;
-    }
-    .store-actions-row .btn {
-      padding: 6px 10px;
-      font-size: 12px;
-      font-weight: 700;
-      height: 32px;
-      text-align: center;
-      justify-content: center;
-      white-space: nowrap;
-      border-radius: var(--radius-sm);
-    }
-    .store-stats-right {
+      color: var(--slate-600);
       display: flex;
       align-items: center;
-      gap: 16px;
-      border-left: 1px solid var(--slate-200);
-      padding-left: 20px;
+      gap: 6px;
+      line-height: 1.3;
+    }
+    .store-info-line strong {
+      color: var(--slate-800);
+      font-weight: 600;
+    }
+    .store-info-icon {
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .store-actions-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .store-follow-btn {
+      padding: 6px 18px !important;
+      font-size: 12.5px !important;
+      font-weight: 700 !important;
+      height: 36px;
+      border-radius: var(--radius-full) !important;
+      white-space: nowrap;
+    }
+    .store-icon-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .store-icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      color: var(--slate-700);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-xs);
+    }
+    .store-icon-btn:hover {
+      background: var(--slate-50);
+      border-color: var(--primary-500);
+      color: var(--primary-700);
+      transform: translateY(-1px);
     }
     .store-tabs-nav {
       display: flex;
@@ -6223,49 +6282,38 @@
                       <span class="verified-check" title="Terverifikasi PPIU Kemenag RI">✓</span>
                       <span class="badge badge-verified" style="font-size:10px; vertical-align:middle;">Official Store PPIU</span>
                     </h1>
-                    <div class="store-location-sub">
-                      📍 ${escapeHtml(travel.city || 'Jakarta Selatan')} &bull; No. SK: <strong>${escapeHtml(travel.skKemenag || 'PPIU No. 412/2021')}</strong> &bull; Akreditasi A
+                    <div class="store-info-details">
+                      <div class="store-info-line"><span class="store-info-icon">📍</span> Lokasi: <strong>${escapeHtml(travel.city || 'Indonesia')}</strong></div>
+                      <div class="store-info-line"><span class="store-info-icon">📜</span> No. SK: <strong>${escapeHtml(travel.skKemenag || 'PPIU No. 412/2021')}</strong></div>
+                      <div class="store-info-line"><span class="store-info-icon">⭐</span> Akreditasi: <strong>Terakreditasi A (Kemenag RI)</strong></div>
                     </div>
                   </div>
                 </div>
 
-                <!-- Store Stats Right -->
-                <div class="store-stats-right">
-                  <div style="text-align:center;">
-                    <div class="stat-title" style="font-size: 1.1rem; font-weight: 800; color: var(--slate-900);">⭐ 4.9 <span style="font-size:11px; font-weight:600; color:var(--slate-500);">(2.916)</span></div>
-                    <div class="stat-sub" style="font-size: 10.5px; color: var(--slate-500);">Rating & Ulasan</div>
-                  </div>
-                  <div style="width: 1px; height: 26px; background: var(--slate-200);"></div>
-                  <div style="text-align:center;">
-                    <div class="stat-title" style="font-size: 1.1rem; font-weight: 800; color: var(--slate-900);">19 rb</div>
-                    <div class="stat-sub" style="font-size: 10.5px; color: var(--slate-500);">Jamaah Berangkat</div>
+                <!-- Right Side: Tombol Follow & Icon Actions -->
+                <div class="store-actions-wrapper">
+                  <button id="btn-follow-travel" class="btn ${isFollowed ? 'btn-outline' : 'btn-primary'} store-follow-btn" onclick="TravelStore.toggleFollow('${escapeHtml(travel.id)}')">
+                    ${isFollowed ? '✓ Mengikuti' : '+ Follow'}
+                  </button>
+                  <div class="store-icon-actions">
+                    <button class="store-icon-btn" onclick="ChatModal.open()" title="Kirim Pesan ke Biro">
+                      💬
+                    </button>
+                    <button class="store-icon-btn" onclick="TravelStore.showLegalModal('${escapeHtml(travel.id)}')" title="Informasi & Legalitas Resmi">
+                      ℹ️
+                    </button>
+                    <button class="store-icon-btn" onclick="navigator.clipboard.writeText(window.location.href); Toast.show('Link profil biro travel berhasil disalin!', 'success');" title="Salin Link Profil Biro">
+                      ↗️
+                    </button>
                   </div>
                 </div>
               </div>
-
-              <!-- 4 Action Buttons in 1 Single Row -->
-              <div class="store-actions-row">
-                <button id="btn-follow-travel" class="btn ${isFollowed ? 'btn-outline' : 'btn-primary'} btn-sm" onclick="TravelStore.toggleFollow('${escapeHtml(travel.id)}')">
-                  ${isFollowed ? '✓ Mengikuti' : '+ Follow'}
-                </button>
-                <button class="btn btn-outline-primary btn-sm" onclick="ChatModal.open()">
-                  💬 Chat
-                </button>
-                <button class="btn btn-outline btn-sm" onclick="TravelStore.showLegalModal('${escapeHtml(travel.id)}')">
-                  📋 Info
-                </button>
-                <button class="btn btn-outline btn-sm" onclick="navigator.clipboard.writeText(window.location.href); Toast.show('Link profil biro travel berhasil disalin!', 'success');">
-                  ↗ Bagikan
-                </button>
-              </div>
             </div>
 
-            <!-- Store Tabs Navigation -->
+            <!-- Store Tabs Navigation (Hanya Beranda & Jadwal) -->
             <div class="store-tabs-nav">
               <button class="store-tab-btn active" onclick="TravelStore.switchTab(0, this)">Beranda</button>
-              <button class="store-tab-btn" onclick="TravelStore.switchTab(1, this)">Semua Paket (${packages.length})</button>
-              <button class="store-tab-btn" onclick="TravelStore.switchTab(2, this)">Tentang Legalitas</button>
-              <button class="store-tab-btn" onclick="TravelStore.switchTab(3, this)">Ulasan Jamaah (84)</button>
+              <button class="store-tab-btn" onclick="TravelStore.switchTab(1, this)">Jadwal (${packages.length})</button>
             </div>
 
             <!-- Store Tab Body -->
@@ -6407,10 +6455,9 @@
                         </div>
                         <div class="biro-sk-row">
                           <span class="biro-sk-badge">🛡️ ${escapeHtml(t.skKemenag || 'Resmi PPIU')}</span>
-                          <span class="biro-city">📍 ${escapeHtml(cityShort)}</span>
                         </div>
                         <div class="biro-stats-row">
-                          <span class="biro-stat-item">⭐ ${Number(t.rating || 4.9).toFixed(1)}</span>
+                          <span class="biro-stat-item">📍 ${escapeHtml(cityShort)}</span>
                           <span class="biro-meta-dot">•</span>
                           <span class="biro-stat-item">👥 ${t.jamaahTotal ? (t.jamaahTotal >= 1000 ? Math.floor(t.jamaahTotal/1000) + ' rb+' : t.jamaahTotal) : '1 rb+'}</span>
                           <span class="biro-meta-dot">•</span>
@@ -6669,7 +6716,7 @@
             <!-- Right: Content Details (Height strictly synchronized to photo) -->
             <div class="grab-card-content" style="display: flex; flex-direction: column; justify-content: space-between; flex: 1; min-width: 0; padding: 0;">
               <!-- Baris 1: Tanggal Keberangkatan Soft Pill Biru Lembut (Tanpa Wishlist) -->
-              <div class="grab-card-header" style="display:flex; align-items:center; margin:0; line-height:1;">
+              <div class="grab-card-header" style="display:flex; align-items:center; margin:0 0 3px 0; line-height:1;">
                 <div class="schedule-card-date-badge" style="display:inline-flex; align-items:center; gap:3.5px; font-size:10px; font-weight:700; color:#0369a1; background:#e0f2fe; border:1px solid #bae6fd; padding:1.5px 6px; border-radius:4px; line-height:1.2; white-space:nowrap;">
                   <svg width="10.5" height="10.5" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -6682,7 +6729,7 @@
               </div>
 
               <!-- Baris 2: Judul Paket (Tampil Maksimal Tanpa (...)) -->
-              <h3 class="grab-card-title" style="font-size:12.5px; font-weight:700; line-height:1.25; margin:1px 0 2px 0; width:100%; display:-webkit-box; -webkit-line-clamp:2; line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; text-overflow:clip; word-break:break-word;" title="${escapeHtml(rawTitle)}">
+              <h3 class="grab-card-title" style="font-size:12.5px; font-weight:700; line-height:1.25; margin:3px 0 2px 0; width:100%; display:-webkit-box; -webkit-line-clamp:2; line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; text-overflow:clip; word-break:break-word;" title="${escapeHtml(rawTitle)}">
                 ${escapeHtml(displayTitle)}
               </h3>
 
@@ -7821,7 +7868,7 @@
               <button class="btn btn-sm" style="background:var(--white); color:var(--primary-700); font-weight:700; font-size:11px;" onclick="Toast.show('Kode voucher UMROHBERKAH otomatis diterapkan saat checkout!', 'success')">Klaim Voucher</button>
             </div>
             <div style="margin-bottom: 24px;">
-              <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--slate-900); margin-bottom: 14px;">Sesuai incaran kamu di biro ini</h2>
+              <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--slate-900); margin-bottom: 14px;">Rekomendasi Paket Unggulan</h2>
               <div class="packages-grid">
                 ${packages.map(pkg => Marketplace.createPackageCardHtml(pkg)).join('')}
               </div>
@@ -7830,44 +7877,9 @@
         } else if (tabIndex === 1) {
           body.innerHTML = `
             <div style="margin-bottom: 24px;">
-              <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--slate-900); margin-bottom: 14px;">Semua Katalog Paket (${packages.length})</h2>
+              <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--slate-900); margin-bottom: 14px;">Jadwal Keberangkatan (${packages.length})</h2>
               <div class="packages-grid">
                 ${packages.map(pkg => Marketplace.createPackageCardHtml(pkg)).join('')}
-              </div>
-            </div>
-          `;
-        } else if (tabIndex === 2) {
-          body.innerHTML = `
-            <div style="background:var(--white); border:1px solid var(--slate-200); border-radius:var(--radius-lg); padding:24px; max-width:800px;">
-              <h3 style="font-size:15px; font-weight:800; margin-bottom:14px; color:var(--slate-900);">Legalitas & Sertifikasi Resmi Biro Travel</h3>
-              <table class="pdp-spec-table">
-                <tbody>
-                  <tr><td class="pdp-spec-label">Nama Biro PPIU</td><td class="pdp-spec-val">🕌 ${escapeHtml(travel.name)}</td></tr>
-                  <tr><td class="pdp-spec-label">Nomor Izin SK Kemenag</td><td class="pdp-spec-val">📜 ${escapeHtml(travel.skKemenag || 'No. 412/2021 (Kemenag RI)')}</td></tr>
-                  <tr><td class="pdp-spec-label">Status Akreditasi</td><td class="pdp-spec-val">⭐ Akreditasi A (Sangat Baik)</td></tr>
-                  <tr><td class="pdp-spec-label">Kantor Operasional</td><td class="pdp-spec-val">📍 ${escapeHtml(travel.city || 'Jakarta Selatan, DKI Jakarta')}</td></tr>
-                  <tr><td class="pdp-spec-label">Jaminan Jamaah</td><td class="pdp-spec-val">🛡️ 5 Pasti Umroh Kemenag & Escrow Rekening Amanah</td></tr>
-                </tbody>
-              </table>
-            </div>
-          `;
-        } else if (tabIndex === 3) {
-          body.innerHTML = `
-            <div class="pdp-review-summary" style="max-width:850px;">
-              <h3 style="font-size:14px; font-weight:800; margin-bottom:14px;">ULASAN JAMAAH BIRO TRAVEL</h3>
-              <div class="review-score-grid">
-                <div style="text-align:center;">
-                  <div class="review-score-big">⭐ 4.9<span style="font-size:1.1rem; color:var(--slate-500); font-weight:600;">/5.0</span></div>
-                  <p style="font-size:11px; color:var(--slate-600); font-weight:700; margin-top:4px;">98% jamaah puas</p>
-                  <p style="font-size:10px; color:var(--slate-500);">2.916 rating &bull; 84 ulasan</p>
-                </div>
-                <div>
-                  <div class="review-bar-row"><span>5★</span><div class="review-bar-bg"><div class="review-bar-fill" style="width:94%;"></div></div><span>(2.740)</span></div>
-                  <div class="review-bar-row"><span>4★</span><div class="review-bar-bg"><div class="review-bar-fill" style="width:5%;"></div></div><span>(146)</span></div>
-                  <div class="review-bar-row"><span>3★</span><div class="review-bar-bg"><div class="review-bar-fill" style="width:1%;"></div></div><span>(30)</span></div>
-                  <div class="review-bar-row"><span>2★</span><div class="review-bar-bg"><div class="review-bar-fill" style="width:0%;"></div></div><span>(0)</span></div>
-                  <div class="review-bar-row"><span>1★</span><div class="review-bar-bg"><div class="review-bar-fill" style="width:0%;"></div></div><span>(0)</span></div>
-                </div>
               </div>
             </div>
           `;
@@ -7877,19 +7889,21 @@
       showLegalModal(travelId) {
         const travel = this.currentTravel || ApiClient.db.travels.find(t => t.id === travelId) || ApiClient.db.travels[0];
         ModalManager.open({
-          title: "Informasi Legalitas & Izin PPIU",
+          title: "Legalitas & Sertifikasi Resmi PPIU",
           body: `
             <div style="text-align:center; margin-bottom:16px;">
-              <div style="font-size:40px; margin-bottom:8px;">🕌</div>
-              <h3 style="font-size:16px; font-weight:800; color:var(--slate-900);">${escapeHtml(travel.name)}</h3>
-              <div class="badge badge-verified" style="margin-top:4px;">Izin PPIU Resmi Kemenag RI</div>
+              <div style="font-size:42px; margin-bottom:6px;">🕌</div>
+              <h3 style="font-size:16px; font-weight:800; color:var(--slate-900); margin-bottom:4px;">${escapeHtml(travel.name)}</h3>
+              <span class="badge badge-verified" style="font-size:10.5px;">✓ Terdaftar Resmi Kemenag RI</span>
             </div>
             <table class="pdp-spec-table">
               <tbody>
-                <tr><td class="pdp-spec-label">SK Kemenag</td><td class="pdp-spec-val"><strong>${escapeHtml(travel.skKemenag || 'No. 412/2021')}</strong></td></tr>
-                <tr><td class="pdp-spec-label">Kota Asal</td><td class="pdp-spec-val">${escapeHtml(travel.city || 'Jakarta')}</td></tr>
-                <tr><td class="pdp-spec-label">Sertifikasi</td><td class="pdp-spec-val">Terakreditasi A (Kemenag RI)</td></tr>
-                <tr><td class="pdp-spec-label">Garansi</td><td class="pdp-spec-val">Jaminan 5 Pasti Umroh</td></tr>
+                <tr><td class="pdp-spec-label">Nama Biro PPIU</td><td class="pdp-spec-val"><strong>${escapeHtml(travel.name)}</strong></td></tr>
+                <tr><td class="pdp-spec-label">Nomor Izin SK Kemenag</td><td class="pdp-spec-val"><strong style="color:#047857;">${escapeHtml(travel.skKemenag || 'No. 412/2021 (Kemenag RI)')}</strong></td></tr>
+                <tr><td class="pdp-spec-label">Status Akreditasi</td><td class="pdp-spec-val">⭐ Akreditasi A (Sangat Baik)</td></tr>
+                <tr><td class="pdp-spec-label">Kantor Operasional</td><td class="pdp-spec-val">📍 ${escapeHtml(travel.city || 'Indonesia')}</td></tr>
+                <tr><td class="pdp-spec-label">Jaminan Jamaah</td><td class="pdp-spec-val">🛡️ 5 Pasti Umroh Kemenag RI</td></tr>
+                <tr><td class="pdp-spec-label">Keamanan Transaksi</td><td class="pdp-spec-val">🔒 Escrow Rekening Penampung Amanah</td></tr>
               </tbody>
             </table>
           `,
