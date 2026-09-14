@@ -181,7 +181,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      margin-left: 6px;
+      margin-left: 10px;
       white-space: nowrap;
       cursor: pointer;
       flex-shrink: 0;
@@ -2690,6 +2690,24 @@
     }
 
 
+    /* Shared Modern Accent & Status Pill */
+    .page-title-bar-accent {
+      width: 4px;
+      height: 32px;
+      background: linear-gradient(180deg, var(--primary-500) 0%, var(--primary-700) 100%);
+      border-radius: var(--radius-full);
+      flex-shrink: 0;
+    }
+    .status-dot-pulse {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00aa5b;
+      margin-right: 5px;
+      box-shadow: 0 0 0 2px rgba(0, 170, 91, 0.2);
+    }
+
     /* ==========================================================================
        6F. SCHEDULE & DEPARTURE CALENDAR MODULE STYLES
        ========================================================================== */
@@ -2711,23 +2729,31 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      flex-wrap: wrap;
     }
     .schedule-title {
       font-size: 1.25rem;
       font-weight: 800;
       color: var(--slate-900);
       margin: 0;
+      line-height: 1.2;
+    }
+    .schedule-subtitle {
+      font-size: 11.5px;
+      color: var(--slate-500);
+      margin: 2px 0 0;
+      font-weight: 500;
     }
     .schedule-count-pill {
       display: inline-flex;
       align-items: center;
-      background: #e0f2fe;
-      color: #0369a1;
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
       font-size: 11.5px;
       font-weight: 700;
       padding: 3px 10px;
       border-radius: var(--radius-full);
+      white-space: nowrap;
     }
     .schedule-month-tabs {
       display: flex;
@@ -3021,6 +3047,10 @@
         font-size: 15px !important;
         font-weight: 800 !important;
         margin-bottom: 0 !important;
+        line-height: 1.2 !important;
+      }
+      .schedule-subtitle {
+        font-size: 10.5px !important;
       }
       .schedule-count-pill {
         font-size: 10px !important;
@@ -3155,9 +3185,15 @@
         padding: 10px 12px !important;
       }
       .biro-avatar {
-        width: 38px !important;
-        height: 38px !important;
-        font-size: 17px !important;
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 24px !important;
+        border-radius: 12px !important;
+      }
+      .biro-verified-pin {
+        width: 17px !important;
+        height: 17px !important;
+        font-size: 9.5px !important;
       }
       .biro-name {
         font-size: 12.5px !important;
@@ -3185,13 +3221,26 @@
     .biro-title-wrap {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
     .biro-page-title {
       font-size: 1.25rem;
       font-weight: 800;
       color: var(--slate-900);
       margin: 0;
+      line-height: 1.2;
+    }
+    .biro-verified-badge-mini {
+      display: inline-flex;
+      align-items: center;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #047857;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      padding: 1px 7px;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
     }
     .biro-count-badge {
       display: inline-flex;
@@ -3203,11 +3252,13 @@
       font-weight: 700;
       padding: 2px 8px;
       border-radius: var(--radius-full);
+      white-space: nowrap;
     }
     .biro-page-subtitle {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--slate-500);
       margin-top: 2px;
+      font-weight: 500;
     }
     .biro-search-box {
       margin-bottom: 8px;
@@ -3302,32 +3353,32 @@
       flex-shrink: 0;
     }
     .biro-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
       background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
       color: #047857;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 24px;
       border: 1px solid rgba(0, 170, 91, 0.15);
     }
     .biro-verified-pin {
       position: absolute;
       bottom: -2px;
       right: -2px;
-      width: 15px;
-      height: 15px;
+      width: 17px;
+      height: 17px;
       border-radius: 50%;
       background: #00aa5b;
       color: #ffffff;
-      font-size: 9px;
+      font-size: 9.5px;
       font-weight: 800;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1.5px solid #ffffff;
+      border: 2px solid #ffffff;
       box-shadow: 0 1px 3px rgba(0,0,0,0.15);
     }
     .biro-card-body {
@@ -3409,17 +3460,53 @@
       margin: 0 auto;
     }
     .travel-map-header {
-      margin-bottom: 16px;
+      margin-bottom: 14px;
+    }
+    .travel-map-header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .travel-map-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
     .travel-map-title {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
       font-weight: 800;
       color: var(--slate-900);
-      margin-bottom: 4px;
+      margin: 0;
+      line-height: 1.2;
     }
     .travel-map-subtitle {
-      font-size: 12.5px;
-      color: var(--slate-600);
+      font-size: 11.5px;
+      color: var(--slate-500);
+      margin: 1px 0 0;
+      font-weight: 500;
+    }
+    .map-view-switch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      color: var(--primary-700);
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-xs);
+    }
+    .map-view-switch-btn:hover {
+      background: var(--slate-50);
+      border-color: var(--primary-600);
+      color: var(--primary-800);
     }
     .travel-map-city-tabs {
       display: flex;
@@ -4160,7 +4247,7 @@
       .header-user-profile { display: none; }
       .top-utility-bar { display: none; }
       .header-search-box { display: none !important; } /* Kolom pencarian atas dipindah khusus ke bawah banner slider */
-      .brand-logo { margin-left: 2px; }
+      .brand-logo { margin-left: 10px; }
       .brand-logo-img { height: 32px; max-width: 140px; }
       .header-actions { gap: 6px; }
       .header-icon-btn { width: 34px; height: 34px; }
@@ -4446,15 +4533,15 @@
       flex-shrink: 0;
     }
     .biro-avatar {
-      width: 44px;
-      height: 44px;
+      width: 50px;
+      height: 50px;
       border-radius: 12px;
       background: #f0fdf4;
       border: 1px solid #bbf7d0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 24px;
     }
     .biro-verified-pin {
       position: absolute;
@@ -4462,10 +4549,10 @@
       right: -3px;
       background: #10b981;
       color: #ffffff;
-      font-size: 9px;
+      font-size: 9.5px;
       font-weight: 800;
-      width: 15px;
-      height: 15px;
+      width: 17px;
+      height: 17px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -4582,9 +4669,10 @@
         gap: 8px;
       }
       .biro-avatar {
-        width: 38px;
-        height: 38px;
-        font-size: 18px;
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        border-radius: 12px;
       }
       .biro-name {
         font-size: 13px;
@@ -6232,11 +6320,17 @@
             <div class="biro-header">
               <div class="biro-header-compact">
                 <div class="biro-title-wrap">
-                  <h1 class="biro-page-title">🕌 Direktori Biro PPIU</h1>
-                  <span class="biro-count-badge">${travels.length} Biro Terverifikasi</span>
+                  <div class="page-title-bar-accent"></div>
+                  <div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                      <h1 class="biro-page-title">Direktori Biro PPIU</h1>
+                      <span class="biro-verified-badge-mini">✓ Kemenag RI</span>
+                    </div>
+                    <p class="biro-page-subtitle">Penyelenggara resmi berizin SK Kemenag dengan reputasi terpercaya</p>
+                  </div>
                 </div>
+                <span class="biro-count-badge"><span class="status-dot-pulse"></span>${travels.length} Biro</span>
               </div>
-              <p class="biro-page-subtitle">Biro penyelenggara resmi berizin SK Kemenag RI dengan reputasi amanah.</p>
             </div>
 
             <div class="biro-search-box">
@@ -6406,9 +6500,13 @@
             <div class="schedule-header">
               <div class="schedule-header-compact">
                 <div class="schedule-title-wrap">
-                  <h1 class="schedule-title">📅 Jadwal Keberangkatan Umroh 1448H</h1>
-                  <span class="schedule-count-pill">${departureItems.length} Jadwal</span>
+                  <div class="page-title-bar-accent"></div>
+                  <div>
+                    <h1 class="schedule-title">Jadwal Keberangkatan</h1>
+                    <p class="schedule-subtitle">Musim 1448H &bull; Seluruh biro terakreditasi resmi PPIU</p>
+                  </div>
                 </div>
+                <span class="schedule-count-pill"><span class="status-dot-pulse"></span>${departureItems.length} Jadwal</span>
               </div>
             </div>
 
@@ -6677,13 +6775,16 @@
         root.innerHTML = `
           <div class="travel-map-page">
             <div class="travel-map-header">
-              <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
-                <div>
-                  <h1 class="travel-map-title">🗺️ Peta Persebaran Biro Travel PPIU</h1>
-                  <p class="travel-map-subtitle">Peta interaktif persebaran lokasi kantor biro travel berizin resmi PPIU Kemenag RI. Klik pin marker masjid untuk melihat profil &amp; petunjuk rute.</p>
+              <div class="travel-map-header-inner">
+                <div class="travel-map-title-wrap">
+                  <div class="page-title-bar-accent"></div>
+                  <div>
+                    <h1 class="travel-map-title">Peta Lokasi Kantor Biro</h1>
+                    <p class="travel-map-subtitle">Sebaran kantor resmi PPIU di seluruh Indonesia</p>
+                  </div>
                 </div>
-                <button class="btn btn-outline-primary btn-sm" onclick="Router.navigate('travels')">
-                  🕌 Direktori Biro Agen &rarr;
+                <button class="map-view-switch-btn" onclick="Router.navigate('travels')" title="Buka Direktori Biro">
+                  Daftar Biro &rsaquo;
                 </button>
               </div>
             </div>
