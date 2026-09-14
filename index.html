@@ -1050,8 +1050,10 @@
     .grab-card-thumb-wrapper,
     .card-thumb-wrapper {
       position: relative;
-      width: 104px;
-      height: 104px;
+      width: 108px;
+      height: 108px;
+      min-width: 108px;
+      min-height: 108px;
       border-radius: var(--radius-md);
       overflow: visible;
       background: var(--slate-100);
@@ -2272,11 +2274,11 @@
       }
       .grab-card-thumb-wrapper,
       .tokopedia-card .card-thumb-wrapper {
-        width: 88px;
-        min-width: 88px;
-        max-width: 88px;
-        height: 88px;
-        min-height: 88px;
+        width: 108px;
+        min-width: 108px;
+        max-width: 108px;
+        height: 108px;
+        min-height: 108px;
         border-radius: 8px;
         position: relative;
         overflow: hidden;
@@ -6384,9 +6386,9 @@
         const airlineShort = (pkg.airline || 'Saudia').split(' ')[0];
         const departureShort = (item.city || pkg.departureCity || 'Jakarta').split(' ')[0];
         
-        // Judul maksimal 30 karakter
+        // Judul maksimal 25 karakter
         const rawTitle = pkg.title || 'Paket Umroh';
-        const displayTitle = rawTitle.length > 30 ? (rawTitle.slice(0, 30).trim() + '...') : rawTitle;
+        const displayTitle = rawTitle.length > 25 ? (rawTitle.slice(0, 25).trim() + '...') : rawTitle;
 
         // Format tanggal keberangkatan: (icon kalender) Senin, 14 Sept 2026
         const dayNamesIndo = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
@@ -7241,7 +7243,9 @@
         const quotaLeft = Math.max(0, Number(pkg.quotaTotal || 40) - Number(pkg.quotaTaken || 0));
         const airlineShort = (pkg.airline || 'Saudia').split(' ')[0];
         const departureShort = (pkg.departureCity || 'Jakarta').split(' ')[0];
-        const displayTitle = pkg.title || 'Paket Umroh';
+        // Judul maksimal 25 karakter
+        const rawTitle = pkg.title || 'Paket Umroh';
+        const displayTitle = rawTitle.length > 25 ? (rawTitle.slice(0, 25).trim() + '...') : rawTitle;
 
         // Format tanggal keberangkatan dd/mm/yy
         let departureDateFormatted = '15/10/26';
@@ -7263,7 +7267,7 @@
             <!-- Left: Squarish Thumbnail with GrabFood-style badges -->
             <div class="grab-card-thumb-container">
               <div class="grab-card-thumb-wrapper">
-                <img src="${safeUrl(pkg.image)}" class="grab-card-thumb" alt="${escapeHtml(displayTitle)}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?auto=format&fit=crop&w=800&q=80'">
+                <img src="${safeUrl(pkg.image)}" class="grab-card-thumb" alt="${escapeHtml(rawTitle)}" loading="lazy" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?auto=format&fit=crop&w=800&q=80'">
                 <!-- Top-Left Green Badge (GrabFood "Promo" style) -->
                 <span class="grab-badge-promo">Promo</span>
                 <!-- Bottom-Right Circular Verified Badge (GrabFood checkmark style) -->
@@ -7279,7 +7283,7 @@
             <div class="grab-card-content">
               <!-- Top Row: Title & Wishlist Button (di sebelah kanan, diluar foto produk) -->
               <div class="grab-card-header">
-                <h3 class="grab-card-title" title="${escapeHtml(displayTitle)}">
+                <h3 class="grab-card-title" title="${escapeHtml(rawTitle)}">
                   ${escapeHtml(displayTitle)}
                 </h3>
                 <button class="grab-wishlist-btn ${isWish ? 'active' : ''}" onclick="event.stopPropagation(); AuthStore.toggleWishlist('${escapeHtml(pkg.id)}')" title="Simpan ke Wishlist">
