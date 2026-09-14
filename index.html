@@ -3198,6 +3198,24 @@
       .biro-name {
         font-size: 12.5px !important;
       }
+      .biro-page-title {
+        font-size: 15px !important;
+        font-weight: 800 !important;
+        line-height: 1.2 !important;
+      }
+      .biro-verified-badge-mini {
+        font-size: 9.5px !important;
+        padding: 1px 6px !important;
+        white-space: nowrap !important;
+      }
+      .biro-page-subtitle {
+        font-size: 10.5px !important;
+        margin-top: 1px !important;
+      }
+      .biro-count-badge {
+        font-size: 10px !important;
+        padding: 2px 7px !important;
+      }
     }
 
     /* ==========================================================================
@@ -3216,12 +3234,13 @@
       justify-content: space-between;
       align-items: center;
       gap: 10px;
-      flex-wrap: wrap;
     }
     .biro-title-wrap {
       display: flex;
       align-items: center;
       gap: 10px;
+      min-width: 0;
+      flex: 1;
     }
     .biro-page-title {
       font-size: 1.25rem;
@@ -3229,6 +3248,7 @@
       color: var(--slate-900);
       margin: 0;
       line-height: 1.2;
+      white-space: nowrap;
     }
     .biro-verified-badge-mini {
       display: inline-flex;
@@ -3241,6 +3261,7 @@
       padding: 1px 7px;
       border-radius: 4px;
       letter-spacing: 0.02em;
+      white-space: nowrap;
     }
     .biro-count-badge {
       display: inline-flex;
@@ -3253,12 +3274,14 @@
       padding: 2px 8px;
       border-radius: var(--radius-full);
       white-space: nowrap;
+      flex-shrink: 0;
     }
     .biro-page-subtitle {
       font-size: 11.5px;
       color: var(--slate-500);
       margin-top: 2px;
       font-weight: 500;
+      white-space: nowrap;
     }
     .biro-search-box {
       margin-bottom: 8px;
@@ -4390,27 +4413,28 @@
       padding: 14px 0 40px;
     }
     .biro-header {
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     .biro-header-compact {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
     }
     .biro-title-wrap {
       display: flex;
       align-items: center;
       gap: 10px;
-      flex-wrap: wrap;
+      min-width: 0;
+      flex: 1;
     }
     .biro-page-title {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 800;
       color: var(--slate-900);
       margin: 0;
-      letter-spacing: -0.02em;
+      line-height: 1.2;
+      white-space: nowrap;
     }
     .biro-count-badge {
       display: inline-flex;
@@ -4418,17 +4442,21 @@
       gap: 4px;
       background: #ecfdf5;
       color: #047857;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 700;
-      padding: 3px 9px;
-      border-radius: 20px;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
       border: 1px solid #a7f3d0;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .biro-page-subtitle {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--slate-500);
-      margin-top: 4px;
+      margin-top: 2px;
       margin-bottom: 0;
+      font-weight: 500;
+      white-space: nowrap;
     }
     .biro-search-box {
       margin-top: 12px;
@@ -4673,6 +4701,23 @@
         height: 50px;
         font-size: 24px;
         border-radius: 12px;
+      }
+      .biro-page-title {
+        font-size: 15px !important;
+        font-weight: 800 !important;
+      }
+      .biro-verified-badge-mini {
+        font-size: 9.5px !important;
+        padding: 1px 6px !important;
+        white-space: nowrap !important;
+      }
+      .biro-page-subtitle {
+        font-size: 10.5px !important;
+        margin-top: 1px !important;
+      }
+      .biro-count-badge {
+        font-size: 10px !important;
+        padding: 2px 7px !important;
       }
       .biro-name {
         font-size: 13px;
@@ -6321,12 +6366,12 @@
               <div class="biro-header-compact">
                 <div class="biro-title-wrap">
                   <div class="page-title-bar-accent"></div>
-                  <div>
+                  <div style="min-width:0;">
                     <div style="display:flex; align-items:center; gap:8px;">
                       <h1 class="biro-page-title">Direktori Biro PPIU</h1>
                       <span class="biro-verified-badge-mini">✓ Kemenag RI</span>
                     </div>
-                    <p class="biro-page-subtitle">Penyelenggara resmi berizin SK Kemenag dengan reputasi terpercaya</p>
+                    <p class="biro-page-subtitle">Biro resmi terdaftar Kemenag RI</p>
                   </div>
                 </div>
                 <span class="biro-count-badge"><span class="status-dot-pulse"></span>${travels.length} Biro</span>
