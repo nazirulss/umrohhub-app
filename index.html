@@ -1520,6 +1520,391 @@
       font-weight: 600;
     }
 
+    /* Modern Dynamic PDP Tab Styles */
+    .pdp-tab-pane {
+      padding: 8px 0 16px;
+      animation: fadeInPdpTab 0.25s ease-in-out;
+    }
+    @keyframes fadeInPdpTab {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .pdp-desc-text {
+      font-size: 13px;
+      color: var(--slate-700);
+      line-height: 1.75;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--slate-200);
+    }
+    .pdp-facility-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .facility-card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      box-shadow: var(--shadow-xs);
+    }
+    .facility-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .facility-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .facility-type {
+      font-size: 10.5px;
+      color: var(--slate-500);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+    .facility-name {
+      font-size: 13px;
+      color: var(--slate-900);
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .facility-desc {
+      font-size: 11.5px;
+      color: var(--slate-600);
+      line-height: 1.55;
+    }
+    .facility-checklist-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .facility-checklist-col {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+    }
+    .facility-checklist-col.include {
+      border-left: 4px solid var(--primary-600);
+    }
+    .facility-checklist-col.exclude {
+      border-left: 4px solid var(--warning-600);
+    }
+    .checklist-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--slate-900);
+      margin-bottom: 10px;
+    }
+    .checklist-list {
+      padding-left: 18px;
+      font-size: 12px;
+      color: var(--slate-700);
+      line-height: 1.7;
+    }
+    .checklist-list li {
+      margin-bottom: 4px;
+    }
+
+    /* Modern Timeline V2 for Itinerary */
+    .timeline-v2 {
+      position: relative;
+      padding-left: 20px;
+      border-left: 2px solid var(--primary-200);
+      margin-left: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .timeline-v2-item {
+      position: relative;
+    }
+    .timeline-v2-marker {
+      position: absolute;
+      left: -33px;
+      top: 2px;
+    }
+    .timeline-v2-badge {
+      display: inline-block;
+      background: var(--primary-600);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+      white-space: nowrap;
+    }
+    .timeline-v2-card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      box-shadow: var(--shadow-xs);
+    }
+    .timeline-v2-title {
+      font-size: 13px;
+      color: var(--slate-900);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .timeline-v2-desc {
+      font-size: 12px;
+      color: var(--slate-600);
+      line-height: 1.55;
+    }
+
+    /* Terms & Conditions Grid */
+    .pdp-terms-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .pdp-terms-card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      box-shadow: var(--shadow-xs);
+    }
+
+    @media (max-width: 768px) {
+      .pdp-facility-grid,
+      .facility-checklist-container,
+      .pdp-terms-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Enhanced Booking Modal Styles */
+    .modal-pkg-summary {
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .modal-pkg-icon {
+      font-size: 26px;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .modal-pkg-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .modal-pkg-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--slate-900);
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+    .modal-pkg-meta {
+      font-size: 11.5px;
+      color: var(--slate-600);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .modal-variant-pills {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 6px;
+    }
+    @media (max-width: 480px) {
+      .modal-variant-pills {
+        grid-template-columns: 1fr;
+      }
+    }
+    .modal-variant-btn {
+      padding: 8px 10px;
+      background: var(--white);
+      border: 1.5px solid var(--slate-200);
+      border-radius: var(--radius-sm);
+      font-size: 11.5px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .modal-variant-btn:hover {
+      border-color: var(--primary-400);
+      background: var(--primary-50);
+    }
+    .modal-variant-btn.active {
+      border-color: var(--primary-600);
+      background: var(--primary-50);
+      color: var(--primary-800);
+      font-weight: 700;
+      box-shadow: 0 0 0 1px var(--primary-600);
+    }
+    .modal-price-breakdown {
+      background: var(--primary-50);
+      border: 1px solid var(--primary-100);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      margin: 14px 0;
+    }
+    .modal-price-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--slate-600);
+      margin-bottom: 5px;
+    }
+    .modal-price-line.total {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--primary-200);
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--slate-900);
+    }
+    .modal-price-line.total .modal-price-val {
+      color: var(--primary-700);
+      font-size: 1.15rem;
+    }
+    .modal-trust-banner {
+      font-size: 11px;
+      color: var(--slate-600);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
+      margin-top: 12px;
+      line-height: 1.4;
+    }
+
+    /* Direct WhatsApp Chat Integration Styles */
+    .wa-chat-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .wa-biro-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+    }
+    .wa-biro-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #25D366;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .wa-biro-meta {
+      flex: 1;
+      min-width: 0;
+    }
+    .wa-biro-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--slate-900);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .wa-biro-sub {
+      font-size: 11.5px;
+      color: var(--slate-500);
+      margin-top: 2px;
+    }
+    .wa-context-box {
+      background: var(--primary-50);
+      border: 1px solid var(--primary-100);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      font-size: 11.5px;
+      color: var(--slate-700);
+      line-height: 1.5;
+    }
+    .wa-preview-area {
+      position: relative;
+      background: #f8fafc;
+      border: 1px solid var(--slate-300);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      font-size: 11.5px;
+      color: var(--slate-800);
+      line-height: 1.6;
+      max-height: 140px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      font-family: inherit;
+    }
+    .wa-btn-primary {
+      background: #25D366;
+      color: #ffffff !important;
+      font-weight: 700;
+      border: none;
+      padding: 11px 16px;
+      border-radius: var(--radius-md);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 13.5px;
+      text-decoration: none;
+      box-shadow: 0 2px 6px rgba(37, 211, 102, 0.35);
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+    .wa-btn-primary:hover {
+      background: #1eb956;
+      color: #ffffff !important;
+      transform: translateY(-1px);
+    }
+    .wa-btn-secondary {
+      background: var(--white);
+      color: var(--slate-700);
+      border: 1px solid var(--slate-300);
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .wa-btn-secondary:hover {
+      background: var(--slate-50);
+      border-color: var(--slate-400);
+    }
+
     /* Official Store Biro Profile */
     .travel-shop-box {
       display: flex;
@@ -1528,12 +1913,16 @@
       background: var(--white);
       border: 1px solid var(--slate-200);
       border-radius: var(--radius-md);
-      padding: 12px 16px;
+      padding: 12px 14px;
+      gap: 12px;
+      box-shadow: var(--shadow-xs);
     }
     .travel-shop-info {
       display: flex;
       align-items: center;
       gap: 10px;
+      flex: 1;
+      min-width: 0;
     }
     .travel-shop-avatar {
       width: 42px;
@@ -1545,16 +1934,45 @@
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 16px;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .travel-shop-details {
+      flex: 1;
+      min-width: 0;
     }
     .travel-shop-details h4 {
       font-size: 13.5px;
       font-weight: 700;
       color: var(--slate-900);
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .travel-shop-details p {
       font-size: 11px;
       color: var(--slate-500);
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .travel-shop-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex-shrink: 0;
+      min-width: 76px;
+    }
+    .travel-shop-btns .btn {
+      width: 100%;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      justify-content: center;
+      text-align: center;
     }
 
     /* Tokopedia Review Breakdown Box */
@@ -1706,14 +2124,94 @@
       bottom: 0;
       left: 0;
       right: 0;
-      height: 60px;
+      min-height: 62px;
       background: var(--white);
       border-top: 1px solid var(--slate-200);
       padding: 8px 16px;
-      z-index: 999;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+      z-index: 1000;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
+    }
+
+    .pdp-mobile-bar-actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .pdp-mobile-icon-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--slate-50);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 5px 8px;
+      color: var(--slate-700);
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      min-width: 44px;
+      height: 42px;
+      transition: all 0.2s;
+    }
+    .pdp-mobile-icon-btn:hover {
+      background: var(--primary-50);
+      border-color: var(--primary-600);
+      color: var(--primary-700);
+    }
+    .pdp-mobile-icon-btn.active {
+      color: var(--danger-600);
+      border-color: var(--danger-600);
+      background: var(--danger-100);
+    }
+
+    .pdp-mobile-bar-pricing {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      flex: 1;
+    }
+
+    .pdp-mobile-book-btn {
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: var(--radius-md);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Mobile Back Button at Top of PDP */
+    .pdp-mobile-back-header {
+      display: none;
+      margin-bottom: 12px;
+    }
+    .pdp-back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-full);
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--slate-700);
+      cursor: pointer;
+      box-shadow: var(--shadow-xs);
+    }
+    .pdp-back-btn:hover {
+      background: var(--slate-100);
+      color: var(--primary-700);
+    }
+
+    /* Prevent mobile dock nav overlap when on PDP */
+    body.pdp-active .mobile-bottom-nav {
+      display: none !important;
     }
 
     @media (max-width: 1080px) {
@@ -1726,6 +2224,12 @@
       }
     }
     @media (max-width: 768px) {
+      .pdp-container {
+        padding-bottom: 90px;
+      }
+      .pdp-mobile-back-header {
+        display: block;
+      }
       .pdp-grid-3col {
         grid-template-columns: 1fr;
         gap: 16px;
@@ -4214,10 +4718,13 @@
       background: var(--white);
       border-radius: var(--radius-lg);
       width: 100%;
-      max-width: 480px;
+      max-width: 520px;
       box-shadow: var(--shadow-lg);
       overflow: hidden;
       animation: agFadeUp 0.25s ease-out;
+      display: flex;
+      flex-direction: column;
+      max-height: 92vh;
     }
     .modal-header {
       padding: 16px 20px;
@@ -4225,8 +4732,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-shrink: 0;
     }
-    .modal-body { padding: 20px; }
+    .modal-body {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+    }
     .modal-footer {
       padding: 14px 20px;
       border-top: 1px solid var(--slate-200);
@@ -4234,6 +4746,7 @@
       justify-content: flex-end;
       gap: 10px;
       background: var(--slate-50);
+      flex-shrink: 0;
     }
 
     .form-group label {
@@ -5504,19 +6017,79 @@
        ========================================================================== */
     const Router = {
       currentRoute: 'home',
+      currentParam: null,
       sliderInterval: null,
       currentSlide: 0,
 
-      navigate(route, params = null) {
-        this.currentRoute = route;
-        if (!window.location.hash || window.location.hash.substring(1) !== route) {
-          try { history.replaceState(null, '', '#' + route); } catch (e) {}
+      parseRoute(hashString) {
+        const raw = (hashString || window.location.hash || '').replace(/^#/, '').trim();
+        if (!raw) return { route: 'home', param: null };
+
+        // Support path format: #package-detail/PKG-001 or #travel-store/TRV-001
+        if (raw.includes('/')) {
+          const slashIdx = raw.indexOf('/');
+          const route = raw.substring(0, slashIdx);
+          const param = decodeURIComponent(raw.substring(slashIdx + 1));
+          return { route, param };
         }
+
+        // Support query format: #package-detail?id=PKG-001
+        if (raw.includes('?')) {
+          const qIdx = raw.indexOf('?');
+          const route = raw.substring(0, qIdx);
+          const q = new URLSearchParams(raw.substring(qIdx + 1));
+          const param = q.get('id') || q.get('packageId') || q.get('travelId') || null;
+          return { route, param };
+        }
+
+        return { route: raw, param: null };
+      },
+
+      getShareableUrl(route, param = null) {
+        const origin = window.location.origin + window.location.pathname;
+        const ref = (new URLSearchParams(window.location.search)).get('ref');
+        const refQuery = ref ? `?ref=${encodeURIComponent(ref)}` : '';
+        const hash = param ? `#${route}/${encodeURIComponent(param)}` : `#${route}`;
+        return `${origin}${refQuery}${hash}`;
+      },
+
+      navigate(route, params = null) {
+        // Handle input if passed as combined 'package-detail/PKG-001'
+        if (route && (route.includes('/') || route.includes('?'))) {
+          const parsed = this.parseRoute(route);
+          route = parsed.route;
+          if (!params) params = parsed.param;
+        }
+
+        this.currentRoute = route;
+        this.currentParam = params;
+
+        // Build canonical hash string
+        let targetHash = route;
+        if (params) {
+          targetHash = `${route}/${encodeURIComponent(params)}`;
+        }
+
+        if (window.location.hash.replace(/^#/, '') !== targetHash) {
+          try { history.replaceState(null, '', '#' + targetHash); } catch (e) {}
+        }
+
+        if (route !== 'package-detail') {
+          document.title = 'Umrohpedia - Marketplace & Portal Umroh Terverifikasi Kemenag';
+        }
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
         const root = document.getElementById('app-root');
         root.innerHTML = '<div class="empty-state" style="padding:60px 0;"><div class="skeleton-box" style="height:200px; width:100%; max-width:800px; margin:0 auto;"></div></div>';
 
         // Update active state on mobile bottom navigation
+        const isPdp = (route === 'package-detail' || route.startsWith('package-detail'));
+        document.body.classList.toggle('pdp-active', isPdp);
+        const mobileNav = document.getElementById('mobile-bottom-nav');
+        if (mobileNav) {
+          mobileNav.style.display = isPdp ? 'none' : '';
+        }
+
         document.querySelectorAll('.bottom-nav-item').forEach(el => el.classList.remove('active'));
         if (route === 'home') document.getElementById('bnav-home')?.classList.add('active');
         else if (route === 'schedule') document.getElementById('bnav-schedule')?.classList.add('active');
@@ -5990,32 +6563,57 @@
 
       async renderPackageDetail(pkgId) {
         const root = document.getElementById('app-root');
-        root.innerHTML = '<div class="empty-state"><div class="skeleton-box" style="height:350px; width:100%;"></div></div>';
+        root.innerHTML = '<div class="empty-state" style="padding:60px 0;"><div class="skeleton-box" style="height:350px; width:100%; max-width:800px; margin:0 auto;"></div></div>';
 
-        let pkg = ApiClient.db.packages.find(p => p.id === pkgId) || ApiClient.db.packages[0];
+        // 1. Resolve Package from Cache or Database
+        let pkg = null;
+        if (pkgId && Array.isArray(ApiClient.db.packages)) {
+          pkg = ApiClient.db.packages.find(p => p.id === pkgId);
+        }
+
         let departures = [];
 
-        try {
-          const res = await ApiClient.request('packages.detail', { id: pkgId });
-          if (res && res.success && res.data) {
-            pkg = ApiClient.normalizePackage(res.data);
-            departures = res.data.departures || [];
+        // 2. Fetch Authoritative Detail from Backend
+        if (pkgId) {
+          try {
+            const res = await ApiClient.request('packages.detail', { id: pkgId });
+            if (res && res.success && res.data) {
+              pkg = ApiClient.normalizePackage(res.data);
+              departures = res.data.departures || [];
+            }
+          } catch (e) {
+            console.warn("Failed fetching live package detail, using fallback", e);
           }
-        } catch (e) {
-          console.warn("Failed fetching live package detail, using fallback", e);
         }
+
+        // 3. Fallback jika data belum termuat di cache
+        if (!pkg) {
+          if (!ApiClient.db.packages || ApiClient.db.packages.length === 0) {
+            try {
+              await ApiClient.fetchPackages();
+              pkg = ApiClient.db.packages.find(p => p.id === pkgId) || ApiClient.db.packages[0];
+            } catch (e) {}
+          } else {
+            pkg = ApiClient.db.packages[0];
+          }
+        }
+
+        if (pkg && pkg.title) {
+          document.title = `${pkg.title} — Umrohpedia`;
+        }
+        Marketplace.activePackage = pkg;
 
         const departureList = departures.length > 0 
           ? departures 
-          : [{ id: pkg.id + '-DEP-1', departureCity: pkg.departureCity, departureDate: pkg.departureDate || '2026-10-15', quotaTotal: pkg.quotaTotal || 45, quotaTaken: pkg.quotaTaken || 12 }];
+          : [{ id: (pkg ? pkg.id : 'PKG-001') + '-DEP-1', departureCity: pkg ? pkg.departureCity : 'Jakarta', departureDate: pkg ? (pkg.departureDate || '2026-10-15') : '2026-10-15', quotaTotal: pkg ? (pkg.quotaTotal || 45) : 45, quotaTaken: pkg ? (pkg.quotaTaken || 12) : 12 }];
 
         const quotaLeft = Math.max(0, Number(departureList[0].quotaTotal || 45) - Number(departureList[0].quotaTaken || 12));
-        const cashbackStr = pkg.commissionAffiliate ? `Cashback Rp ${(pkg.commissionAffiliate / 1000).toFixed(0)} Rb` : "Cashback Spesial";
-        const isWish = AuthStore.wishlist.includes(pkg.id);
+        const cashbackStr = pkg && pkg.commissionAffiliate ? `Cashback Rp ${(pkg.commissionAffiliate / 1000).toFixed(0)} Rb` : "Cashback Spesial";
+        const isWish = pkg ? AuthStore.wishlist.includes(pkg.id) : false;
 
         // Thumbnail media gallery URLs
         const galleryImages = [
-          safeUrl(pkg.image),
+          safeUrl(pkg ? pkg.image : ''),
           "https://images.unsplash.com/photo-1565552684305-7e8e7a080824?auto=format&fit=crop&w=800&q=80",
           "https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=800&q=80",
           "https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?auto=format&fit=crop&w=800&q=80"
@@ -6023,6 +6621,18 @@
 
         root.innerHTML = `
           <div class="pdp-container">
+            <!-- Mobile Back Button & Quick Share -->
+            <div class="pdp-mobile-back-header" style="display:flex; justify-content:space-between; align-items:center;">
+              <button class="pdp-back-btn" onclick="Router.navigate('marketplace')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <span>Kembali ke Paket</span>
+              </button>
+              <button class="pdp-back-btn" onclick="Marketplace.sharePackage('${escapeHtml(pkg.id)}', '${escapeHtml(pkg.title)}')" title="Bagikan Paket">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                <span>Bagikan</span>
+              </button>
+            </div>
+
             <!-- Breadcrumbs -->
             <div class="pdp-breadcrumbs">
               <a href="#" onclick="Router.navigate('home')">Home</a> &rsaquo;
@@ -6054,9 +6664,9 @@
                 <div class="pdp-social-proof">
                   <span>Terjual <strong>120+ jamaah</strong></span>
                   <span>•</span>
-                  <span style="color:#d97706; font-weight:700;">⭐ ${escapeHtml(pkg.rating)} <span style="color:var(--slate-500); font-weight:400;">(84 rating)</span></span>
+                  <span class="badge badge-verified" style="font-size:11px;">✓ Terverifikasi Kemenag</span>
                   <span>•</span>
-                  <span>Diskusi (12)</span>
+                  <span>Jaminan 5 Pasti</span>
                 </div>
 
                 <!-- Price & Cashback Box -->
@@ -6088,28 +6698,13 @@
                 <div class="pdp-sticky-tabs">
                   <button class="pdp-tab-btn active" onclick="Marketplace.switchPdpTab(0, this)">Detail Paket</button>
                   <button class="pdp-tab-btn" onclick="Marketplace.switchPdpTab(1, this)">Fasilitas & Hotel</button>
-                  <button class="pdp-tab-btn" onclick="Marketplace.switchPdpTab(2, this)">Itinerary</button>
-                  <button class="pdp-tab-btn" onclick="Marketplace.switchPdpTab(3, this)">Ulasan Jamaah</button>
+                  <button class="pdp-tab-btn" onclick="Marketplace.switchPdpTab(2, this)">Itinerary (${Number(pkg.durationDays || 9)} Hari)</button>
+                  <button class="pdp-tab-btn" onclick="Marketplace.switchPdpTab(3, this)">Syarat & Dokumen</button>
                 </div>
 
                 <!-- Tab Body Content -->
                 <div id="pdp-tab-body">
-                  <!-- Specification Table -->
-                  <table class="pdp-spec-table">
-                    <tbody>
-                      <tr><td class="pdp-spec-label">Durasi Ibadah</td><td class="pdp-spec-val">⏳ ${Number(pkg.durationDays)} Hari Perjalanan</td></tr>
-                      <tr><td class="pdp-spec-label">Kategori Paket</td><td class="pdp-spec-val">🏷️ Umroh ${escapeHtml(pkg.category)}</td></tr>
-                      <tr><td class="pdp-spec-label">Maskapai Penerbangan</td><td class="pdp-spec-val">✈️ ${escapeHtml(pkg.airline)} (Direct Flight)</td></tr>
-                      <tr><td class="pdp-spec-label">Hotel Makkah</td><td class="pdp-spec-val">🏨 ${escapeHtml(pkg.hotelMakkah)} (★5 Ring 1)</td></tr>
-                      <tr><td class="pdp-spec-label">Hotel Madinah</td><td class="pdp-spec-val">🕌 ${escapeHtml(pkg.hotelMadinah)} (★4 Depan Nabawi)</td></tr>
-                      <tr><td class="pdp-spec-label">Izin Resmi Kemenag</td><td class="pdp-spec-val">📜 ${escapeHtml(pkg.skKemenag || 'PPIU Berizin Resmi')}</td></tr>
-                    </tbody>
-                  </table>
-
-                  <!-- Deskripsi Produk -->
-                  <div style="font-size:13px; color:var(--slate-700); line-height:1.7; margin-bottom:20px;">
-                    <p>Paket perjalanan ibadah Umroh resmi yang diselenggarakan oleh <strong>${escapeHtml(pkg.travelName)}</strong> dengan mengedepankan prinsip <strong>5 Pasti Umroh Kemenag RI</strong>. Menggunakan penerbangan langsung tanpa transit serta akomodasi hotel berbintang di pelataran Masjidil Haram dan Masjid Nabawi untuk kenyamanan maksimal ibadah jamaah dan keluarga.</p>
-                  </div>
+                  ${Marketplace.getTabContent(0, pkg)}
                 </div>
 
                 <!-- Biro PPIU Profile Card (Official Store Style) -->
@@ -6118,12 +6713,12 @@
                     <div class="travel-shop-avatar">🕋</div>
                     <div class="travel-shop-details">
                       <h4>${escapeHtml(pkg.travelName)} <span class="verified-check">✓</span></h4>
-                      <p>⭐ 4.9 (1.2rb jamaah) • ${escapeHtml(pkg.skKemenag || 'PPIU Resmi')} • Kota Jakarta Selatan</p>
+                      <p>${escapeHtml(pkg.skKemenag || 'PPIU Resmi Kemenag')} &bull; ${escapeHtml(pkg.departureCity ? pkg.departureCity.split(' ')[0] : 'Indonesia')}</p>
                     </div>
                   </div>
-                  <div style="display:flex; gap:8px;">
-                    <button class="btn btn-outline btn-sm" onclick="Router.navigate('travel-store', '${escapeHtml(pkg.travelId || pkg.travelName)}')">Kunjungi Biro &rarr;</button>
-                    <button class="btn btn-outline-primary btn-sm" onclick="ChatModal.open()">Chat Travel</button>
+                  <div class="travel-shop-btns">
+                    <button class="btn btn-outline" onclick="Router.navigate('travel-store', '${escapeHtml(pkg.travelId || pkg.travelName)}')">Kunjungi</button>
+                    <button class="btn btn-outline-primary" onclick="ChatModal.openTravelChat('${escapeHtml(pkg.id)}')">Chat</button>
                   </div>
                 </div>
 
@@ -6133,46 +6728,6 @@
                   <div>
                     <strong style="font-size:12.5px; color:var(--slate-900);">Jaminan 5 Pasti Umroh Kemenag RI</strong>
                     <p style="font-size:11px; color:var(--slate-600); margin-top:2px;">Pasti Travelnya, Pasti Jadwalnya, Pasti Terbangnya, Pasti Hotelnya, Pasti Visanya. Transaksi dilindungi rekening amanah.</p>
-                  </div>
-                </div>
-
-                <!-- Tokopedia Review Breakdown Box -->
-                <div class="pdp-review-summary">
-                  <h3 style="font-size:14px; font-weight:800; margin-bottom:14px;">ULASAN JAMAAH</h3>
-                  <div class="review-score-grid">
-                    <div style="text-align:center;">
-                      <div class="review-score-big">⭐ 4.9<span style="font-size:1.1rem; color:var(--slate-500); font-weight:600;">/5.0</span></div>
-                      <p style="font-size:11px; color:var(--slate-600); font-weight:700; margin-top:4px;">98% jamaah puas</p>
-                      <p style="font-size:10px; color:var(--slate-500);">84 rating • 72 ulasan</p>
-                    </div>
-                    <div>
-                      <div class="review-bar-row"><span>5★</span><div class="review-bar-bg"><div class="review-bar-fill" style="width:92%;"></div></div><span>(78)</span></div>
-                      <div class="review-bar-row"><span>4★</span><div class="review-bar-bg"><div class="review-bar-fill" style="width:6%;"></div></div><span>(5)</span></div>
-                      <div class="review-bar-row"><span>3★</span><div class="review-bar-bg"><div class="review-bar-fill" style="width:2%;"></div></div><span>(1)</span></div>
-                      <div class="review-bar-row"><span>2★</span><div class="review-bar-bg"><div class="review-bar-fill" style="width:0%;"></div></div><span>(0)</span></div>
-                      <div class="review-bar-row"><span>1★</span><div class="review-bar-bg"><div class="review-bar-fill" style="width:0%;"></div></div><span>(0)</span></div>
-                    </div>
-                  </div>
-
-                  <!-- Verified Reviews List -->
-                  <div style="display:flex; flex-direction:column; gap:12px;">
-                    <div style="border-bottom:1px solid var(--slate-100); padding-bottom:10px;">
-                      <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                        <div><strong style="font-size:12.5px;">H. Ahmad Fauzi</strong> <span class="badge badge-verified" style="font-size:9px;">Jamaah Terverifikasi</span></div>
-                        <span style="font-size:11px; color:var(--slate-400);">1 minggu lalu</span>
-                      </div>
-                      <div style="color:#f5a623; font-size:12px; margin-bottom:4px;">★★★★★ <span style="color:var(--slate-600); font-size:11px;">Varian: Quad</span></div>
-                      <p style="font-size:12px; color:var(--slate-700);">"Alhamdulillah fasilitas hotel sangat dekat dengan Masjidil Haram, muthawwif sangat membimbing ibadah dengan khusyuk. Pelayanan biro Al-Falah sangat profesional."</p>
-                    </div>
-
-                    <div>
-                      <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                        <div><strong style="font-size:12.5px;">Hj. Siti Aminah</strong> <span class="badge badge-verified" style="font-size:9px;">Jamaah Terverifikasi</span></div>
-                        <span style="font-size:11px; color:var(--slate-400);">2 minggu lalu</span>
-                      </div>
-                      <div style="color:#f5a623; font-size:12px; margin-bottom:4px;">★★★★★ <span style="color:var(--slate-600); font-size:11px;">Varian: Triple</span></div>
-                      <p style="font-size:12px; color:var(--slate-700);">"Makanan cocok dengan lidah Indonesia, penerbangan Saudia tepat waktu tanpa delay, proses visa dan paspor dibantu sampai tuntas."</p>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -6215,9 +6770,9 @@
 
                   <!-- Quick Action Links -->
                   <div class="pdp-quick-actions">
-                    <a onclick="ChatModal.open()">💬 Chat</a>
+                    <a onclick="ChatModal.openTravelChat('${escapeHtml(pkg.id)}')">💬 Chat</a>
                     <a onclick="AuthStore.toggleWishlist('${escapeHtml(pkg.id)}')">♥ Wishlist</a>
-                    <a onclick="navigator.clipboard.writeText(window.location.href); Toast.show('Link paket berhasil disalin!', 'success');">↗ Share</a>
+                    <a onclick="Marketplace.sharePackage('${escapeHtml(pkg.id)}', '${escapeHtml(pkg.title)}')">↗ Share</a>
                   </div>
                 </div>
               </div>
@@ -6226,11 +6781,21 @@
 
           <!-- Mobile Sticky Bottom Booking Bar -->
           <div class="pdp-mobile-bottom-bar" id="pdp-mobile-bottom-bar">
-            <div>
-              <div style="font-size:10px; color:var(--slate-500);">Subtotal Estimasi:</div>
-              <div id="pdp-mobile-total-price" style="font-size:1.15rem; font-weight:800; color:var(--primary-700);">Rp ${Number(pkg.price).toLocaleString('id-ID')}</div>
+            <div class="pdp-mobile-bar-actions">
+              <button class="pdp-mobile-icon-btn" onclick="ChatModal.openTravelChat('${escapeHtml(pkg.id)}')" title="Konsultasi & Chat">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <span>Chat</span>
+              </button>
+              <button class="pdp-mobile-icon-btn ${isWish ? 'active' : ''}" onclick="AuthStore.toggleWishlist('${escapeHtml(pkg.id)}')" title="Simpan ke Wishlist">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="${isWish ? 'var(--danger-600)' : 'none'}" stroke="${isWish ? 'var(--danger-600)' : 'currentColor'}" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span>Wishlist</span>
+              </button>
             </div>
-            <button class="btn btn-primary" style="padding:10px 20px; font-size:13px; font-weight:700;" onclick="Marketplace.openBookingModal('${escapeHtml(pkg.id)}', Marketplace.selectedDepartureId || '${escapeHtml(departureList[0].id)}')">
+            <div class="pdp-mobile-bar-pricing">
+              <div style="font-size:10px; color:var(--slate-500); line-height:1.2;">Subtotal Estimasi:</div>
+              <div id="pdp-mobile-total-price" style="font-size:1.1rem; font-weight:800; color:var(--primary-700); line-height:1.2;">Rp ${Number(pkg.price).toLocaleString('id-ID')}</div>
+            </div>
+            <button class="btn btn-primary pdp-mobile-book-btn" onclick="Marketplace.openBookingModal('${escapeHtml(pkg.id)}', Marketplace.selectedDepartureId || '${escapeHtml(departureList[0].id)}')">
               Booking Sekarang &rarr;
             </button>
           </div>
@@ -6238,6 +6803,7 @@
 
         Marketplace.currentBasePrice = Number(pkg.price);
         Marketplace.currentRoomSurcharge = 0;
+        Marketplace.selectedRoomLabel = 'Quad (Sekamar 4)';
         Marketplace.selectedDepartureId = departureList[0].id;
         Marketplace.paxCount = 1;
       },
@@ -6296,7 +6862,7 @@
                     ${isFollowed ? '✓ Mengikuti' : '+ Follow'}
                   </button>
                   <div class="store-icon-actions">
-                    <button class="store-icon-btn" onclick="ChatModal.open()" title="Kirim Pesan ke Biro">
+                    <button class="store-icon-btn" onclick="ChatModal.openTravelStoreChat('${escapeHtml(travel.id)}')" title="Kirim Pesan WhatsApp ke Biro">
                       💬
                     </button>
                     <button class="store-icon-btn" onclick="TravelStore.showLegalModal('${escapeHtml(travel.id)}')" title="Informasi & Legalitas Resmi">
@@ -7699,6 +8265,28 @@
         if (mobTotalPrice) mobTotalPrice.textContent = `Rp ${total.toLocaleString('id-ID')}`;
       },
 
+      sharePackage(pkgId, title = '') {
+        const pkg = (ApiClient.db.packages && ApiClient.db.packages.find(p => p.id === pkgId)) || { title: title || 'Paket Umroh' };
+        const shareUrl = Router.getShareableUrl('package-detail', pkgId);
+        const shareText = `Lihat paket umroh resmi "${pkg.title}" di Umrohpedia. Terverifikasi Kemenag RI & amanah:`;
+
+        if (navigator.share) {
+          navigator.share({
+            title: `${pkg.title} - Umrohpedia`,
+            text: shareText,
+            url: shareUrl
+          }).catch(() => {});
+        } else if (navigator.clipboard) {
+          navigator.clipboard.writeText(shareUrl).then(() => {
+            Toast.show("Link paket berhasil disalin ke clipboard!", "success");
+          }).catch(() => {
+            Toast.show("Gagal menyalin link paket.", "error");
+          });
+        } else {
+          prompt("Salin link paket umroh:", shareUrl);
+        }
+      },
+
       switchPdpTab(tabIndex, btnElem) {
         const buttons = document.querySelectorAll('.pdp-tab-btn');
         buttons.forEach(b => b.classList.remove('active'));
@@ -7707,109 +8295,538 @@
         const body = document.getElementById('pdp-tab-body');
         if (!body) return;
 
+        const pkg = this.activePackage || (ApiClient.db.packages && ApiClient.db.packages[0]);
+        body.innerHTML = this.getTabContent(tabIndex, pkg);
+      },
+
+      getTabContent(tabIndex, pkg) {
+        if (!pkg) return '';
+        
+        const duration = Number(pkg.durationDays) || 9;
+        const airline = escapeHtml(pkg.airline || 'Saudia Airlines');
+        const hotelMakkah = escapeHtml(pkg.hotelMakkah || 'Hotel Bintang 5 Ring 1');
+        const hotelMadinah = escapeHtml(pkg.hotelMadinah || 'Hotel Bintang 4 Depan Nabawi');
+        const travelName = escapeHtml(pkg.travelName || 'Biro Travel PPIU Resmi');
+        const category = escapeHtml(pkg.category || 'Reguler');
+        const sk = escapeHtml(pkg.skKemenag || 'Izin PPIU Terverifikasi Kemenag RI');
+        const depCity = escapeHtml(pkg.departureCity || 'Jakarta (CGK)');
+
         if (tabIndex === 0) {
-          body.innerHTML = `
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
-              <div class="kpi-card">✈️ Maskapai: <strong>Saudia Airlines / Garuda Indonesia (Direct)</strong></div>
-              <div class="kpi-card">🏨 Hotel Makkah: <strong>Pullman Zamzam / Setaraf (★5 Ring 1)</strong></div>
-              <div class="kpi-card">🕌 Hotel Madinah: <strong>Rove Madinah / Setaraf (★4 Depan Masjid)</strong></div>
-              <div class="kpi-card">🚄 Transportasi: <strong>Kereta Cepat Haramain & Bus Eksekutif</strong></div>
+          // Tab 0: Detail & Spesifikasi Paket
+          return `
+            <div class="pdp-tab-pane">
+              <table class="pdp-spec-table">
+                <tbody>
+                  <tr><td class="pdp-spec-label">Durasi Perjalanan</td><td class="pdp-spec-val">⏳ ${duration} Hari Penuh</td></tr>
+                  <tr><td class="pdp-spec-label">Kategori Program</td><td class="pdp-spec-val">🏷️ Umroh ${category}</td></tr>
+                  <tr><td class="pdp-spec-label">Maskapai Penerbangan</td><td class="pdp-spec-val">✈️ ${airline}</td></tr>
+                  <tr><td class="pdp-spec-label">Hotel Makkah</td><td class="pdp-spec-val">🏨 ${hotelMakkah}</td></tr>
+                  <tr><td class="pdp-spec-label">Hotel Madinah</td><td class="pdp-spec-val">🕌 ${hotelMadinah}</td></tr>
+                  <tr><td class="pdp-spec-label">Bandara Keberangkatan</td><td class="pdp-spec-val">🛫 ${depCity}</td></tr>
+                  <tr><td class="pdp-spec-label">Legalitas Penyelenggara</td><td class="pdp-spec-val">📜 ${sk}</td></tr>
+                </tbody>
+              </table>
+
+              <div class="pdp-desc-text">
+                <h4 style="font-size:13.5px; font-weight:700; color:var(--slate-900); margin-bottom:8px;">Deskripsi Program Ibadah</h4>
+                <p>Paket perjalanan ibadah Umroh <strong>${escapeHtml(pkg.title)}</strong> diselenggarakan secara resmi dan amanah oleh <strong>${travelName}</strong> berlandaskan komitmen <strong>5 Pasti Umroh Kemenag RI</strong>.</p>
+                <p style="margin-top:8px;">Paket ini memadukan kenyamanan penerbangan menggunakan <strong>${airline}</strong> serta akomodasi hotel pilihan di Makkah (<strong>${hotelMakkah}</strong>) dan Madinah (<strong>${hotelMadinah}</strong>). Seluruh rangkaian manasik dan pelaksanaan thawaf, sa'i, serta tahallul dibimbing oleh Muthawwif berpengalaman sesuai Al-Qur'an dan Sunnah.</p>
+              </div>
             </div>
           `;
         } else if (tabIndex === 1) {
-          body.innerHTML = `
-            <div class="timeline-list">
-              <div class="timeline-item"><strong>Hari 1:</strong> Keberangkatan dari Bandara Soekarno-Hatta menuju Bandara Internasional Jeddah, dilanjutkan perjalanan menuju Madinah.</div>
-              <div class="timeline-item"><strong>Hari 2-4:</strong> Ibadah di Masjid Nabawi, ziarah Raudhah, ziarah Kota Madinah (Masjid Quba, Jabal Uhud, Kebun Kurma).</div>
-              <div class="timeline-item"><strong>Hari 5:</strong> Pengambilan Miqat di Bir Ali, perjalanan menuju Makkah Al-Mukarramah, pelaksanaan Ibadah Umroh Wajib.</div>
-              <div class="timeline-item"><strong>Hari 6-8:</strong> Memperbanyak ibadah di Masjidil Haram, ziarah Kota Makkah (Jabal Tsur, Padang Arafah, Mina).</div>
-              <div class="timeline-item"><strong>Hari 9:</strong> Tawaf Wada', kepulangan menuju Tanah Air Indonesia.</div>
+          // Tab 1: Fasilitas & Hotel
+          return `
+            <div class="pdp-tab-pane">
+              <div class="pdp-facility-grid">
+                <div class="facility-card">
+                  <div class="facility-card-header">
+                    <span class="facility-icon">🏨</span>
+                    <div>
+                      <div class="facility-type">Akomodasi Makkah</div>
+                      <strong class="facility-name">${hotelMakkah}</strong>
+                    </div>
+                  </div>
+                  <p class="facility-desc">Berada di kawasan utama Masjidil Haram. Akses jalan kaki dekat, memudahkan jamaah melaksanakan shalat fardhu berjamaah dan thawaf sunnah setiap waktu.</p>
+                </div>
+
+                <div class="facility-card">
+                  <div class="facility-card-header">
+                    <span class="facility-icon">🕌</span>
+                    <div>
+                      <div class="facility-type">Akomodasi Madinah</div>
+                      <strong class="facility-name">${hotelMadinah}</strong>
+                    </div>
+                  </div>
+                  <p class="facility-desc">Terletak di pelataran Masjid Nabawi, memudahkan ziarah ke Raudhah Syarifah dan makam Rasulullah SAW bagi jamaah pria maupun wanita.</p>
+                </div>
+
+                <div class="facility-card">
+                  <div class="facility-card-header">
+                    <span class="facility-icon">✈️</span>
+                    <div>
+                      <div class="facility-type">Penerbangan Resmi</div>
+                      <strong class="facility-name">${airline}</strong>
+                    </div>
+                  </div>
+                  <p class="facility-desc">Tiket penerbangan kelas ekonomi pulang-pergi dengan jaminan kode booking PNR resmi, bagasi 30kg + 7kg kabin, serta konsumsi halal selama penerbangan.</p>
+                </div>
+
+                <div class="facility-card">
+                  <div class="facility-card-header">
+                    <span class="facility-icon">🚄</span>
+                    <div>
+                      <div class="facility-type">Transportasi Darat</div>
+                      <strong class="facility-name">Bus Eksekutif AC & Kereta Cepat</strong>
+                    </div>
+                  </div>
+                  <p class="facility-desc">Armada bus AC eksekutif terbaru untuk ziarah dan antar-jemput bandara, serta Kereta Cepat Haramain (sesuai ketersediaan jadwal grup) untuk efisiensi rute Makkah-Madinah.</p>
+                </div>
+              </div>
+
+              <!-- Inclusions & Exclusions ala Tokopedia Specs -->
+              <div class="facility-checklist-container">
+                <div class="facility-checklist-col include">
+                  <h4 class="checklist-title">✅ Fasilitas Sudah Termasuk:</h4>
+                  <ul class="checklist-list">
+                    <li>Tiket Pesawat PP Internasional (${airline})</li>
+                    <li>Akomodasi Hotel Makkah (${hotelMakkah}) & Madinah (${hotelMadinah})</li>
+                    <li>Visa Umroh resmi Kerajaan Arab Saudi & Asuransi Perjalanan</li>
+                    <li>Makan 3x sehari Menu Masakan Indonesia (Fullboard)</li>
+                    <li>Pembimbing Ibadah (Muthawwif) bersertifikasi & Tour Leader</li>
+                    <li>Handling Airport Bandara ${depCity} & Saudi Arabia</li>
+                    <li>Air Zamzam 5 Liter (sesuai regulasi otoritas GACA Saudi)</li>
+                    <li>Ziarah kota Makkah, Madinah, dan manasik umroh sebelum berangkat</li>
+                  </ul>
+                </div>
+
+                <div class="facility-checklist-col exclude">
+                  <h4 class="checklist-title">❌ Fasilitas Belum Termasuk:</h4>
+                  <ul class="checklist-list">
+                    <li>Biaya pembuatan atau perpanjangan paspor asli</li>
+                    <li>Vaksinasi Meningitis di Kantor Kesehatan Pelabuhan (KKP)</li>
+                    <li>Keperluan pribadi (Laundry, telepon roaming, sewa kursi roda)</li>
+                    <li>Kelebihan bagasi di luar ketentuan maskapai (${airline})</li>
+                    <li>Biaya transportasi domestik menuju bandara ${depCity}</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           `;
         } else if (tabIndex === 2) {
-          body.innerHTML = `
-            <ul style="padding-left: 20px; line-height: 1.8;">
-              <li>Paspor asli dengan masa berlaku minimal 8 bulan sebelum keberangkatan.</li>
-              <li>Buku / Sertifikat Vaksinasi Meningitis resmi.</li>
-              <li>Buku Nikah asli bagi pasangan suami istri.</li>
-              <li>KTP & Kartu Keluarga fotokopi.</li>
-              <li>Pelunasan biaya paket paling lambat 30 hari sebelum jadwal keberangkatan.</li>
-            </ul>
+          // Tab 2: Itinerary Rencana Perjalanan
+          let itineraryDays = [];
+          if (duration >= 14) {
+            itineraryDays = [
+              { day: 1, title: `Keberangkatan dari ${depCity} menuju Transit City`, desc: `Berkumpul di lounge bandara ${depCity}, briefing manasik safar, dan penerbangan internasional.` },
+              { day: 2, title: "City Tour Wisata Sejarah & Istirahat", desc: "Ziarah sejarah peradaban Islam dan eksplorasi destinasi wisata religi." },
+              { day: 3, title: "Penerbangan menuju Madinah Al-Munawwarah", desc: "Tiba di Bandara Prince Mohammad bin Abdulaziz Madinah, check-in hotel dan istirahat." },
+              { day: 4, title: "Ibadah di Masjid Nabawi & Ziarah Raudhah", desc: "Pelaksanaan ziarah ke Raudhah Syarifah (didampingi muthawwifah untuk jamaah wanita) dan makam Rasulullah SAW." },
+              { day: 5, title: "Ziarah Kota Madinah", desc: "Mengunjungi Masjid Quba (shalat sunnah berpahala umroh), Jabal Uhud, Masjid Qiblatain, dan Pasar Kurma." },
+              { day: 6, title: "Pengambilan Miqat di Bir Ali & Menuju Makkah", desc: "Mengenakan kain ihram, niat umroh di Miqat Bir Ali, perjalanan darat ke Makkah dan pelaksanaan Umroh Wajib (Thawaf, Sa'i, Tahallul)." },
+              { day: 7, title: "Ibadah Mandiri & Thawaf Sunnah di Masjidil Haram", desc: "Memperbanyak iktikaf, membaca Al-Qur'an, dan shalat berjamaah di pelataran Ka'bah." },
+              { day: 8, title: "Ziarah Kota Makkah & Miqat Ji'ranah", desc: "Mengunjungi Padang Arafah, Jabal Rahmah, Muzdalifah, Mina, Jabal Tsur, dan kesempatan Umroh Sunnah kedua." },
+              { day: 9, title: "City Tour Kota Bersejarah Thaif", desc: "Wisata ke kota sejuk Thaif, mengunjungi Masjid Ibnu Abbas, Masjid Kuk, dan perkebunan mawar Thaif." },
+              { day: 10, title: "Ibadah Qiyamul Lail & Muhasabah Makkah", desc: "Khusyuk beribadah di Masjidil Haram bersama bimbingan muthawwif biro." },
+              { day: 11, title: "Persiapan Kepulangan & Ziarah Museum Wahyu", desc: "Kunjungan edukatif ke Museum Al-Amoudi / Wahyu dan belanja oleh-oleh di Pasar Kakiyah." },
+              { day: 12, title: "Ibadah Penutup Thawaf Wada'", desc: "Melaksanakan Thawaf perpisahan (Thawaf Wada') dengan khidmat sebelum meninggalkan tanah suci." },
+              { day: 13, title: "Transfer ke Bandara Internasional Jeddah", desc: "Perjalanan menuju King Abdulaziz International Airport Jeddah untuk penerbangan pulang." },
+              { day: 14, title: `Tiba Kembali di Tanah Air (${depCity})`, desc: "Alhamdulillah rombongan tiba dengan selamat membawa predikat Umroh yang Maqbulah." }
+            ];
+          } else if (duration >= 12) {
+            itineraryDays = [
+              { day: 1, title: `Keberangkatan dari ${depCity} menuju Madinah`, desc: `Berkumpul di Bandara ${depCity}, pengarahan manasik safar, dan penerbangan langsung/transit menuju Madinah.` },
+              { day: 2, title: "Tiba di Madinah & Pengenalan Masjid Nabawi", desc: "Check-in hotel di Madinah, orientasi area sekitar Masjid Nabawi dan shalat berjamaah." },
+              { day: 3, title: "Ziarah Raudhah Syarifah & Makam Rasulullah SAW", desc: "Ibadah khusus di Taman Surga (Raudhah) dan ziarah Makam Baqi didampingi pembimbing." },
+              { day: 4, title: "Ziarah Luar Kota Madinah", desc: "Mengunjungi Masjid Quba, kebun kurma, Jabal Uhud, dan Masjid Khandaq." },
+              { day: 5, title: "Ibadah Mandiri & Khutbah Manasik Umroh", desc: "Memperbanyak ibadah di Masjid Nabawi dan pemantapan rukun umroh sebelum bertolak ke Makkah." },
+              { day: 6, title: "Miqat di Bir Ali & Pelaksanaan Umroh Pertama Makkah", desc: "Mandi ihram, berniat umroh di Bir Ali, menuju Makkah dan menyelesaikan Thawaf, Sa'i, Tahallul." },
+              { day: 7, title: "Istirahat Pemulihan & Ibadah di Masjidil Haram", desc: "Memperbanyak shalat sunnah, meminum air zamzam, dan thawaf sunnah di depan Ka'bah." },
+              { day: 8, title: "Ziarah Makkah: Arafah, Muzdalifah, Mina", desc: "Napak tilas rute haji akbar ke Padang Arafah, Mina, dan Jabal Rahmah, serta Miqat Ji'ranah untuk umroh kedua." },
+              { day: 9, title: "Wisata Religi Kota Thaif", desc: "Perjalanan ke pegunungan Thaif menikmati suasana sejuk dan ziarah ke jejak dakwah Nabi SAW." },
+              { day: 10, title: "Ibadah Iktikaf di Masjidil Haram", desc: "Fokus memperbanyak doa dan ibadah di waktu-waktu mustajab." },
+              { day: 11, title: "Thawaf Wada' & Menuju Bandara Jeddah", desc: "Pelaksanaan Thawaf perpisahan, check-out hotel Makkah, dan transfer ke Bandara Jeddah." },
+              { day: 12, title: `Tiba Kembali di ${depCity}`, desc: "Insya Allah tiba kembali di Indonesia dengan selamat, mabrur, dan berkah." }
+            ];
+          } else {
+            itineraryDays = [
+              { day: 1, title: `Keberangkatan dari ${depCity} menuju Madinah`, desc: `Jamaah berkumpul di Bandara ${depCity}, pembagian dokumen perjalanan, lalu terbang menuju Madinah dengan ${airline}.` },
+              { day: 2, title: "Ibadah di Masjid Nabawi & Ziarah Raudhah", desc: `Check-in di ${hotelMadinah}, shalat fardhu berjamaah di Masjid Nabawi, ziarah Makam Baqi dan agenda masuk Raudhah.` },
+              { day: 3, title: "Ziarah Sejarah Kota Madinah", desc: "Mengunjungi Masjid Quba, Jabal Uhud, makam syuhada Uhud, dan perkebunan kurma Madinah." },
+              { day: 4, title: "Persiapan Ihram & Menuju Makkah Al-Mukarramah", desc: "Mandi ihram di hotel, bertolak ke Masjid Miqat Bir Ali, niat umroh, dan perjalanan ke Makkah menggunakan bus eksekutif/kereta cepat." },
+              { day: 5, title: "Pelaksanaan Umroh Wajib (Thawaf, Sa'i, Tahallul)", desc: `Check-in di ${hotelMakkah}, dilanjutkan pelaksanaan ibadah umroh bersama Muthawwif hingga tahallul selesai.` },
+              { day: 6, title: "Memperbanyak Ibadah di Masjidil Haram", desc: "Hari tenang untuk memperbanyak ibadah shalat sunnah, iktikaf, dan berdoa di Multazam & Hijir Ismail." },
+              { day: 7, title: "Ziarah Kota Makkah & Miqat Umroh Kedua", desc: "Ziarah ke Jabal Tsur, Padang Arafah, Jabal Rahmah, Muzdalifah, Mina, dan Miqat di Tan'im / Ji'ranah bagi yang ingin umroh tambahan." },
+              { day: 8, title: "Thawaf Wada' & Perjalanan ke Bandara Jeddah", desc: "Melaksanakan Thawaf Wada' bersama, check-out hotel, singgah di Corniche Jeddah lalu menuju bandara." },
+              { day: 9, title: `Kedatangan di Bandara ${depCity}`, desc: `Penerbangan pulang dan tiba kembali di ${depCity}. Program ibadah umroh selesai dengan aman, lancar, dan tertib.` }
+            ];
+          }
+
+          return `
+            <div class="pdp-tab-pane">
+              <div style="background:var(--primary-50); border:1px solid var(--primary-100); border-radius:var(--radius-md); padding:12px 16px; margin-bottom:18px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+                <span style="font-size:13px; font-weight:700; color:var(--primary-900);">📅 Total Program: ${duration} Hari Perjalanan Ibadah</span>
+                <span class="badge badge-verified" style="font-size:11px;">Rute Nyaman & Terjadwal</span>
+              </div>
+
+              <div class="timeline-v2">
+                ${itineraryDays.map(item => `
+                  <div class="timeline-v2-item">
+                    <div class="timeline-v2-marker">
+                      <span class="timeline-v2-badge">Hari ${item.day}</span>
+                    </div>
+                    <div class="timeline-v2-card">
+                      <strong class="timeline-v2-title">${escapeHtml(item.title)}</strong>
+                      <p class="timeline-v2-desc">${escapeHtml(item.desc)}</p>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
           `;
         } else if (tabIndex === 3) {
-          body.innerHTML = `
-            <div style="display:flex; flex-direction:column; gap:12px;">
-              <div class="kpi-card">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                  <strong>H. Ahmad Fauzi</strong>
-                  <span style="color:#f5a623;">★★★★★</span>
+          // Tab 3: Persyaratan & Ketentuan Dokumen
+          return `
+            <div class="pdp-tab-pane">
+              <div class="pdp-terms-grid">
+                <div class="pdp-terms-card">
+                  <h4 style="font-size:13.5px; font-weight:700; color:var(--slate-900); margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                    <span>📋</span> Dokumen Persyaratan Pendaftaran
+                  </h4>
+                  <ul class="checklist-list" style="color:var(--slate-700); line-height:1.8;">
+                    <li><strong>Paspor Asli:</strong> Masa berlaku minimal 8 bulan sebelum jadwal keberangkatan, susunan nama minimal 2 suku kata (contoh: Ahmad Fauzi).</li>
+                    <li><strong>Kartu Identitas:</strong> Fotokopi / Scan KTP Elektronik dan Kartu Keluarga (KK) yang jelas.</li>
+                    <li><strong>Buku Nikah Asli:</strong> Diperlukan bagi pasangan suami-istri yang bepergian bersama.</li>
+                    <li><strong>Akta Kelahiran:</strong> Diperlukan bagi jamaah anak-anak atau saudara kandung.</li>
+                    <li><strong>Sertifikat Vaksinasi:</strong> Vaksin Meningitis resmi dari KKP / Puskesmas rujukan.</li>
+                    <li><strong>Pas Foto:</strong> Foto terbaru latar belakang putih fokus wajah 80% (softcopy/cetak 4x6).</li>
+                  </ul>
                 </div>
-                <p style="font-size:12px; color:var(--slate-600);">"Alhamdulillah pelayanan biro sangat memuaskan, hotel benar-benar dekat dengan Masjidil Haram, muthawwif sangat membimbing ibadah dengan khusyuk."</p>
-              </div>
-              <div class="kpi-card">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                  <strong>Hj. Siti Aminah</strong>
-                  <span style="color:#f5a623;">★★★★★</span>
+
+                <div class="pdp-terms-card">
+                  <h4 style="font-size:13.5px; font-weight:700; color:var(--slate-900); margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                    <span>💳</span> Ketentuan Pembayaran & Pelunasan
+                  </h4>
+                  <div style="font-size:12.5px; color:var(--slate-700); line-height:1.7;">
+                    <p><strong>1. Uang Muka (Booking Fee):</strong> Pembayaran deposit awal saat melakukan booking di platform untuk mengamankan kursi kuota penerbangan.</p>
+                    <p style="margin-top:8px;"><strong>2. Pelunasan Biaya:</strong> Pembayaran pelunasan wajib diselesaikan paling lambat <strong>30 hari</strong> sebelum jadwal keberangkatan.</p>
+                    <p style="margin-top:8px;"><strong>3. Perlindungan Rekening Amanah:</strong> Pembayaran jamaah diverifikasi secara transparan dan diteruskan ke biro travel PPIU resmi berizin Kemenag RI.</p>
+                  </div>
                 </div>
-                <p style="font-size:12px; color:var(--slate-600);">"Makanan cocok dengan lidah Indonesia, penerbangan tepat waktu tanpa delay, sangat amanah."</p>
+
+                <div class="pdp-terms-card" style="grid-column: 1 / -1; background:var(--gold-50); border:1px solid var(--gold-100);">
+                  <h4 style="font-size:13.5px; font-weight:700; color:var(--gold-600); margin-bottom:8px;">
+                    🛡️ Kebijakan Pembatalan & Pengembalian Dana (Refund)
+                  </h4>
+                  <p style="font-size:12px; color:var(--slate-700); line-height:1.6;">
+                    Pembatalan setelah tiket penerbangan terbit atau visa diajukan tunduk pada regulasi maskapai (${airline}) dan muassasah di Arab Saudi. Potongan pembatalan mengacu pada standar asosiasi haji dan umroh resmi (AMPHURI / HIMPUH) demi perlindungan hak kedua belah pihak.
+                  </p>
+                </div>
               </div>
             </div>
           `;
         }
+        return '';
       },
 
       openBookingModal(pkgId, preferredDepartureId = '') {
-        const pkg = ApiClient.db.packages.find(p => p.id === pkgId) || ApiClient.db.packages[0];
-        const departureId = preferredDepartureId || (pkg.departures && pkg.departures[0] ? pkg.departures[0].id : (pkg.id + "-DEP"));
+        const pkg = (ApiClient.db.packages && ApiClient.db.packages.find(p => p.id === pkgId)) 
+          || this.activePackage 
+          || (ApiClient.db.packages && ApiClient.db.packages[0]);
+
+        if (!pkg) {
+          Toast.show("Data paket tidak ditemukan.", "error");
+          return;
+        }
+
+        const departureList = (pkg.departures && pkg.departures.length > 0)
+          ? pkg.departures
+          : [{ id: preferredDepartureId || (pkg.id + "-DEP"), departureCity: pkg.departureCity || 'Jakarta (CGK)', departureDate: pkg.departureDate || '2026-10-15', quotaTotal: 45, quotaTaken: 12 }];
+
+        const depId = preferredDepartureId || this.selectedDepartureId || departureList[0].id;
+        const activeDep = departureList.find(d => d.id === depId) || departureList[0];
+
+        const basePrice = Number(pkg.price) || (this.currentBasePrice || 28500000);
+        this.currentBasePrice = basePrice;
+        
+        const currentVariant = this.selectedRoomLabel || 'Quad (Sekamar 4)';
+        const currentSurcharge = Number(this.currentRoomSurcharge || 0);
+        const currentPax = Math.max(1, Math.min(10, parseInt(this.paxCount, 10) || 1));
+        this.paxCount = currentPax;
+
+        const singlePrice = basePrice + currentSurcharge;
+        const totalPrice = singlePrice * currentPax;
+        const dpEstimate = 5000000 * currentPax;
+
+        // Clean user prefill values (eliminate hardcoded dummy values)
+        let initialName = (AuthStore.currentUser && AuthStore.currentUser.name) || '';
+        if (initialName.includes('(')) {
+          initialName = initialName.split('(')[0].trim();
+        }
+        if (initialName.toLowerCase().includes('admin') || initialName.toLowerCase().includes('travel')) {
+          initialName = '';
+        }
+
+        const initialPhone = (AuthStore.currentUser && AuthStore.currentUser.phone) 
+          ? AuthStore.currentUser.phone 
+          : '';
 
         ModalManager.open({
-          title: "Formulir Booking Umroh",
+          title: "Formulir Pemesanan Paket Umroh",
           body: `
-            <form id="booking-form" onsubmit="event.preventDefault(); Marketplace.submitBooking('${escapeHtml(pkg.id)}', '${escapeHtml(departureId)}', this)">
-              <div class="form-group" style="margin-bottom: 12px;">
-                <label>Nama Jamaah Sesuai Paspor / KTP</label>
-                <input type="text" name="name" required class="form-control" value="${escapeHtml(AuthStore.currentUser.name)}">
+            <form id="booking-form" onsubmit="event.preventDefault(); Marketplace.submitBooking('${escapeHtml(pkg.id)}', '${escapeHtml(activeDep.id)}', this)">
+              <!-- Package & Departure Summary Card -->
+              <div class="modal-pkg-summary">
+                <div class="modal-pkg-icon">🕋</div>
+                <div class="modal-pkg-info">
+                  <h4 class="modal-pkg-title">${escapeHtml(pkg.title)}</h4>
+                  <div class="modal-pkg-meta">
+                    <span>🏢 <strong>${escapeHtml(pkg.travelName || 'Biro Travel PPIU')}</strong></span>
+                    <span>•</span>
+                    <span>🛫 Keberangkatan: <strong>${escapeHtml(activeDep.departureDate || pkg.departureDate)}</strong> (${escapeHtml((activeDep.departureCity || pkg.departureCity || 'Jakarta').split(' ')[0])})</span>
+                  </div>
+                </div>
               </div>
+
+              <!-- Room Variant Selection in Modal -->
+              <div class="form-group" style="margin-bottom: 14px;">
+                <label style="display:flex; justify-content:space-between; align-items:center;">
+                  <span>Pilih Varian Tipe Kamar</span>
+                  <span id="modal-selected-variant-label" style="font-weight:800; color:var(--primary-700);">${escapeHtml(currentVariant)}</span>
+                </label>
+                <div class="modal-variant-pills" id="modal-variant-pills">
+                  <button type="button" class="modal-variant-btn ${currentVariant.includes('Quad') ? 'active' : ''}" onclick="Marketplace.setModalRoomVariant('Quad (Sekamar 4)', 0, this)">
+                    <strong>Quad (4 Pax)</strong>
+                    <span style="color:var(--slate-500); font-size:10.5px;">Standar (+Rp 0)</span>
+                  </button>
+                  <button type="button" class="modal-variant-btn ${currentVariant.includes('Triple') ? 'active' : ''}" onclick="Marketplace.setModalRoomVariant('Triple (Sekamar 3)', 2000000, this)">
+                    <strong>Triple (3 Pax)</strong>
+                    <span style="color:var(--primary-700); font-size:10.5px;">+Rp 2.000.000</span>
+                  </button>
+                  <button type="button" class="modal-variant-btn ${currentVariant.includes('Double') ? 'active' : ''}" onclick="Marketplace.setModalRoomVariant('Double (Sekamar 2)', 4000000, this)">
+                    <strong>Double (2 Pax)</strong>
+                    <span style="color:var(--primary-700); font-size:10.5px;">+Rp 4.000.000</span>
+                  </button>
+                </div>
+                <!-- Hidden inputs to track variant calculations -->
+                <input type="hidden" name="roomType" id="modal-input-room-type" value="${escapeHtml(currentVariant)}">
+                <input type="hidden" name="roomSurcharge" id="modal-input-surcharge" value="${currentSurcharge}">
+                <input type="hidden" name="basePrice" id="modal-input-base-price" value="${basePrice}">
+              </div>
+
+              <!-- Pax Count Input -->
+              <div class="form-group" style="margin-bottom: 14px;">
+                <label>Jumlah Jamaah (Pax)</label>
+                <input type="number" id="modal-booking-pax" name="pax" min="1" max="10" value="${currentPax}" class="form-control" oninput="Marketplace.updateModalPriceCalculation()" onchange="Marketplace.updateModalPriceCalculation()" required>
+                <span style="font-size:11px; color:var(--slate-500); margin-top:3px; display:block;">Maksimal pemesanan per transaksi: 10 jamaah.</span>
+              </div>
+
+              <!-- Jamaah Contact Info -->
+              <div class="form-group" style="margin-bottom: 12px;">
+                <label>Nama Lengkap Jamaah Sesuai Paspor / KTP</label>
+                <input type="text" name="name" required class="form-control" placeholder="Contoh: Ahmad Fauzi" value="${escapeHtml(initialName)}">
+              </div>
+
               <div class="form-group" style="margin-bottom: 12px;">
                 <label>Nomor WhatsApp Aktif</label>
-                <input type="tel" name="phone" required class="form-control" value="081288991122">
+                <input type="tel" name="phone" required class="form-control" placeholder="Contoh: 081234567890" value="${escapeHtml(initialPhone)}">
+                <span style="font-size:11px; color:var(--slate-500); margin-top:3px; display:block;">Pihak biro travel akan mengirimkan konfirmasi pendaftaran & panduan dokumen via WhatsApp.</span>
               </div>
-              <div class="form-group" style="margin-bottom: 12px;">
-                <label>Jumlah Jamaah (Pax)</label>
-                <input type="number" name="pax" min="1" max="10" value="${this.paxCount}" class="form-control">
+
+              <div class="form-group" style="margin-bottom: 14px;">
+                <label>Catatan Tambahan (Opsional)</label>
+                <input type="text" name="notes" class="form-control" placeholder="Contoh: Permintaan kursi roda / kamar berdampingan">
+              </div>
+
+              <!-- Dynamic Price Breakdown Box -->
+              <div class="modal-price-breakdown">
+                <div class="modal-price-line">
+                  <span>Harga Dasar Paket:</span>
+                  <span class="modal-price-val">Rp ${basePrice.toLocaleString('id-ID')} / pax</span>
+                </div>
+                <div class="modal-price-line">
+                  <span>Biaya Tambahan Kamar:</span>
+                  <span class="modal-price-val" id="modal-surcharge-val">+Rp ${currentSurcharge.toLocaleString('id-ID')} / pax</span>
+                </div>
+                <div class="modal-price-line">
+                  <span>Biaya Per Orang:</span>
+                  <span class="modal-price-val" id="modal-single-price-val" style="color:var(--primary-700);">Rp ${singlePrice.toLocaleString('id-ID')}</span>
+                </div>
+                <div class="modal-price-line total">
+                  <span>Total Estimasi Paket:</span>
+                  <span class="modal-price-val" id="modal-total-price-val">Rp ${totalPrice.toLocaleString('id-ID')}</span>
+                </div>
+                <div class="modal-price-line" style="margin-top:6px; font-size:11.5px; color:var(--slate-500);">
+                  <span>Deposit Awal (DP Booking):</span>
+                  <span class="modal-price-val" id="modal-dp-price-val" style="color:var(--gold-600); font-weight:700;">Rp ${dpEstimate.toLocaleString('id-ID')}</span>
+                </div>
+              </div>
+
+              <!-- Security & Guarantee Trust Note -->
+              <div class="modal-trust-banner">
+                <span style="font-size:16px;">🛡️</span>
+                <span>Transaksi Anda aman dilindungi Rekening Amanah Umrohpedia & Komitmen 5 Pasti Umroh Kemenag RI.</span>
               </div>
             </form>
           `,
           footer: `
-            <button class="btn btn-outline" onclick="ModalManager.close()">Batal</button>
-            <button class="btn btn-primary" onclick="document.getElementById('booking-form').requestSubmit()">Konfirmasi Booking</button>
+            <button class="btn btn-outline" type="button" onclick="ModalManager.close()">Batal</button>
+            <button class="btn btn-primary" type="button" id="modal-submit-btn" onclick="document.getElementById('booking-form').requestSubmit()">
+              <span id="modal-submit-btn-text">Konfirmasi Booking (Rp ${totalPrice.toLocaleString('id-ID')})</span> &rarr;
+            </button>
           `
         });
+      },
+
+      setModalRoomVariant(label, surcharge, elem) {
+        this.selectedRoomLabel = label;
+        this.currentRoomSurcharge = surcharge || 0;
+
+        const roomTypeInput = document.getElementById('modal-input-room-type');
+        const surchargeInput = document.getElementById('modal-input-surcharge');
+        const labelDisplay = document.getElementById('modal-selected-variant-label');
+
+        if (roomTypeInput) roomTypeInput.value = label;
+        if (surchargeInput) surchargeInput.value = this.currentRoomSurcharge;
+        if (labelDisplay) labelDisplay.textContent = label;
+
+        const pills = document.querySelectorAll('#modal-variant-pills .modal-variant-btn');
+        pills.forEach(p => p.classList.remove('active'));
+        if (elem) elem.classList.add('active');
+
+        // Sync with PDP if on page
+        const pdpLabel = document.getElementById('selected-room-label');
+        const pdpSidebarVar = document.getElementById('pdp-sidebar-variant-name');
+        if (pdpLabel) pdpLabel.textContent = label;
+        if (pdpSidebarVar) pdpSidebarVar.textContent = label;
+        const pdpPills = document.querySelectorAll('#room-variant-pills .pdp-variant-pill');
+        pdpPills.forEach(p => {
+          if (p.textContent.includes(label.split(' ')[0])) {
+            p.classList.add('active');
+          } else {
+            p.classList.remove('active');
+          }
+        });
+
+        this.updateModalPriceCalculation();
+        this.updatePdpCalculations();
+      },
+
+      updateModalPriceCalculation() {
+        const paxInput = document.getElementById('modal-booking-pax');
+        const surchargeInput = document.getElementById('modal-input-surcharge');
+        const basePriceInput = document.getElementById('modal-input-base-price');
+
+        const pax = Math.max(1, Math.min(10, parseInt(paxInput ? paxInput.value : 1, 10) || 1));
+        const surcharge = Number(surchargeInput ? surchargeInput.value : (this.currentRoomSurcharge || 0));
+        const basePrice = Number(basePriceInput ? basePriceInput.value : (this.currentBasePrice || 28500000));
+
+        this.paxCount = pax;
+        this.currentRoomSurcharge = surcharge;
+
+        const singlePrice = basePrice + surcharge;
+        const totalPrice = singlePrice * pax;
+        const dpEstimate = 5000000 * pax;
+
+        const singleValElem = document.getElementById('modal-single-price-val');
+        const surchargeValElem = document.getElementById('modal-surcharge-val');
+        const totalValElem = document.getElementById('modal-total-price-val');
+        const dpValElem = document.getElementById('modal-dp-price-val');
+        const submitTextElem = document.getElementById('modal-submit-btn-text');
+
+        if (singleValElem) singleValElem.textContent = `Rp ${singlePrice.toLocaleString('id-ID')}`;
+        if (surchargeValElem) surchargeValElem.textContent = `+Rp ${surcharge.toLocaleString('id-ID')} / pax`;
+        if (totalValElem) totalValElem.textContent = `Rp ${totalPrice.toLocaleString('id-ID')}`;
+        if (dpValElem) dpValElem.textContent = `Rp ${dpEstimate.toLocaleString('id-ID')}`;
+        if (submitTextElem) submitTextElem.textContent = `Konfirmasi Booking (Rp ${totalPrice.toLocaleString('id-ID')})`;
+
+        // Sync with PDP count
+        const pdpPaxSpan = document.getElementById('pdp-pax-count');
+        if (pdpPaxSpan) pdpPaxSpan.textContent = pax;
+        this.updatePdpCalculations();
       },
 
       async submitBooking(pkgId, departureId, form) {
         const formData = new FormData(form);
         const paxCount = parseInt(formData.get('pax'), 10) || 1;
-        const jamaahName = formData.get('name');
-        const jamaahPhone = formData.get('phone');
+        const rawJamaahName = (formData.get('name') || '').trim();
+        const jamaahPhone = (formData.get('phone') || '').trim();
+        const roomType = (formData.get('roomType') || this.selectedRoomLabel || 'Quad (Sekamar 4)').trim();
+        const notes = (formData.get('notes') || '').trim();
         const visitorKey = ApiClient.getVisitorKey();
+
+        if (!rawJamaahName) {
+          Toast.show("Nama lengkap jamaah wajib diisi sesuai KTP/Paspor.", "error");
+          return;
+        }
+
+        if (!jamaahPhone || jamaahPhone.replace(/\D/g, '').length < 9) {
+          Toast.show("Nomor WhatsApp aktif wajib diisi minimal 9 digit angka.", "error");
+          return;
+        }
 
         ModalManager.close();
 
-        // Kirim transaksi ke backend Google Apps Script
-        const res = await ApiClient.request('bookings.create', {
-          departureId: departureId,
-          packageId: pkgId,
-          paxCount: paxCount,
-          jamaahName: jamaahName,
-          jamaahPhone: jamaahPhone,
-          visitorKey: visitorKey
-        });
+        // Format nama jamaah dengan varian kamar agar terlihat jelas di dashboard biro & customer
+        const variantTag = roomType && !roomType.toLowerCase().includes('quad')
+          ? ` [${roomType.split(' ')[0]}]`
+          : '';
+        const formattedJamaahName = `${rawJamaahName}${variantTag}`;
 
-        if (res && res.success) {
-          Toast.show("Alhamdulillah! Booking Anda tercatat berstatus PENDING.", "success");
-        } else {
-          Toast.show(res ? res.message : "Booking gagal diproses.", "error");
+        const pkg = (ApiClient.db.packages && ApiClient.db.packages.find(p => p.id === pkgId)) 
+          || this.activePackage 
+          || (ApiClient.db.packages && ApiClient.db.packages[0]);
+
+        const basePrice = Number(pkg ? pkg.price : 28500000);
+        const surcharge = Number(this.currentRoomSurcharge || 0);
+        const unitPrice = basePrice + surcharge;
+        const totalPrice = unitPrice * paxCount;
+
+        // Local cache entry for immediate optimistic customer dashboard reflection
+        const bookingId = `BKG-${Date.now().toString(36).toUpperCase()}`;
+        const newBookingRecord = {
+          id: bookingId,
+          bookingCode: `UH-${Math.floor(100000 + Math.random() * 900000)}`,
+          packageId: pkg ? pkg.id : pkgId,
+          packageName: pkg ? pkg.title : 'Paket Umroh Terpilih',
+          travelName: pkg ? (pkg.travelName || 'Biro Travel PPIU') : 'Al-Falah Tour & Travel',
+          jamaahName: formattedJamaahName,
+          jamaahPhone: jamaahPhone,
+          paxCount: paxCount,
+          unitPrice: unitPrice,
+          totalPrice: totalPrice,
+          roomType: roomType,
+          notes: notes,
+          status: 'PENDING',
+          paymentStatus: 'UNPAID',
+          createdAt: new Date().toISOString()
+        };
+
+        if (ApiClient.db.bookings) {
+          ApiClient.db.bookings.unshift(newBookingRecord);
+        }
+        localStorage.removeItem('uh_cache_dash_customer');
+
+        // Kirim transaksi ke backend Google Apps Script
+        try {
+          const res = await ApiClient.request('bookings.create', {
+            departureId: departureId,
+            packageId: pkgId,
+            paxCount: paxCount,
+            jamaahName: formattedJamaahName,
+            jamaahPhone: jamaahPhone,
+            roomType: roomType,
+            notes: notes,
+            visitorKey: visitorKey
+          });
+
+          if (res && res.success) {
+            Toast.show("Alhamdulillah! Booking Anda tercatat berstatus PENDING.", "success");
+          } else {
+            Toast.show(res ? res.message : "Booking gagal diproses.", "error");
+          }
+        } catch (err) {
+          console.warn("Booking submit API error, fallback handled", err);
         }
 
         Router.navigate('customer-dashboard');
@@ -8082,7 +9099,7 @@
               </div>
               <div class="trx-actions-group">
                 ${isPending ? `
-                  <button class="btn btn-outline btn-sm trx-action-btn" onclick="ChatModal.open()">Chat Biro</button>
+                  <button class="btn btn-outline btn-sm trx-action-btn" onclick="ChatModal.openBookingChat('${escapeHtml(b.id || b.bookingCode)}')">Chat Biro</button>
                   <button class="btn btn-primary btn-sm trx-action-btn" onclick="CustomerDashboard.showBookingDetail('${escapeHtml(b.id || b.bookingCode)}')">Lihat Detail</button>
                 ` : isCompleted ? `
                   <button class="btn btn-outline btn-sm trx-action-btn" onclick="CustomerDashboard.showBookingDetail('${escapeHtml(b.id || b.bookingCode)}')">Detail Transaksi</button>
@@ -8728,39 +9745,306 @@
     };
 
     /* ==========================================================================
-       6.1 CHAT & NOTIFICATION MODALS (TOKOPEDIA STYLE)
+       6.1 CHAT & NOTIFICATION MODALS (TOKOPEDIA STYLE & WHATSAPP INTEGRATION)
        ========================================================================== */
     const ChatModal = {
-      open() {
+      formatWaPhone(phone) {
+        if (!phone) return '6281299001122';
+        let cleaned = String(phone).replace(/\D/g, '');
+        if (cleaned.startsWith('0')) {
+          cleaned = '62' + cleaned.substring(1);
+        } else if (cleaned.startsWith('8')) {
+          cleaned = '62' + cleaned;
+        }
+        return cleaned;
+      },
+
+      copyMessage(btnElem, textToCopy) {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(textToCopy).then(() => {
+            if (btnElem) {
+              const orig = btnElem.textContent;
+              btnElem.textContent = '✓ Pesan Tersalin!';
+              setTimeout(() => { btnElem.textContent = orig; }, 2000);
+            }
+            Toast.show("Teks pesan konsultasi berhasil disalin ke clipboard!", "success");
+          }).catch(() => {
+            prompt("Salin teks pesan berikut:", textToCopy);
+          });
+        } else {
+          prompt("Salin teks pesan berikut:", textToCopy);
+        }
+      },
+
+      openTravelChat(pkgId) {
+        const pkg = (ApiClient.db.packages && ApiClient.db.packages.find(p => p.id === pkgId))
+          || Marketplace.activePackage
+          || (ApiClient.db.packages && ApiClient.db.packages[0]);
+
+        if (!pkg) {
+          this.open();
+          return;
+        }
+
+        const travel = (ApiClient.db.travels && ApiClient.db.travels.find(t => t.id === pkg.travelId || t.name === pkg.travelName))
+          || (ApiClient.db.travels && ApiClient.db.travels[0])
+          || { name: pkg.travelName || 'Biro Travel PPIU', phone: '0812-9900-1122', skKemenag: pkg.skKemenag || 'PPIU Resmi' };
+
+        const departureList = (pkg.departures && pkg.departures.length > 0)
+          ? pkg.departures
+          : [{ id: pkg.id + '-DEP', departureDate: pkg.departureDate || '2026-10-15', departureCity: pkg.departureCity || 'Jakarta' }];
+
+        const currentDep = departureList.find(d => d.id === Marketplace.selectedDepartureId) || departureList[0];
+        const departureDate = currentDep.departureDate || pkg.departureDate || '2026-10-15';
+        const departureCity = currentDep.departureCity || pkg.departureCity || 'Jakarta (CGK)';
+        const roomVariant = Marketplace.selectedRoomLabel || 'Quad (Sekamar 4)';
+        const singlePrice = (Marketplace.currentBasePrice || Number(pkg.price) || 28500000) + (Marketplace.currentRoomSurcharge || 0);
+        const shareUrl = Router.getShareableUrl('package-detail', pkg.id);
+        const waPhone = this.formatWaPhone(travel.phone);
+
+        const waMessage = `Assalamu'alaikum Warahmatullahi Wabarakatuh, Admin ${travel.name}.
+
+Saya tertarik berkonsultasi mengenai paket umroh resmi yang terdaftar di Umrohpedia:
+🕋 Paket: *${pkg.title}*
+🏢 Biro Penyelenggara: *${travel.name}* (${travel.skKemenag || 'Izin PPIU Kemenag RI'})
+🛫 Jadwal Keberangkatan: *${departureDate}* (${departureCity.split(' ')[0]})
+🏨 Tipe Kamar Dipilih: *${roomVariant}*
+💰 Estimasi Biaya: Rp ${singlePrice.toLocaleString('id-ID')} / pax
+
+Tautan Paket: ${shareUrl}
+
+Mohon informasi terkait sisa kuota kursi, kelengkapan berkas paspor, dan jadwal bimbingan manasik umrohnya. Terima kasih.`;
+
+        const waUrl = `https://wa.me/${waPhone}?text=${encodeURIComponent(waMessage)}`;
+
         ModalManager.open({
-          title: "💬 Pusat Chat & Bantuan Ibadah",
+          title: `💬 Konsultasi Langsung via WhatsApp`,
           body: `
-            <div style="display:flex; flex-direction:column; gap:10px;">
-              <div class="kpi-card" style="display:flex; align-items:center; gap:12px; cursor:pointer;" onclick="Toast.show('Menghubungkan ke WhatsApp Customer Service 24/7...', 'success'); ModalManager.close();">
-                <div style="width:40px; height:40px; border-radius:50%; background:#03ac0e; color:#fff; display:flex; align-items:center; justify-content:center; font-size:18px;">📱</div>
-                <div style="flex:1;">
-                  <strong style="font-size:13px; color:var(--slate-900);">Customer Service Umrohpedia 24/7</strong>
-                  <p style="font-size:11px; color:var(--slate-500); margin-top:2px;">Konsultasi pendaftaran, pembayaran, & legalitas</p>
+            <div class="wa-chat-container">
+              <!-- Biro Travel Header Card -->
+              <div class="wa-biro-header">
+                <div class="wa-biro-avatar">🕋</div>
+                <div class="wa-biro-meta">
+                  <div class="wa-biro-name">
+                    ${escapeHtml(travel.name)}
+                    <span class="verified-check" title="Terverifikasi Kemenag RI">✓</span>
+                  </div>
+                  <div class="wa-biro-sub">
+                    📞 ${escapeHtml(travel.phone || 'WhatsApp Aktif')} • ${escapeHtml(travel.skKemenag || 'PPIU Resmi Kemenag RI')}
+                  </div>
                 </div>
-                <span class="badge badge-verified">Online</span>
               </div>
 
-              <div class="kpi-card" style="display:flex; align-items:center; gap:12px; cursor:pointer;" onclick="Toast.show('Menghubungkan ke Tim Muthawwif & Konsultan Syariah...', 'info'); ModalManager.close();">
-                <div style="width:40px; height:40px; border-radius:50%; background:#7e22ce; color:#fff; display:flex; align-items:center; justify-content:center; font-size:18px;">🕌</div>
-                <div style="flex:1;">
-                  <strong style="font-size:13px; color:var(--slate-900);">Konsultasi Fiqih & Bimbingan Ibadah</strong>
-                  <p style="font-size:11px; color:var(--slate-500); margin-top:2px;">Tanya jawab manasik & bimbingan umroh syariah</p>
-                </div>
-                <span class="badge badge-info">Siaga</span>
+              <!-- Context Pill -->
+              <div class="wa-context-box">
+                <div>Paket: <strong>${escapeHtml(pkg.title)}</strong></div>
+                <div style="margin-top:2px; font-size:11px; opacity:0.85;">Keberangkatan: ${escapeHtml(departureDate)} • Varian: ${escapeHtml(roomVariant)}</div>
               </div>
 
-              <div class="kpi-card" style="display:flex; align-items:center; gap:12px; cursor:pointer;" onclick="Toast.show('Menghubungkan ke Al-Falah Travel Support...', 'info'); ModalManager.close();">
-                <div style="width:40px; height:40px; border-radius:50%; background:#b45309; color:#fff; display:flex; align-items:center; justify-content:center; font-size:18px;">🕋</div>
-                <div style="flex:1;">
-                  <strong style="font-size:13px; color:var(--slate-900);">Live Support Biro PPIU Terdaftar</strong>
-                  <p style="font-size:11px; color:var(--slate-500); margin-top:2px;">Al-Falah Tour & Travel (PPIU No. 412/2021)</p>
+              <!-- Live WhatsApp Message Preview -->
+              <div style="font-size:12px; font-weight:700; color:var(--slate-800); margin-top:2px;">
+                Preview Pesan WhatsApp Otomatis:
+              </div>
+              <div class="wa-preview-area">${escapeHtml(waMessage)}</div>
+
+              <!-- Direct Action Buttons -->
+              <div style="display:flex; flex-direction:column; gap:8px; margin-top:4px;">
+                <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="wa-btn-primary" onclick="ModalManager.close()">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                  <span>Buka WhatsApp Biro Sekarang</span>
+                </a>
+                <div style="display:flex; gap:8px;">
+                  <button type="button" class="wa-btn-secondary" style="flex:1;" onclick="ChatModal.copyMessage(this, \`${escapeHtml(waMessage).replace(/`/g, '\\`')}\`)">
+                    📋 Salin Teks Pesan
+                  </button>
+                  <a href="tel:${escapeHtml(travel.phone ? travel.phone.replace(/[^0-9+]/g, '') : '')}" class="wa-btn-secondary" style="text-decoration:none;" title="Panggilan Telepon Langsung">
+                    📞 Telepon Biro
+                  </a>
                 </div>
-                <span class="badge badge-gold">Biro</span>
+              </div>
+
+              <!-- Safe Rekening Guarantee -->
+              <div class="modal-trust-banner" style="margin-top:4px;">
+                <span>🛡️</span>
+                <span>Untuk keamanan dana, seluruh transaksi dan setoran wajib dilakukan melalui platform Umrohpedia.</span>
+              </div>
+            </div>
+          `,
+          footer: `<button class="btn btn-outline" onclick="ModalManager.close()">Tutup</button>`
+        });
+      },
+
+      openTravelStoreChat(travelId) {
+        const travel = (ApiClient.db.travels && ApiClient.db.travels.find(t => t.id === travelId || t.name === travelId))
+          || TravelStore.currentTravel
+          || (ApiClient.db.travels && ApiClient.db.travels[0]);
+
+        if (!travel) {
+          this.open();
+          return;
+        }
+
+        const waPhone = this.formatWaPhone(travel.phone);
+        const storeUrl = window.location.href;
+
+        const waMessage = `Assalamu'alaikum Warahmatullahi Wabarakatuh, Admin ${travel.name}.
+
+Saya menemukan etalase resmi *${travel.name}* (${travel.skKemenag || 'Izin PPIU Kemenag RI'}) di aplikasi Umrohpedia.
+Saya ingin berkonsultasi mengenai paket umroh yang sedang dibuka dan jadwal keberangkatannya.
+
+Tautan Toko: ${storeUrl}
+
+Mohon informasi rekomendasi paket dan ketersediaan kuotanya. Terima kasih.`;
+
+        const waUrl = `https://wa.me/${waPhone}?text=${encodeURIComponent(waMessage)}`;
+
+        ModalManager.open({
+          title: `💬 Hubungi WhatsApp ${escapeHtml(travel.name)}`,
+          body: `
+            <div class="wa-chat-container">
+              <div class="wa-biro-header">
+                <div class="wa-biro-avatar">🕋</div>
+                <div class="wa-biro-meta">
+                  <div class="wa-biro-name">
+                    ${escapeHtml(travel.name)}
+                    <span class="verified-check">✓</span>
+                  </div>
+                  <div class="wa-biro-sub">
+                    ${escapeHtml(travel.skKemenag || 'PPIU Resmi')} • ${escapeHtml(travel.city || 'Indonesia')}
+                  </div>
+                </div>
+              </div>
+
+              <div style="font-size:12px; font-weight:700; color:var(--slate-800);">
+                Pesan Konsultasi:
+              </div>
+              <div class="wa-preview-area">${escapeHtml(waMessage)}</div>
+
+              <div style="display:flex; flex-direction:column; gap:8px; margin-top:4px;">
+                <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="wa-btn-primary" onclick="ModalManager.close()">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                  <span>Lanjut Chat ke WhatsApp Biro</span>
+                </a>
+                <button type="button" class="wa-btn-secondary" onclick="ChatModal.copyMessage(this, \`${escapeHtml(waMessage).replace(/`/g, '\\`')}\`)">
+                  📋 Salin Pesan
+                </button>
+              </div>
+            </div>
+          `,
+          footer: `<button class="btn btn-outline" onclick="ModalManager.close()">Tutup</button>`
+        });
+      },
+
+      openBookingChat(bookingId) {
+        const b = (ApiClient.db.bookings && ApiClient.db.bookings.find(item => item.id === bookingId || item.bookingCode === bookingId))
+          || (ApiClient.db.bookings && ApiClient.db.bookings[0]);
+
+        if (!b) {
+          this.open();
+          return;
+        }
+
+        const travel = (ApiClient.db.travels && ApiClient.db.travels.find(t => t.name === b.travelName))
+          || (ApiClient.db.travels && ApiClient.db.travels[0])
+          || { name: b.travelName || 'Biro Travel PPIU', phone: '0812-9900-1122' };
+
+        const waPhone = this.formatWaPhone(travel.phone);
+        const waMessage = `Assalamu'alaikum Warahmatullahi Wabarakatuh, Admin ${b.travelName || travel.name}.
+
+Saya jamaah atas nama *${b.jamaahName || 'Jamaah'}* ingin konfirmasi pemesanan tiket/paket umroh di Umrohpedia:
+📋 Kode Booking: *${b.id || b.bookingCode || 'BKG-001'}*
+🕋 Paket: *${b.packageName || 'Paket Umroh'}*
+👥 Jumlah Jamaah: *${b.paxCount || 1} Pax*
+💰 Total Biaya: *Rp ${Number(b.totalPrice || 0).toLocaleString('id-ID')}*
+Status: *${b.status || 'PENDING'}*
+
+Mohon arahan verifikasi paspor dan panduan pelunasan rekening amanahnya. Terima kasih.`;
+
+        const waUrl = `https://wa.me/${waPhone}?text=${encodeURIComponent(waMessage)}`;
+
+        ModalManager.open({
+          title: `💬 Konfirmasi Booking ke Biro Travel`,
+          body: `
+            <div class="wa-chat-container">
+              <div class="wa-biro-header">
+                <div class="wa-biro-avatar">🕋</div>
+                <div class="wa-biro-meta">
+                  <div class="wa-biro-name">${escapeHtml(b.travelName || travel.name)} <span class="verified-check">✓</span></div>
+                  <div class="wa-biro-sub">Kode Booking: <strong>${escapeHtml(b.id || b.bookingCode)}</strong></div>
+                </div>
+              </div>
+
+              <div style="font-size:12px; font-weight:700; color:var(--slate-800);">
+                Preview Pesan Konfirmasi:
+              </div>
+              <div class="wa-preview-area">${escapeHtml(waMessage)}</div>
+
+              <div style="display:flex; flex-direction:column; gap:8px; margin-top:4px;">
+                <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="wa-btn-primary" onclick="ModalManager.close()">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                  <span>Kirim Pesan Konfirmasi via WhatsApp</span>
+                </a>
+                <button type="button" class="wa-btn-secondary" onclick="ChatModal.copyMessage(this, \`${escapeHtml(waMessage).replace(/`/g, '\\`')}\`)">
+                  📋 Salin Pesan
+                </button>
+              </div>
+            </div>
+          `,
+          footer: `<button class="btn btn-outline" onclick="ModalManager.close()">Tutup</button>`
+        });
+      },
+
+      open() {
+        // If on package detail, directly offer travel chat
+        if (Router.currentRoute === 'package-detail' && Marketplace.activePackage) {
+          this.openTravelChat(Marketplace.activePackage.id);
+          return;
+        }
+
+        const csMsg = `Assalamu'alaikum CS Umrohpedia 24/7, saya ingin berkonsultasi mengenai platform dan pemesanan paket umroh...`;
+        const csUrl = `https://wa.me/6281288889999?text=${encodeURIComponent(csMsg)}`;
+
+        const fiqihMsg = `Assalamu'alaikum Ustadz / Pembimbing Ibadah, saya ingin berkonsultasi seputar tata cara dan fikih umroh...`;
+        const fiqihUrl = `https://wa.me/6281299990000?text=${encodeURIComponent(fiqihMsg)}`;
+
+        ModalManager.open({
+          title: "💬 Pusat Konsultasi & Bantuan Umrohpedia",
+          body: `
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <!-- 1. CS Platform Umrohpedia -->
+              <a href="${csUrl}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;" class="kpi-card" onclick="ModalManager.close()">
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div style="width:42px; height:42px; border-radius:50%; background:#25D366; color:#fff; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;">📱</div>
+                  <div style="flex:1;">
+                    <strong style="font-size:13.5px; color:var(--slate-900);">Customer Service Umrohpedia 24/7</strong>
+                    <p style="font-size:11.5px; color:var(--slate-500); margin-top:2px;">Bantuan legalitas, proteksi rekening amanah, & pendaftaran</p>
+                  </div>
+                  <span class="badge badge-verified">WhatsApp</span>
+                </div>
+              </a>
+
+              <!-- 2. Bimbingan Fiqih Muthawwif -->
+              <a href="${fiqihUrl}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;" class="kpi-card" onclick="ModalManager.close()">
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div style="width:42px; height:42px; border-radius:50%; background:#7e22ce; color:#fff; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;">🕌</div>
+                  <div style="flex:1;">
+                    <strong style="font-size:13.5px; color:var(--slate-900);">Konsultasi Fiqih & Bimbingan Ibadah</strong>
+                    <p style="font-size:11.5px; color:var(--slate-500); margin-top:2px;">Tanya jawab rukun, wajib, & manasik safar umroh</p>
+                  </div>
+                  <span class="badge badge-info">Siaga</span>
+                </div>
+              </a>
+
+              <!-- 3. Biro PPIU Resmi -->
+              <div class="kpi-card" style="cursor:pointer;" onclick="ModalManager.close(); Router.navigate('marketplace');">
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div style="width:42px; height:42px; border-radius:50%; background:#b45309; color:#fff; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0;">🕋</div>
+                  <div style="flex:1;">
+                    <strong style="font-size:13.5px; color:var(--slate-900);">Chat Langsung Biro PPIU Terdaftar</strong>
+                    <p style="font-size:11.5px; color:var(--slate-500); margin-top:2px;">Buka paket yang Anda minati untuk chat WhatsApp biro terkait</p>
+                  </div>
+                  <span class="badge badge-gold">&rarr;</span>
+                </div>
               </div>
             </div>
           `,
@@ -8915,15 +10199,23 @@
       if (targetPackageId) {
         Router.navigate('package-detail', targetPackageId);
       } else if (window.location.hash && window.location.hash.length > 1) {
-        Router.navigate(window.location.hash.substring(1));
+        const parsed = Router.parseRoute(window.location.hash);
+        Router.navigate(parsed.route, parsed.param);
       } else {
         Router.navigate('home');
       }
 
       window.addEventListener('hashchange', () => {
-        const hash = window.location.hash.substring(1);
-        if (hash && Router.currentRoute !== hash) {
-          Router.navigate(hash);
+        const parsed = Router.parseRoute(window.location.hash);
+        const currentTarget = Router.currentParam 
+          ? `${Router.currentRoute}/${encodeURIComponent(Router.currentParam)}` 
+          : Router.currentRoute;
+        const newTarget = parsed.param 
+          ? `${parsed.route}/${encodeURIComponent(parsed.param)}` 
+          : parsed.route;
+
+        if (currentTarget !== newTarget) {
+          Router.navigate(parsed.route, parsed.param);
         }
       });
 
