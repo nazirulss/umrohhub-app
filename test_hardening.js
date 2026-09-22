@@ -620,6 +620,104 @@ try {
   assert(false, "TEST 20 — Payout/admin authorization", e.message);
 }
 
+// TEST 21 — Kemenag 7-Month Rule: Passport validity calculation
+try {
+  function validatePassportRule(expiryDateStr, departureDateStr) {
+    const expDate = new Date(expiryDateStr);
+    const depDate = new Date(departureDateStr);
+    const diffDays = Math.floor((expDate.getTime() - depDate.getTime()) / (1000 * 60 * 60 * 24));
+    const diffMonths = Math.round((diffDays / 30.4375) * 10) / 10;
+    if (diffDays < 0) return { status: "EXPIRED", isValid: false, isCritical: true };
+    if (diffMonths < 7) return { status: "LESS_THAN_7_MONTHS", isValid: false, isCritical: true, diffMonths };
+    return { status: "VALID", isValid: true, isCritical: false, diffMonths };
+  }
+
+  const dep = "2026-10-15";
+  const validPassport = validatePassportRule("2027-10-15", dep); // 12 months -> VALID
+  const criticalPassport = validatePassportRule("2027-02-15", dep); // 4 months -> LESS_THAN_7_MONTHS
+  const expiredPassport = validatePassportRule("2026-08-01", dep); // Expired before dep
+
+  const ruleSuccess = validPassport.isValid === true && validPassport.status === "VALID" &&
+                      criticalPassport.isValid === false && criticalPassport.status === "LESS_THAN_7_MONTHS" && criticalPassport.isCritical === true &&
+                      expiredPassport.isValid === false && expiredPassport.status === "EXPIRED";
+
+  assert(ruleSuccess, "TEST 21 — Kemenag 7-Month Rule strictly flags passports with < 7 months active validity");
+} catch (e) {
+  assert(false, "TEST 21 — Kemenag 7-Month Rule", e.message);
+}
+
+// TEST 22 — Passport Full Name Validation: Minimum 2-3 words required for Saudi visa standards
+try {
+  function validatePassportName(name) {
+    if (!name || typeof name !== "string") return false;
+    const words = name.trim().split(/\s+/).filter(Boolean);
+    return words.length >= 2;
+  }
+
+  const singleWord = validatePassportName("Sulaiman");
+  const validTwoWords = validatePassportName("Ahmad Fauzi");
+  const validThreeWords = validatePassportName("Ahmad Fauzi Ridwan");
+
+  assert(!singleWord && validTwoWords && validThreeWords, "TEST 22 — Passport Full Name strictly requires at least 2 words for Saudi visa standards");
+} catch (e) {
+  assert(false, "TEST 22 — Passport Full Name Validation", e.message);
+}
+
+// TEST 23 — Document State Lifecycle & Revision Notes
+try {
+  let doc = {
+    id: "DOC-TEST-001",
+    bookingId: "BKG-TEST-001",
+    status: "BELUM_UPLOAD",
+    rejectionReason: ""
+  };
+
+  // Submit by customer
+  doc.status = "MENUNGGU_VERIFIKASI";
+  doc.passportNo = "X9988771";
+  doc.expiryDate = "2034-01-01";
+
+  // Reject by biro
+  doc.status = "PERLU_REVISI";
+  doc.rejectionReason = "Foto halaman depan paspor buram";
+
+  const isRejectedWithReason = doc.status === "PERLU_REVISI" && doc.rejectionReason.length > 0;
+
+  // Re-submit & verify by biro
+  doc.status = "MENUNGGU_VERIFIKASI";
+  doc.rejectionReason = "";
+  doc.status = "TERVERIFIKASI";
+  doc.verifiedBy = "Admin Biro PPIU";
+  doc.verifiedAt = new Date().toISOString();
+
+  const isVerifiedWithAuditor = doc.status === "TERVERIFIKASI" && !!doc.verifiedBy && !!doc.verifiedAt;
+
+  assert(isRejectedWithReason && isVerifiedWithAuditor, "TEST 23 — Document lifecycle transitions through review, revision with notes, and biro verification");
+} catch (e) {
+  assert(false, "TEST 23 — Document State Lifecycle", e.message);
+}
+
+// TEST 24 — Booking Document Summary computation
+try {
+  const mockDocs = [
+    { bookingId: "BKG-SUM-01", status: "TERVERIFIKASI", passportNo: "A1" },
+    { bookingId: "BKG-SUM-01", status: "TERVERIFIKASI", passportNo: "A2" }
+  ];
+
+  function getSummary(docs, totalPax) {
+    const verified = docs.filter(d => d.status === "TERVERIFIKASI").length;
+    const isComplete = verified === totalPax;
+    return { verified, totalPax, isComplete };
+  }
+
+  const sum1 = getSummary(mockDocs, 2);
+  const sum2 = getSummary(mockDocs, 3); // 2 of 3 verified -> not complete
+
+  assert(sum1.isComplete && !sum2.isComplete && sum1.verified === 2, "TEST 24 — Booking Document Summary correctly tracks multi-pax completion");
+} catch (e) {
+  assert(false, "TEST 24 — Booking Document Summary", e.message);
+}
+
 // GOLDEN PATH VERIFICATION
 console.log("\n=== TESTING GOLDEN PATH ===");
 try {

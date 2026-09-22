@@ -5306,6 +5306,308 @@
         font-size: 10.5px;
       }
     }
+
+    /* ==========================================================================
+       6H. JAMAAH PASSPORT & DOCUMENT MANAGEMENT SYSTEM STYLES
+       ========================================================================== */
+    .trx-doc-strip {
+      background: var(--slate-50);
+      border: 1px dashed var(--slate-300);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      margin: 10px 0 6px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .trx-doc-strip-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .trx-doc-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .trx-doc-meta {
+      font-size: 11.5px;
+      color: var(--slate-600);
+      font-weight: 600;
+    }
+    .trx-doc-btn {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      height: 28px;
+    }
+
+    /* Passenger Tabs in Modal */
+    .doc-pax-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--slate-200);
+      scrollbar-width: thin;
+    }
+    .doc-pax-tab {
+      padding: 7px 14px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--slate-100);
+      color: var(--slate-700);
+      border: 1px solid var(--slate-200);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .doc-pax-tab:hover {
+      background: var(--slate-200);
+    }
+    .doc-pax-tab.active {
+      background: var(--primary-600);
+      color: var(--white);
+      border-color: var(--primary-600);
+      box-shadow: 0 2px 6px rgba(0, 170, 91, 0.25);
+    }
+
+    /* Document Status Badges */
+    .badge-doc-verified {
+      background: #e5f9f0;
+      color: #008a4b;
+      border: 1px solid #b7ecd3;
+    }
+    .badge-doc-pending {
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+    .badge-doc-rejected {
+      background: #fde8ed;
+      color: #e02954;
+      border: 1px solid #f9b8c6;
+    }
+    .badge-doc-empty {
+      background: #f0f3f7;
+      color: #6d7588;
+      border: 1px solid #d6dae0;
+    }
+    .badge-doc-critical {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1px solid #fca5a5;
+    }
+
+    /* Passport Expiry Dynamic Alert Box */
+    .doc-alert-box {
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .doc-alert-box.critical {
+      background: #fff1f2;
+      border: 1.5px solid #f43f5e;
+      color: #881337;
+    }
+    .doc-alert-box.warning {
+      background: #fffbeb;
+      border: 1.5px solid #f59e0b;
+      color: #78350f;
+    }
+    .doc-alert-box.success {
+      background: #f0fdf4;
+      border: 1.5px solid #22c55e;
+      color: #14532d;
+    }
+    .doc-alert-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Upload Dropzone / File Picker */
+    .doc-upload-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 600px) {
+      .doc-upload-grid { grid-template-columns: 1fr; }
+    }
+    .doc-upload-box {
+      border: 2px dashed var(--slate-300);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+      background: var(--slate-50);
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+    }
+    .doc-upload-box:hover {
+      border-color: var(--primary-600);
+      background: var(--primary-50);
+    }
+    .doc-upload-box.has-file {
+      border-style: solid;
+      border-color: var(--primary-500);
+      background: #f0fbf6;
+    }
+    .doc-upload-preview {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      margin-bottom: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+    .doc-upload-icon {
+      font-size: 28px;
+      margin-bottom: 6px;
+      color: var(--slate-500);
+    }
+    .doc-upload-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--slate-800);
+      margin-bottom: 2px;
+    }
+    .doc-upload-hint {
+      font-size: 10.5px;
+      color: var(--slate-500);
+    }
+    .doc-file-input {
+      display: none;
+    }
+
+    /* Document Reviewer Table for Biro Travel */
+    .doc-table-wrapper {
+      overflow-x: auto;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      background: var(--white);
+      margin-top: 12px;
+    }
+    .doc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      text-align: left;
+      min-width: 760px;
+    }
+    .doc-table th {
+      background: var(--slate-100);
+      color: var(--slate-700);
+      font-weight: 700;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--slate-200);
+      white-space: nowrap;
+    }
+    .doc-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--slate-100);
+      color: var(--slate-800);
+      vertical-align: middle;
+    }
+    .doc-table tr:hover {
+      background: var(--slate-50);
+    }
+    .doc-thumb-mini {
+      width: 44px;
+      height: 32px;
+      object-fit: cover;
+      border-radius: var(--radius-xs);
+      cursor: pointer;
+      border: 1px solid var(--slate-300);
+      transition: transform 0.15s;
+    }
+    .doc-thumb-mini:hover {
+      transform: scale(1.15);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Flight Passenger Manifest (Printable View) */
+    .manifest-container {
+      background: var(--white);
+      padding: 24px;
+      color: var(--slate-900);
+      font-family: var(--font-main);
+    }
+    .manifest-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid var(--slate-900);
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+    }
+    .manifest-header-biro {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary-900);
+    }
+    .manifest-header-sub {
+      font-size: 11.5px;
+      color: var(--slate-600);
+      margin-top: 3px;
+    }
+    .manifest-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+      margin-top: 14px;
+    }
+    .manifest-table th {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      padding: 6px 8px;
+      font-weight: 700;
+      text-align: left;
+    }
+    .manifest-table td {
+      border: 1px solid #cbd5e1;
+      padding: 6px 8px;
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #modal-body, #modal-body * {
+        visibility: visible;
+      }
+      #modal-body {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+      }
+      .modal-header, .modal-footer, .btn, .doc-filter-strip {
+        display: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -5830,7 +6132,69 @@
           }
         ],
         bookings: [
-          { id: "BKG-DEMO-001", packageName: "Umroh Reguler Syawal Berkah 9 Hari", travelName: "Al-Falah Tour & Travel", jamaahName: "Ahmad Fauzi", jamaahPhone: "08140004001", paxCount: 2, totalPrice: 57000000, paymentStatus: "FULL_PAID", status: "CONFIRMED", affiliateCode: "USTADZ" }
+          {
+            id: "BKG-DEMO-001",
+            bookingCode: "UH-882910",
+            packageId: "PKG-DEMO-001",
+            packageName: "Umroh Reguler Syawal Berkah 9 Hari",
+            travelId: "TRV-DEMO-001",
+            travelName: "Al-Falah Tour & Travel",
+            jamaahName: "Ahmad Fauzi",
+            jamaahPhone: "08140004001",
+            paxCount: 2,
+            totalPrice: 57000000,
+            paymentStatus: "FULL_PAID",
+            status: "CONFIRMED",
+            departureDate: "2026-10-15",
+            affiliateCode: "USTADZ",
+            date: "29 Apr 2026"
+          }
+        ],
+        documents: [
+          {
+            id: "DOC-DEMO-001",
+            bookingId: "BKG-DEMO-001",
+            travelId: "TRV-DEMO-001",
+            paxIndex: 1,
+            fullName: "AHMAD FAUZI RIDWAN",
+            gender: "L",
+            passportNo: "X1289452",
+            birthPlace: "Jakarta",
+            birthDate: "1988-05-14",
+            issuePlace: "Jakarta Selatan",
+            issueDate: "2024-02-10",
+            expiryDate: "2034-02-10",
+            nik: "3174011405880002",
+            passportScanUrl: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80",
+            ktpScanUrl: "",
+            meningitisCertUrl: "",
+            status: "TERVERIFIKASI",
+            rejectionReason: "",
+            verifiedBy: "Al-Falah Tour Admin",
+            verifiedAt: "2026-09-20T08:30:00Z"
+          },
+          {
+            id: "DOC-DEMO-002",
+            bookingId: "BKG-DEMO-001",
+            travelId: "TRV-DEMO-001",
+            paxIndex: 2,
+            fullName: "SITI AISYAH NUR",
+            gender: "P",
+            passportNo: "X1289453",
+            birthPlace: "Bandung",
+            birthDate: "1990-08-22",
+            issuePlace: "Jakarta Selatan",
+            issueDate: "2024-02-10",
+            expiryDate: "2034-02-10",
+            nik: "3174016208900004",
+            passportScanUrl: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80",
+            ktpScanUrl: "",
+            meningitisCertUrl: "",
+            status: "MENUNGGU_VERIFIKASI",
+            rejectionReason: "",
+            verifiedBy: "",
+            verifiedAt: ""
+          }
         ],
         travels: [
           {
@@ -8930,6 +9294,546 @@
     };
 
     /* ==========================================================================
+       4C. JAMAAH PASSPORT & DOCUMENT REPOSITORY & MANAGER (KEMENAG COMPLIANT)
+       ========================================================================== */
+    const DocumentStore = {
+      cacheKey: 'uh_cache_jamaah_docs',
+
+      getAll() {
+        const cachedRaw = localStorage.getItem(this.cacheKey);
+        if (cachedRaw) {
+          try {
+            const parsed = JSON.parse(cachedRaw);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          } catch(e) {}
+        }
+        return ApiClient.db.documents || [];
+      },
+
+      saveAll(docs) {
+        localStorage.setItem(this.cacheKey, JSON.stringify(docs));
+        ApiClient.db.documents = docs;
+      },
+
+      getByBooking(bookingId) {
+        const all = this.getAll();
+        return all.filter(d => d.bookingId === bookingId);
+      },
+
+      getByPax(bookingId, paxIndex) {
+        const all = this.getAll();
+        return all.find(d => d.bookingId === bookingId && Number(d.paxIndex) === Number(paxIndex));
+      },
+
+      saveDoc(doc) {
+        const all = this.getAll();
+        const idx = all.findIndex(d => (d.id && d.id === doc.id) || (d.bookingId === doc.bookingId && Number(d.paxIndex) === Number(doc.paxIndex)));
+        if (idx >= 0) {
+          all[idx] = { ...all[idx], ...doc, updatedAt: new Date().toISOString() };
+        } else {
+          const newDoc = {
+            id: doc.id || `DOC-${Date.now().toString(36).toUpperCase()}-${Math.floor(100 + Math.random() * 900)}`,
+            ...doc,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          };
+          all.push(newDoc);
+        }
+        this.saveAll(all);
+        return true;
+      },
+
+      verifyDoc(docId, status, rejectionReason = '', verifiedBy = 'Biro Travel') {
+        const all = this.getAll();
+        const doc = all.find(d => d.id === docId);
+        if (doc) {
+          doc.status = status;
+          doc.rejectionReason = rejectionReason || '';
+          doc.verifiedBy = verifiedBy;
+          doc.verifiedAt = new Date().toISOString();
+          doc.updatedAt = new Date().toISOString();
+          this.saveAll(all);
+          return true;
+        }
+        return false;
+      },
+
+      validatePassport(expiryDateStr, departureDateStr) {
+        if (!expiryDateStr) {
+          return { isValid: false, diffMonths: 0, status: 'EMPTY', isCritical: false, text: 'Tanggal kedaluwarsa paspor belum diisi.' };
+        }
+        const expDate = new Date(expiryDateStr);
+        if (isNaN(expDate.getTime())) {
+          return { isValid: false, diffMonths: 0, status: 'INVALID', isCritical: true, text: 'Format tanggal kedaluwarsa paspor tidak valid.' };
+        }
+        let depDate = new Date();
+        if (departureDateStr && !isNaN(new Date(departureDateStr).getTime())) {
+          depDate = new Date(departureDateStr);
+        } else {
+          depDate = new Date('2026-10-15');
+        }
+
+        const diffTime = expDate.getTime() - depDate.getTime();
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        const diffMonths = Math.round((diffDays / 30.4375) * 10) / 10;
+
+        if (diffDays < 0) {
+          return {
+            isValid: false,
+            diffMonths,
+            diffDays,
+            isCritical: true,
+            status: 'EXPIRED',
+            text: '⚠️ PASPOR TELAH KADALUWARSA! Paspor sudah melewati masa berlaku dan tidak dapat digunakan untuk penerbangan ibadah umroh.'
+          };
+        } else if (diffMonths < 7) {
+          return {
+            isValid: false,
+            diffMonths,
+            diffDays,
+            isCritical: true,
+            status: 'LESS_THAN_7_MONTHS',
+            text: `⚠️ PERINGATAN KEMENAG RI: Sisa masa berlaku paspor hanya tersisa ${diffMonths} bulan (${diffDays} hari) dari jadwal penerbangan. Regulasi Kemenag RI & Muassasah mewajibkan MINIMAL 7 BULAN aktif! Segera perpanjang paspor Anda di Kantor Imigrasi sebelum visa diajukan.`
+          };
+        } else {
+          return {
+            isValid: true,
+            diffMonths,
+            diffDays,
+            isCritical: false,
+            status: 'VALID',
+            text: `✅ MEMENUHI SYARAT: Masa berlaku paspor tersisa ${diffMonths} bulan (${diffDays} hari) sebelum tanggal keberangkatan umroh (≥ 7 bulan regulasi Kemenag RI).`
+          };
+        }
+      },
+
+      getBookingSummary(bookingId, totalPax = 1) {
+        const docs = this.getByBooking(bookingId);
+        const uploadedCount = docs.filter(d => (d.passportNo && d.passportNo.trim()) || d.passportScanUrl).length;
+        const verifiedCount = docs.filter(d => d.status === 'TERVERIFIKASI').length;
+        const rejectedCount = docs.filter(d => d.status === 'PERLU_REVISI').length;
+        const pendingCount = docs.filter(d => d.status === 'MENUNGGU_VERIFIKASI').length;
+
+        let statusText = 'Belum Diunggah';
+        let statusBadgeClass = 'badge-doc-empty';
+        let statusIcon = '📋';
+
+        if (rejectedCount > 0) {
+          statusText = 'Perlu Revisi';
+          statusBadgeClass = 'badge-doc-rejected';
+          statusIcon = '⚠️';
+        } else if (verifiedCount === totalPax && totalPax > 0) {
+          statusText = 'Lengkap & Terverifikasi';
+          statusBadgeClass = 'badge-doc-verified';
+          statusIcon = '✅';
+        } else if (pendingCount > 0 || uploadedCount > 0) {
+          statusText = `${uploadedCount}/${totalPax} Menunggu Review`;
+          statusBadgeClass = 'badge-doc-pending';
+          statusIcon = '⏳';
+        }
+
+        return {
+          totalPax,
+          uploadedCount,
+          verifiedCount,
+          rejectedCount,
+          pendingCount,
+          statusText,
+          statusBadgeClass,
+          statusIcon
+        };
+      }
+    };
+
+    const DocumentManager = {
+      activeBookingId: null,
+      activePaxIndex: 1,
+      tempUploads: {},
+
+      openModal(bookingId, defaultPax = 1) {
+        const b = (CustomerDashboard.allBookings || []).find(item => item.id === bookingId || item.bookingCode === bookingId) ||
+                  (ApiClient.db.bookings || []).find(item => item.id === bookingId || item.bookingCode === bookingId) ||
+                  { id: bookingId, bookingCode: bookingId, paxCount: 2, packageName: "Paket Umroh Reguler", departureDate: "2026-10-15", travelName: "Al-Falah Tour & Travel" };
+
+        this.activeBookingId = b.id || b.bookingCode;
+        this.activePaxIndex = Number(defaultPax || 1);
+        this.tempUploads = {};
+
+        const totalPax = Number(b.paxCount || 1);
+        const departureDate = b.departureDate || '2026-10-15';
+        const doc = DocumentStore.getByPax(this.activeBookingId, this.activePaxIndex) || {
+          paxIndex: this.activePaxIndex,
+          fullName: this.activePaxIndex === 1 ? (b.jamaahName || 'Ahmad Fauzi') : '',
+          gender: 'L',
+          passportNo: '',
+          birthPlace: '',
+          birthDate: '',
+          issuePlace: '',
+          issueDate: '',
+          expiryDate: '',
+          nik: '',
+          passportScanUrl: '',
+          ktpScanUrl: '',
+          meningitisCertUrl: '',
+          status: 'BELUM_UPLOAD',
+          rejectionReason: ''
+        };
+
+        const valResult = DocumentStore.validatePassport(doc.expiryDate, departureDate);
+        let alertClass = 'warning';
+        if (valResult.isCritical) alertClass = 'critical';
+        else if (valResult.isValid) alertClass = 'success';
+
+        let paxTabsHtml = '';
+        for (let i = 1; i <= totalPax; i++) {
+          const pDoc = DocumentStore.getByPax(this.activeBookingId, i);
+          let pIcon = '📋';
+          if (pDoc) {
+            if (pDoc.status === 'TERVERIFIKASI') pIcon = '✅';
+            else if (pDoc.status === 'PERLU_REVISI') pIcon = '❌';
+            else if (pDoc.status === 'MENUNGGU_VERIFIKASI') pIcon = '⏳';
+          }
+          paxTabsHtml += `
+            <button type="button" class="doc-pax-tab ${i === this.activePaxIndex ? 'active' : ''}" onclick="DocumentManager.switchPaxTab('${escapeHtml(this.activeBookingId)}', ${i})">
+              <span>${pIcon}</span>
+              <span>Jamaah ${i}</span>
+            </button>
+          `;
+        }
+
+        const modalBody = `
+          <div>
+            <!-- Header Booking Info -->
+            <div style="background:var(--slate-50); border:1px solid var(--slate-200); border-radius:var(--radius-sm); padding:10px 14px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <div>
+                <div style="font-size:12px; font-weight:800; color:var(--slate-900);">${escapeHtml(b.packageName || 'Paket Umroh')}</div>
+                <div style="font-size:11px; color:var(--slate-600); margin-top:2px;">
+                  Biro: <strong>${escapeHtml(b.travelName || 'Al-Falah Tour')}</strong> &bull; Jadwal Flight: <strong>${escapeHtml(departureDate)}</strong>
+                </div>
+              </div>
+              <span class="trx-status-pill trx-status-berlangsung" style="font-size:10px;">${totalPax} Jamaah</span>
+            </div>
+
+            <!-- Pax Tabs Navigation -->
+            <div class="doc-pax-tabs">
+              ${paxTabsHtml}
+            </div>
+
+            <!-- Status & Revision Alert Box if Rejected -->
+            ${doc.status === 'PERLU_REVISI' ? `
+              <div class="doc-alert-box critical" style="margin-top:0;">
+                <div class="doc-alert-icon">❌</div>
+                <div>
+                  <strong>CATATAN REVISI DARI BIRO TRAVEL:</strong>
+                  <div style="margin-top:2px; font-size:11.5px;">${escapeHtml(doc.rejectionReason || 'Mohon unggah kembali scan paspor yang jelas dan pastikan masa berlaku memenuhi syarat.')}</div>
+                </div>
+              </div>
+            ` : doc.status === 'TERVERIFIKASI' ? `
+              <div class="doc-alert-box success" style="margin-top:0;">
+                <div class="doc-alert-icon">✅</div>
+                <div>
+                  <strong>DOKUMEN TELAH TERVERIFIKASI</strong>
+                  <div style="margin-top:2px; font-size:11.5px;">Diverifikasi oleh: <strong>${escapeHtml(doc.verifiedBy || 'Biro Travel')}</strong> pada ${escapeHtml(doc.verifiedAt ? new Date(doc.verifiedAt).toLocaleDateString('id-ID') : 'Sistem')}</div>
+                </div>
+              </div>
+            ` : doc.status === 'MENUNGGU_VERIFIKASI' ? `
+              <div class="doc-alert-box warning" style="margin-top:0;">
+                <div class="doc-alert-icon">⏳</div>
+                <div>
+                  <strong>MENUNGGU VERIFIKASI BIRO TRAVEL</strong>
+                  <div style="margin-top:2px; font-size:11.5px;">Berkas Anda telah tersubmit. Tim operasional biro sedang memvalidasi data fisik paspor ke sistem muassasah.</div>
+                </div>
+              </div>
+            ` : ''}
+
+            <!-- Form Data Jamaah & Paspor -->
+            <form id="doc-form-pax" onsubmit="event.preventDefault(); DocumentManager.submitForm('${escapeHtml(this.activeBookingId)}', ${this.activePaxIndex});">
+              <div style="font-size:13px; font-weight:800; color:var(--slate-900); margin-bottom:12px; display:flex; align-items:center; gap:6px;">
+                <span>🛂</span>
+                <span>Data Identitas Paspor (Jamaah ${this.activePaxIndex})</span>
+              </div>
+
+              <div style="display:grid; grid-template-columns: 2fr 1fr; gap:10px; margin-bottom:10px;">
+                <div class="form-group">
+                  <label>Nama Lengkap (Sesuai Paspor) *</label>
+                  <input type="text" id="doc-name" class="form-control" placeholder="Contoh: AHMAD FAUZI RIDWAN" value="${escapeHtml(doc.fullName || '')}" required>
+                  <div style="font-size:10px; color:var(--slate-500); margin-top:2px;">* Minimal 2-3 suku kata standar penerbitan visa Saudi.</div>
+                </div>
+                <div class="form-group">
+                  <label>Jenis Kelamin *</label>
+                  <select id="doc-gender" class="form-control">
+                    <option value="L" ${doc.gender === 'L' ? 'selected' : ''}>Laki-laki</option>
+                    <option value="P" ${doc.gender === 'P' ? 'selected' : ''}>Perempuan</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;">
+                <div class="form-group">
+                  <label>Nomor Paspor *</label>
+                  <input type="text" id="doc-passport-no" class="form-control" placeholder="Contoh: X1289452" value="${escapeHtml(doc.passportNo || '')}" required>
+                </div>
+                <div class="form-group">
+                  <label>NIK KTP (16 Digit) *</label>
+                  <input type="text" id="doc-nik" class="form-control" placeholder="16 Digit NIK" maxlength="16" value="${escapeHtml(doc.nik || '')}" required>
+                </div>
+              </div>
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;">
+                <div class="form-group">
+                  <label>Tempat Lahir</label>
+                  <input type="text" id="doc-birth-place" class="form-control" placeholder="Kota Lahir" value="${escapeHtml(doc.birthPlace || '')}">
+                </div>
+                <div class="form-group">
+                  <label>Tanggal Lahir</label>
+                  <input type="date" id="doc-birth-date" class="form-control" value="${escapeHtml(doc.birthDate || '')}">
+                </div>
+              </div>
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:6px;">
+                <div class="form-group">
+                  <label>Tanggal Terbit Paspor</label>
+                  <input type="date" id="doc-issue-date" class="form-control" value="${escapeHtml(doc.issueDate || '')}">
+                </div>
+                <div class="form-group">
+                  <label>Tanggal Habis Berlaku (Expiry) *</label>
+                  <input type="date" id="doc-expiry-date" class="form-control" value="${escapeHtml(doc.expiryDate || '')}" required oninput="DocumentManager.handleExpiryChange(this.value, '${departureDate}')">
+                </div>
+              </div>
+
+              <!-- DYNAMIC PASSPORT EXPIRY ALERT (KEMENAG 7-MONTH RULE) -->
+              <div id="doc-alert-passport" class="doc-alert-box ${alertClass}">
+                <div class="doc-alert-icon">${valResult.isCritical ? '⚠️' : valResult.isValid ? '✅' : 'ℹ️'}</div>
+                <div>${escapeHtml(valResult.text)}</div>
+              </div>
+
+              <!-- FILE UPLOADS: SCAN PASPOR & KTP -->
+              <div style="font-size:13px; font-weight:800; color:var(--slate-900); margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+                <span>📎</span>
+                <span>Unggah Berkas Fisik (Foto / Scan)</span>
+              </div>
+
+              <div class="doc-upload-grid">
+                <!-- Box 1: Scan Paspor -->
+                <div class="doc-upload-box ${doc.passportScanUrl ? 'has-file' : ''}" onclick="DocumentManager.triggerUpload('passportScan')">
+                  <input type="file" id="input-file-passport" class="doc-file-input" accept="image/*" onchange="DocumentManager.handleFileSelected(this, 'passportScan')">
+                  ${doc.passportScanUrl ? `
+                    <img id="preview-passportScan" src="${escapeHtml(doc.passportScanUrl)}" class="doc-upload-preview" alt="Scan Paspor">
+                    <div class="doc-upload-title">✓ Scan Paspor Terpasang</div>
+                    <div class="doc-upload-hint">Klik untuk ganti foto paspor</div>
+                  ` : `
+                    <div class="doc-upload-icon">📖</div>
+                    <div class="doc-upload-title">Scan Paspor (Halaman Depan) *</div>
+                    <div class="doc-upload-hint">Format JPG/PNG, jelas & tidak silau</div>
+                  `}
+                </div>
+
+                <!-- Box 2: Scan KTP Asli -->
+                <div class="doc-upload-box ${doc.ktpScanUrl ? 'has-file' : ''}" onclick="DocumentManager.triggerUpload('ktpScan')">
+                  <input type="file" id="input-file-ktp" class="doc-file-input" accept="image/*" onchange="DocumentManager.handleFileSelected(this, 'ktpScan')">
+                  ${doc.ktpScanUrl ? `
+                    <img id="preview-ktpScan" src="${escapeHtml(doc.ktpScanUrl)}" class="doc-upload-preview" alt="Scan KTP">
+                    <div class="doc-upload-title">✓ Scan KTP Terpasang</div>
+                    <div class="doc-upload-hint">Klik untuk ganti foto KTP</div>
+                  ` : `
+                    <div class="doc-upload-icon">🪪</div>
+                    <div class="doc-upload-title">Scan KTP Asli *</div>
+                    <div class="doc-upload-hint">Nomor NIK terbaca tajam</div>
+                  `}
+                </div>
+              </div>
+            </form>
+          </div>
+        `;
+
+        const modalFooter = `
+          <button type="button" class="btn btn-outline" onclick="ModalManager.close()">Tutup</button>
+          <button type="button" class="btn btn-primary" onclick="DocumentManager.submitForm('${escapeHtml(this.activeBookingId)}', ${this.activePaxIndex})">
+            💾 Simpan &amp; Ajukan Verifikasi
+          </button>
+        `;
+
+        ModalManager.open({
+          title: `Kelola Dokumen Jamaah (${this.activePaxIndex}/${totalPax})`,
+          body: modalBody,
+          footer: modalFooter
+        });
+      },
+
+      switchPaxTab(bookingId, paxIndex) {
+        this.openModal(bookingId, paxIndex);
+      },
+
+      handleExpiryChange(expiryVal, departureDate) {
+        const box = document.getElementById('doc-alert-passport');
+        if (!box) return;
+        const res = DocumentStore.validatePassport(expiryVal, departureDate);
+        let alertClass = 'warning';
+        let icon = 'ℹ️';
+        if (res.isCritical) { alertClass = 'critical'; icon = '⚠️'; }
+        else if (res.isValid) { alertClass = 'success'; icon = '✅'; }
+
+        box.className = `doc-alert-box ${alertClass}`;
+        box.innerHTML = `
+          <div class="doc-alert-icon">${icon}</div>
+          <div>${escapeHtml(res.text)}</div>
+        `;
+      },
+
+      triggerUpload(docType) {
+        const inputId = docType === 'passportScan' ? 'input-file-passport' : 'input-file-ktp';
+        const el = document.getElementById(inputId);
+        if (el) el.click();
+      },
+
+      handleFileSelected(inputElem, docType) {
+        const file = inputElem.files && inputElem.files[0];
+        if (!file) return;
+
+        if (!file.type.startsWith('image/')) {
+          Toast.show('Format file harus berupa gambar (JPG/PNG).', 'warning');
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+            const maxDim = 1000;
+            if (width > maxDim || height > maxDim) {
+              if (width > height) {
+                height = Math.round((height * maxDim) / width);
+                width = maxDim;
+              } else {
+                width = Math.round((width * maxDim) / height);
+                height = maxDim;
+              }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+
+            DocumentManager.tempUploads[docType] = dataUrl;
+
+            // Update UI box directly
+            const previewId = `preview-${docType}`;
+            const existingImg = document.getElementById(previewId);
+            if (existingImg) {
+              existingImg.src = dataUrl;
+            } else {
+              const parentBox = inputElem.closest('.doc-upload-box');
+              if (parentBox) {
+                parentBox.classList.add('has-file');
+                parentBox.innerHTML = `
+                  <input type="file" id="${inputElem.id}" class="doc-file-input" accept="image/*" onchange="DocumentManager.handleFileSelected(this, '${docType}')">
+                  <img id="${previewId}" src="${dataUrl}" class="doc-upload-preview" alt="Preview Dokumen">
+                  <div class="doc-upload-title">✓ Foto Berhasil Diunggah</div>
+                  <div class="doc-upload-hint">Klik untuk ganti foto</div>
+                `;
+              }
+            }
+            Toast.show(`Foto ${docType === 'passportScan' ? 'Paspor' : 'KTP'} berhasil dimuat!`, 'success');
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      },
+
+      submitForm(bookingId, paxIndex) {
+        const nameInput = document.getElementById('doc-name');
+        const passportNoInput = document.getElementById('doc-passport-no');
+        const nikInput = document.getElementById('doc-nik');
+        const genderSelect = document.getElementById('doc-gender');
+        const birthPlaceInput = document.getElementById('doc-birth-place');
+        const birthDateInput = document.getElementById('doc-birth-date');
+        const issueDateInput = document.getElementById('doc-issue-date');
+        const expiryDateInput = document.getElementById('doc-expiry-date');
+
+        const fullName = (nameInput ? nameInput.value : '').trim();
+        const passportNo = (passportNoInput ? passportNoInput.value : '').trim().toUpperCase();
+        const nik = (nikInput ? nikInput.value : '').trim();
+        const gender = genderSelect ? genderSelect.value : 'L';
+        const birthPlace = birthPlaceInput ? birthPlaceInput.value.trim() : '';
+        const birthDate = birthDateInput ? birthDateInput.value : '';
+        const issueDate = issueDateInput ? issueDateInput.value : '';
+        const expiryDate = expiryDateInput ? expiryDateInput.value : '';
+
+        if (!fullName) {
+          Toast.show('Nama lengkap sesuai paspor wajib diisi.', 'warning');
+          if (nameInput) nameInput.focus();
+          return;
+        }
+
+        const nameWords = fullName.split(/\s+/).filter(Boolean);
+        if (nameWords.length < 2) {
+          Toast.show('Peringatan: Nama paspor umroh disarankan minimal 2–3 suku kata.', 'warning');
+        }
+
+        if (!passportNo) {
+          Toast.show('Nomor paspor wajib diisi.', 'warning');
+          if (passportNoInput) passportNoInput.focus();
+          return;
+        }
+
+        if (!expiryDate) {
+          Toast.show('Tanggal habis berlaku paspor wajib diisi.', 'warning');
+          if (expiryDateInput) expiryDateInput.focus();
+          return;
+        }
+
+        const b = (CustomerDashboard.allBookings || []).find(item => item.id === bookingId || item.bookingCode === bookingId) || {};
+        const departureDate = b.departureDate || '2026-10-15';
+        const valRes = DocumentStore.validatePassport(expiryDate, departureDate);
+
+        if (valRes.status === 'EXPIRED') {
+          alert('Paspor Anda sudah kadaluwarsa! Silakan perpanjang paspor terlebih dahulu di Kantor Imigrasi sebelum mengajukan dokumen.');
+          return;
+        }
+
+        if (valRes.status === 'LESS_THAN_7_MONTHS') {
+          const proceed = confirm(`PERINGATAN REGULASI KEMENAG:\n\nSisa masa berlaku paspor hanya ${valRes.diffMonths} bulan dari jadwal keberangkatan umroh (syarat minimal Kemenag adalah 7 bulan aktif).\n\nApakah Anda yakin ingin tetap menyimpan berkas ini untuk dikonsultasikan dengan biro travel?`);
+          if (!proceed) return;
+        }
+
+        const existingDoc = DocumentStore.getByPax(bookingId, paxIndex) || {};
+        const passportScanUrl = this.tempUploads['passportScan'] || existingDoc.passportScanUrl || 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80';
+        const ktpScanUrl = this.tempUploads['ktpScan'] || existingDoc.ktpScanUrl || '';
+
+        const updatedDoc = {
+          ...existingDoc,
+          bookingId: bookingId,
+          travelId: b.travelId || 'TRV-DEMO-001',
+          paxIndex: Number(paxIndex),
+          fullName: fullName,
+          gender: gender,
+          passportNo: passportNo,
+          nik: nik,
+          birthPlace: birthPlace,
+          birthDate: birthDate,
+          issueDate: issueDate,
+          expiryDate: expiryDate,
+          passportScanUrl: passportScanUrl,
+          ktpScanUrl: ktpScanUrl,
+          status: 'MENUNGGU_VERIFIKASI',
+          rejectionReason: ''
+        };
+
+        DocumentStore.saveDoc(updatedDoc);
+        Toast.show(`Alhamdulillah! Berkas Jamaah ${paxIndex} berhasil disimpan & diajukan untuk verifikasi biro.`, 'success');
+        ModalManager.close();
+
+        if (Router.currentRoute === 'customer-dashboard') {
+          CustomerDashboard.renderDom(CustomerDashboard.allBookings);
+        }
+      }
+    };
+
+    /* ==========================================================================
        5. DASHBOARDS (JAMAAH, TRAVEL, AFFILIATE, ADMIN) - SWR INSTANT CACHING
        ========================================================================== */
     const CustomerDashboard = {
@@ -9062,6 +9966,9 @@
         }
 
         const pkgImg = "https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?auto=format&fit=crop&w=300&q=80";
+        const bookingKey = b.id || b.bookingCode || 'BKG-001';
+        const paxTotal = Number(b.paxCount || 1);
+        const docSummary = DocumentStore.getBookingSummary(bookingKey, paxTotal);
 
         return `
           <div class="trx-tokopedia-card">
@@ -9075,19 +9982,30 @@
               </div>
               <div style="display:flex; align-items:center; gap:8px;">
                 <span class="trx-status-pill ${statusBadgeClass}">${statusText}</span>
-                <span style="color:var(--slate-400); cursor:pointer; font-size:16px;" onclick="CustomerDashboard.showBookingDetail('${escapeHtml(b.id || b.bookingCode)}')">&#8942;</span>
+                <span style="color:var(--slate-400); cursor:pointer; font-size:16px;" onclick="CustomerDashboard.showBookingDetail('${escapeHtml(bookingKey)}')">&#8942;</span>
               </div>
             </div>
 
             <!-- Card Body: Image, Title, Metadata -->
-            <div class="trx-card-body" style="cursor:pointer;" onclick="CustomerDashboard.showBookingDetail('${escapeHtml(b.id || b.bookingCode)}')">
+            <div class="trx-card-body" style="cursor:pointer;" onclick="CustomerDashboard.showBookingDetail('${escapeHtml(bookingKey)}')">
               <img src="${pkgImg}" class="trx-thumb" alt="Paket Umroh">
               <div class="trx-item-info">
                 <div class="trx-item-title">${escapeHtml(b.packageName || b.bookingCode || 'Paket Umroh Reguler 9 Hari')}</div>
                 <div class="trx-item-meta">
-                  🕌 <strong>${escapeHtml(b.travelName || 'Al-Falah Tour & Travel')}</strong> &bull; ${Number(b.paxCount || 1)} Jamaah
+                  🕌 <strong>${escapeHtml(b.travelName || 'Al-Falah Tour & Travel')}</strong> &bull; ${paxTotal} Jamaah
                 </div>
               </div>
+            </div>
+
+            <!-- Jamaah Passport & Document Status Strip -->
+            <div class="trx-doc-strip">
+              <div class="trx-doc-strip-left">
+                <span class="trx-doc-badge ${docSummary.statusBadgeClass}">${docSummary.statusIcon} ${escapeHtml(docSummary.statusText)}</span>
+                <span class="trx-doc-meta">${docSummary.uploadedCount}/${paxTotal} Berkas Terdata</span>
+              </div>
+              <button class="btn btn-sm btn-outline-primary trx-doc-btn" onclick="DocumentManager.openModal('${escapeHtml(bookingKey)}')">
+                📄 Kelola Paspor &amp; Dokumen &rarr;
+              </button>
             </div>
 
             <!-- Card Footer: Price & Actions -->
@@ -9098,11 +10016,12 @@
                 <span class="trx-savings-text">Hemat &amp; Cashback Rp 750.000</span>
               </div>
               <div class="trx-actions-group">
+                <button class="btn btn-outline-primary btn-sm trx-action-btn" onclick="DocumentManager.openModal('${escapeHtml(bookingKey)}')">📄 Paspor Jamaah</button>
                 ${isPending ? `
-                  <button class="btn btn-outline btn-sm trx-action-btn" onclick="ChatModal.openBookingChat('${escapeHtml(b.id || b.bookingCode)}')">Chat Biro</button>
-                  <button class="btn btn-primary btn-sm trx-action-btn" onclick="CustomerDashboard.showBookingDetail('${escapeHtml(b.id || b.bookingCode)}')">Lihat Detail</button>
+                  <button class="btn btn-outline btn-sm trx-action-btn" onclick="ChatModal.openBookingChat('${escapeHtml(bookingKey)}')">Chat Biro</button>
+                  <button class="btn btn-primary btn-sm trx-action-btn" onclick="CustomerDashboard.showBookingDetail('${escapeHtml(bookingKey)}')">Lihat Detail</button>
                 ` : isCompleted ? `
-                  <button class="btn btn-outline btn-sm trx-action-btn" onclick="CustomerDashboard.showBookingDetail('${escapeHtml(b.id || b.bookingCode)}')">Detail Transaksi</button>
+                  <button class="btn btn-outline btn-sm trx-action-btn" onclick="CustomerDashboard.showBookingDetail('${escapeHtml(bookingKey)}')">Detail Transaksi</button>
                   <button class="btn btn-primary btn-sm trx-action-btn" style="background:#00AA5B; border-color:#00AA5B;" onclick="Router.navigate('marketplace')">Pesan Lagi</button>
                 ` : `
                   <button class="btn btn-outline btn-sm trx-action-btn" onclick="Router.navigate('marketplace')">Cari Paket Lain</button>
@@ -9115,6 +10034,10 @@
 
       showBookingDetail(id) {
         const b = this.allBookings.find(item => item.id === id || item.bookingCode === id) || this.allBookings[0] || ApiClient.db.bookings[0];
+        const bookingKey = b.id || b.bookingCode || 'BKG-001';
+        const paxTotal = Number(b.paxCount || 1);
+        const docSummary = DocumentStore.getBookingSummary(bookingKey, paxTotal);
+
         ModalManager.open({
           title: "Rincian Transaksi Booking",
           body: `
@@ -9125,16 +10048,20 @@
             </div>
             <table class="pdp-spec-table">
               <tbody>
-                <tr><td class="pdp-spec-label">Kode Booking</td><td class="pdp-spec-val"><strong>${escapeHtml(b.id || b.bookingCode || 'BKG-001')}</strong></td></tr>
+                <tr><td class="pdp-spec-label">Kode Booking</td><td class="pdp-spec-val"><strong>${escapeHtml(bookingKey)}</strong></td></tr>
                 <tr><td class="pdp-spec-label">Nama Jamaah</td><td class="pdp-spec-val">${escapeHtml(b.jamaahName || AuthStore.currentUser.name)}</td></tr>
-                <tr><td class="pdp-spec-label">Jumlah Jamaah</td><td class="pdp-spec-val">${Number(b.paxCount || 1)} Orang</td></tr>
+                <tr><td class="pdp-spec-label">Jumlah Jamaah</td><td class="pdp-spec-val">${paxTotal} Orang</td></tr>
                 <tr><td class="pdp-spec-label">Status Ibadah</td><td class="pdp-spec-val"><span class="badge ${b.status === 'CONFIRMED' ? 'badge-verified' : 'badge-info'}">${escapeHtml(b.status || 'PENDING')}</span></td></tr>
                 <tr><td class="pdp-spec-label">Status Pembayaran</td><td class="pdp-spec-val"><span class="badge ${b.paymentStatus === 'FULL_PAID' ? 'badge-verified' : 'badge-gold'}">${escapeHtml(b.paymentStatus || 'UNPAID')}</span></td></tr>
+                <tr><td class="pdp-spec-label">Berkas Paspor</td><td class="pdp-spec-val"><span class="badge ${docSummary.statusBadgeClass}">${docSummary.statusIcon} ${escapeHtml(docSummary.statusText)} (${docSummary.uploadedCount}/${paxTotal})</span></td></tr>
                 <tr><td class="pdp-spec-label">Total Tagihan</td><td class="pdp-spec-val"><strong style="color:var(--primary-700); font-size:14px;">Rp ${Number(b.totalPrice || 0).toLocaleString('id-ID')}</strong></td></tr>
               </tbody>
             </table>
           `,
-          footer: `<button class="btn btn-primary btn-block" onclick="ModalManager.close()">Tutup Rincian</button>`
+          footer: `
+            <button class="btn btn-outline" onclick="ModalManager.close()">Tutup</button>
+            <button class="btn btn-primary" onclick="ModalManager.close(); DocumentManager.openModal('${escapeHtml(bookingKey)}');">📄 Kelola Paspor Jamaah &rarr;</button>
+          `
         });
       }
     };
@@ -9299,6 +10226,14 @@
                   <div class="account-menu-icon-circle">📅</div>
                   <div class="account-menu-label">Jadwal Flight</div>
                 </div>
+                <div class="account-menu-item" onclick="TravelDocumentReviewer.openModal()">
+                  <div class="account-menu-icon-circle">📋</div>
+                  <div class="account-menu-label">Paspor Jamaah</div>
+                </div>
+                <div class="account-menu-item" onclick="TravelDocumentReviewer.openManifestModal()">
+                  <div class="account-menu-icon-circle">🖨️</div>
+                  <div class="account-menu-label">Manifes Flight</div>
+                </div>
                 <div class="account-menu-item" onclick="Toast.show('Laporan rekap finansial & pencairan escrow', 'info')">
                   <div class="account-menu-icon-circle">💰</div>
                   <div class="account-menu-label">Rekap Finansial</div>
@@ -9321,8 +10256,11 @@
                       <div style="font-size:11px; color:var(--slate-600); margin-top:2px;">👤 ${escapeHtml(b.jamaahName)} &bull; ${Number(b.paxCount || 1)} Pax</div>
                       <div style="font-size:11.5px; font-weight:800; color:var(--primary-700); margin-top:2px;">Rp ${Number(b.totalPrice || 0).toLocaleString('id-ID')}</div>
                     </div>
-                    <div style="display:flex; flex-direction:column; align-items:flex-end; gap:4px;">
-                      <span class="badge ${b.status === 'CONFIRMED' ? 'badge-verified' : 'badge-gold'}">${escapeHtml(b.status || 'PENDING')}</span>
+                    <div style="display:flex; flex-direction:column; align-items:flex-end; gap:5px;">
+                      <div style="display:flex; gap:4px; align-items:center;">
+                        <span class="badge ${b.status === 'CONFIRMED' ? 'badge-verified' : 'badge-gold'}">${escapeHtml(b.status || 'PENDING')}</span>
+                        <button class="btn btn-outline-primary btn-sm" style="font-size:10px; padding:2px 7px; height:22px;" onclick="TravelDocumentReviewer.openModal('${escapeHtml(b.id || b.bookingCode)}')">📋 Paspor</button>
+                      </div>
                       <button class="btn btn-primary btn-sm" style="font-size:10px; padding:3px 8px; height:24px;" onclick="Toast.show('Booking ${escapeHtml(b.id)} dikonfirmasi!', 'success')">Konfirmasi</button>
                     </div>
                   </div>
@@ -9331,6 +10269,347 @@
             </div>
           </div>
         `;
+      }
+    };
+
+    /* ==========================================================================
+       4D. BIRO TRAVEL PASSPORT VERIFIER & FLIGHT MANIFEST GENERATOR
+       ========================================================================== */
+    const TravelDocumentReviewer = {
+      activeFilter: 'ALL',
+      activeBookingId: null,
+
+      openModal(filterBookingId = null) {
+        this.activeBookingId = filterBookingId;
+        this.renderReviewerModal();
+      },
+
+      setFilter(filter) {
+        this.activeFilter = filter;
+        this.renderReviewerModal();
+      },
+
+      renderReviewerModal() {
+        let docs = DocumentStore.getAll();
+        if (this.activeBookingId) {
+          docs = docs.filter(d => d.bookingId === this.activeBookingId);
+        }
+
+        const counts = {
+          ALL: docs.length,
+          PENDING: docs.filter(d => d.status === 'MENUNGGU_VERIFIKASI').length,
+          VERIFIED: docs.filter(d => d.status === 'TERVERIFIKASI').length,
+          REJECTED: docs.filter(d => d.status === 'PERLU_REVISI').length,
+          CRITICAL: docs.filter(d => {
+            const v = DocumentStore.validatePassport(d.expiryDate, '2026-10-15');
+            return v.isCritical;
+          }).length
+        };
+
+        let filtered = docs.filter(d => {
+          if (this.activeFilter === 'PENDING') return d.status === 'MENUNGGU_VERIFIKASI';
+          if (this.activeFilter === 'VERIFIED') return d.status === 'TERVERIFIKASI';
+          if (this.activeFilter === 'REJECTED') return d.status === 'PERLU_REVISI';
+          if (this.activeFilter === 'CRITICAL') {
+            const v = DocumentStore.validatePassport(d.expiryDate, '2026-10-15');
+            return v.isCritical;
+          }
+          return true;
+        });
+
+        const filterStrip = `
+          <div class="trx-filter-strip" style="margin-bottom:12px;">
+            <button class="trx-filter-pill ${this.activeFilter === 'ALL' ? 'active' : ''}" onclick="TravelDocumentReviewer.setFilter('ALL')">
+              Semua (${counts.ALL})
+            </button>
+            <button class="trx-filter-pill ${this.activeFilter === 'PENDING' ? 'active' : ''}" onclick="TravelDocumentReviewer.setFilter('PENDING')">
+              ⏳ Menunggu Verifikasi (${counts.PENDING})
+            </button>
+            <button class="trx-filter-pill ${this.activeFilter === 'VERIFIED' ? 'active' : ''}" onclick="TravelDocumentReviewer.setFilter('VERIFIED')">
+              ✅ Terverifikasi (${counts.VERIFIED})
+            </button>
+            <button class="trx-filter-pill ${this.activeFilter === 'REJECTED' ? 'active' : ''}" onclick="TravelDocumentReviewer.setFilter('REJECTED')">
+              ❌ Perlu Revisi (${counts.REJECTED})
+            </button>
+            <button class="trx-filter-pill ${this.activeFilter === 'CRITICAL' ? 'active' : ''}" style="${counts.CRITICAL > 0 ? 'color:#b91c1c; font-weight:800;' : ''}" onclick="TravelDocumentReviewer.setFilter('CRITICAL')">
+              ⚠️ Kritis &lt;7 Bulan (${counts.CRITICAL})
+            </button>
+          </div>
+        `;
+
+        const tableHtml = filtered.length > 0 ? `
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Jamaah &amp; Pax</th>
+                  <th>Nomor Paspor &amp; NIK</th>
+                  <th>Masa Berlaku Paspor</th>
+                  <th>Scan Paspor</th>
+                  <th>Status Review</th>
+                  <th style="text-align:center;">Aksi Verifikasi</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${filtered.map((d, idx) => {
+                  const valRes = DocumentStore.validatePassport(d.expiryDate, '2026-10-15');
+                  let statusBadge = 'badge-doc-empty';
+                  let statusLabel = 'Belum Upload';
+                  if (d.status === 'TERVERIFIKASI') {
+                    statusBadge = 'badge-doc-verified';
+                    statusLabel = 'Terverifikasi';
+                  } else if (d.status === 'MENUNGGU_VERIFIKASI') {
+                    statusBadge = 'badge-doc-pending';
+                    statusLabel = 'Menunggu Review';
+                  } else if (d.status === 'PERLU_REVISI') {
+                    statusBadge = 'badge-doc-rejected';
+                    statusLabel = 'Perlu Revisi';
+                  }
+
+                  const scanImg = d.passportScanUrl || 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80';
+
+                  return `
+                    <tr>
+                      <td style="color:var(--slate-500); font-weight:600;">${idx + 1}</td>
+                      <td>
+                        <strong style="color:var(--slate-900); font-size:12.5px;">${escapeHtml(d.fullName || 'Jamaah Belum Bernama')}</strong>
+                        <div style="font-size:11px; color:var(--slate-500);">
+                          ${d.gender === 'P' ? '♀ Perempuan' : '♂ Laki-laki'} &bull; Booking: <strong>${escapeHtml(d.bookingId || 'BKG-001')}</strong> (Pax ${d.paxIndex || 1})
+                        </div>
+                      </td>
+                      <td>
+                        <div style="font-family:monospace; font-size:12px; font-weight:700; color:var(--primary-900);">${escapeHtml(d.passportNo || '-')}</div>
+                        <div style="font-size:10.5px; color:var(--slate-500);">NIK: ${escapeHtml(d.nik || '-')}</div>
+                      </td>
+                      <td>
+                        <div style="font-weight:600;">${escapeHtml(d.expiryDate || '-')}</div>
+                        ${valRes.isCritical ? `
+                          <div style="font-size:10.5px; color:#b91c1c; font-weight:700;">⚠️ ${valRes.diffMonths} bln (${valRes.diffDays} hari)</div>
+                        ` : valRes.isValid ? `
+                          <div style="font-size:10.5px; color:#15803d;">✓ ${valRes.diffMonths} bln aman</div>
+                        ` : ''}
+                      </td>
+                      <td>
+                        ${d.passportScanUrl ? `
+                          <img src="${escapeHtml(scanImg)}" class="doc-thumb-mini" title="Klik untuk memperbesar foto paspor" onclick="TravelDocumentReviewer.zoomScan('${escapeHtml(scanImg)}', '${escapeHtml(d.fullName)}')">
+                        ` : `<span style="font-size:10.5px; color:var(--slate-400);">(Belum ada)</span>`}
+                      </td>
+                      <td>
+                        <span class="trx-status-pill ${statusBadge}" style="font-size:10.5px;">${statusLabel}</span>
+                        ${d.status === 'PERLU_REVISI' && d.rejectionReason ? `
+                          <div style="font-size:10px; color:#e02954; max-width:140px; margin-top:3px;">"${escapeHtml(d.rejectionReason)}"</div>
+                        ` : ''}
+                      </td>
+                      <td style="text-align:center;">
+                        <div style="display:inline-flex; gap:4px; align-items:center;">
+                          ${d.status !== 'TERVERIFIKASI' ? `
+                            <button class="btn btn-primary btn-sm" style="font-size:10px; padding:3px 8px; height:24px; background:#00AA5B; border-color:#00AA5B;" onclick="TravelDocumentReviewer.approveDoc('${escapeHtml(d.id)}')">
+                              ✓ ACC
+                            </button>
+                          ` : `
+                            <span style="font-size:11px; color:#00aa5b; font-weight:700;">✓ Sesuai</span>
+                          `}
+                          <button class="btn btn-outline btn-sm" style="font-size:10px; padding:3px 8px; height:24px;" onclick="TravelDocumentReviewer.promptRejectDoc('${escapeHtml(d.id)}')">
+                            ✏️ Revisi
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  `;
+                }).join('')}
+              </tbody>
+            </table>
+          </div>
+        ` : `
+          <div style="text-align:center; padding:32px 16px; background:var(--slate-50); border-radius:var(--radius-md); border:1px dashed var(--slate-300);">
+            <div style="font-size:32px; margin-bottom:8px;">📋</div>
+            <div style="font-weight:700; color:var(--slate-800); font-size:14px;">Tidak Ada Dokumen pada Filter Ini</div>
+            <div style="font-size:11.5px; color:var(--slate-500); margin-top:2px;">Silakan pilih filter lain atau pastikan jamaah telah mengunggah berkas paspor.</div>
+          </div>
+        `;
+
+        const modalBody = `
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+              <div>
+                <h3 style="font-size:15px; font-weight:800; color:var(--slate-900); margin:0;">Verifikasi Berkas Paspor &amp; Dokumen Jamaah</h3>
+                <div style="font-size:11px; color:var(--slate-500); margin-top:2px;">Pastikan data fisik paspor sesuai dengan NIK dan masa berlaku minimal 7 bulan aktif.</div>
+              </div>
+              <button class="btn btn-outline-primary btn-sm" onclick="TravelDocumentReviewer.openManifestModal()">
+                🖨️ Cetak Manifes Penerbangan
+              </button>
+            </div>
+            ${filterStrip}
+            ${tableHtml}
+          </div>
+        `;
+
+        const modalFooter = `
+          <button type="button" class="btn btn-outline" onclick="ModalManager.close()">Tutup</button>
+        `;
+
+        ModalManager.open({
+          title: "Pusat Verifikasi Dokumen Paspor Jamaah (Biro Travel)",
+          body: modalBody,
+          footer: modalFooter
+        });
+      },
+
+      zoomScan(imageUrl, title) {
+        ModalManager.open({
+          title: `Scan Paspor: ${escapeHtml(title || 'Jamaah')}`,
+          body: `
+            <div style="text-align:center;">
+              <img src="${escapeHtml(imageUrl)}" style="max-width:100%; max-height:75vh; border-radius:var(--radius-md); box-shadow:var(--shadow-md); object-fit:contain;" alt="Foto Paspor">
+            </div>
+          `,
+          footer: `
+            <button class="btn btn-primary" onclick="TravelDocumentReviewer.renderReviewerModal()">Kembali ke Daftar</button>
+          `
+        });
+      },
+
+      approveDoc(docId) {
+        const ok = DocumentStore.verifyDoc(docId, 'TERVERIFIKASI', '', AuthStore.currentUser.name || 'Admin Al-Falah Tour');
+        if (ok) {
+          Toast.show("Dokumen paspor jamaah BERHASIL DIVERIFIKASI (ACC)!", "success");
+          this.renderReviewerModal();
+          if (Router.currentRoute === 'travel-dashboard') {
+            TravelDashboard.render();
+          }
+        }
+      },
+
+      promptRejectDoc(docId) {
+        const d = DocumentStore.getAll().find(item => item.id === docId);
+        if (!d) return;
+
+        ModalManager.open({
+          title: `Minta Revisi Berkas: ${escapeHtml(d.fullName || 'Jamaah')}`,
+          body: `
+            <div>
+              <p style="font-size:12.5px; color:var(--slate-700); margin-bottom:12px;">
+                Tuliskan alasan penolakan/revisi agar calon jamaah dapat memperbarui berkas dengan tepat:
+              </p>
+              <div class="form-group">
+                <label>Alasan Revisi / Catatan Perbaikan *</label>
+                <textarea id="reject-reason-text" class="form-control" rows="3" placeholder="Contoh: Foto halaman paspor terpotong pada bagian tanggal lahir dan nomor paspor buram. Mohon re-upload foto terbaru."></textarea>
+              </div>
+              <div style="font-size:11px; color:var(--slate-500); margin-top:6px;">
+                Pilihan cepat:
+                <span style="color:var(--primary-600); cursor:pointer; text-decoration:underline; margin-right:6px;" onclick="document.getElementById('reject-reason-text').value='Foto scan paspor buram / terpotong, mohon foto ulang dengan pencahayaan terang.'">Foto Buram</span>
+                <span style="color:var(--primary-600); cursor:pointer; text-decoration:underline; margin-right:6px;" onclick="document.getElementById('reject-reason-text').value='Masa berlaku paspor kurang dari 7 bulan sebelum tanggal flight. Wajib perpanjang paspor ke Kantor Imigrasi.'">Kurang 7 Bulan</span>
+                <span style="color:var(--primary-600); cursor:pointer; text-decoration:underline;" onclick="document.getElementById('reject-reason-text').value='Nama pada akun tidak sesuai dengan nama fisik di paspor.'">Nama Beda</span>
+              </div>
+            </div>
+          `,
+          footer: `
+            <button class="btn btn-outline" onclick="TravelDocumentReviewer.renderReviewerModal()">Batal</button>
+            <button class="btn btn-primary" style="background:#e02954; border-color:#e02954;" onclick="TravelDocumentReviewer.confirmRejectDoc('${escapeHtml(docId)}')">Kirim Instruksi Revisi</button>
+          `
+        });
+      },
+
+      confirmRejectDoc(docId) {
+        const textEl = document.getElementById('reject-reason-text');
+        const reason = textEl ? textEl.value.trim() : '';
+        if (!reason) {
+          Toast.show("Wajib mencantumkan alasan revisi untuk jamaah.", "warning");
+          return;
+        }
+
+        DocumentStore.verifyDoc(docId, 'PERLU_REVISI', reason, AuthStore.currentUser.name || 'Admin Biro');
+        Toast.show("Instruksi revisi berhasil dikirim ke jamaah.", "success");
+        this.renderReviewerModal();
+        if (Router.currentRoute === 'travel-dashboard') {
+          TravelDashboard.render();
+        }
+      },
+
+      openManifestModal() {
+        const docs = DocumentStore.getAll();
+        const travel = ApiClient.db.travels[0] || { name: "Al-Falah Tour & Travel", skKemenag: "PPIU No. 412/2021" };
+
+        const modalBody = `
+          <div class="manifest-container">
+            <div class="manifest-header">
+              <div>
+                <div class="manifest-header-biro">${escapeHtml(travel.name)}</div>
+                <div class="manifest-header-sub">Izin Penyelenggara Resmi PPIU: <strong>${escapeHtml(travel.skKemenag)}</strong></div>
+                <div class="manifest-header-sub">Status: Akreditasi A &bull; Sistem Pengawasan SISKOPATUH Kemenag RI</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:14px; font-weight:800; color:var(--primary-800);">MANIFES PENERBANGAN UMROH</div>
+                <div style="font-size:11px; color:var(--slate-500); margin-top:2px;">Tanggal Cetak: ${new Date().toLocaleDateString('id-ID', { year:'numeric', month:'long', day:'numeric' })}</div>
+                <div style="font-size:11px; font-weight:700; color:var(--slate-700);">Penerbangan: Saudia Airlines (SV-819)</div>
+              </div>
+            </div>
+
+            <table class="manifest-table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Title</th>
+                  <th>Nama Lengkap (Sesuai Paspor)</th>
+                  <th>No. Paspor</th>
+                  <th>L/P</th>
+                  <th>Tempat Lahir</th>
+                  <th>Tgl Lahir</th>
+                  <th>Tgl Terbit</th>
+                  <th>Tgl Kadaluwarsa</th>
+                  <th>Status Paspor</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${docs.map((d, i) => {
+                  const valRes = DocumentStore.validatePassport(d.expiryDate, '2026-10-15');
+                  const title = d.gender === 'P' ? 'MRS' : 'MR';
+                  return `
+                    <tr>
+                      <td style="text-align:center;">${i + 1}</td>
+                      <td><strong>${title}</strong></td>
+                      <td><strong>${escapeHtml(d.fullName || 'JAMAAH')}</strong></td>
+                      <td style="font-family:monospace; font-weight:700;">${escapeHtml(d.passportNo || '-')}</td>
+                      <td style="text-align:center;">${d.gender || 'L'}</td>
+                      <td>${escapeHtml(d.birthPlace || 'Jakarta')}</td>
+                      <td>${escapeHtml(d.birthDate || '1990-01-01')}</td>
+                      <td>${escapeHtml(d.issueDate || '2024-01-01')}</td>
+                      <td>${escapeHtml(d.expiryDate || '2034-01-01')}</td>
+                      <td>
+                        ${d.status === 'TERVERIFIKASI' ? '<span style="color:#00aa5b; font-weight:700;">✓ VALID ACC</span>' : '<span style="color:#e02954; font-weight:700;">PROSES</span>'}
+                      </td>
+                    </tr>
+                  `;
+                }).join('')}
+              </tbody>
+            </table>
+
+            <div style="display:flex; justify-content:space-between; margin-top:30px; font-size:11.5px;">
+              <div style="text-align:center; width:200px;">
+                <div>Petugas Imigrasi &amp; Bandara</div>
+                <div style="height:50px;"></div>
+                <div style="border-top:1px solid var(--slate-400); padding-top:4px;">( ......................................... )</div>
+              </div>
+              <div style="text-align:center; width:200px;">
+                <div>Pimpinan Operasional Biro</div>
+                <div style="height:50px;"></div>
+                <div style="border-top:1px solid var(--slate-400); padding-top:4px;"><strong>${escapeHtml(travel.name)}</strong></div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        const modalFooter = `
+          <button type="button" class="btn btn-outline" onclick="TravelDocumentReviewer.renderReviewerModal()">Kembali</button>
+          <button type="button" class="btn btn-primary" onclick="window.print()">🖨️ Cetak Manifes (Print)</button>
+        `;
+
+        ModalManager.open({
+          title: "Manifes Penerbangan Jamaah Umroh (Passenger Flight Manifest)",
+          body: modalBody,
+          footer: modalFooter
+        });
       }
     };
 
