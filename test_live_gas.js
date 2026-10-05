@@ -3,7 +3,7 @@
  * Covers all 14 Verification Scenarios requested in the task.
  */
 
-let ENDPOINT = "https://script.google.com/macros/s/AKfycbw-TC61guoVIcfKukdb9ZEOF1KFYzZW851lxCPyq-JMjV58Nwe3XvUf-LydGDJI5DLA/exec";
+let ENDPOINT = "https://script.google.com/macros/s/AKfycbyoOPC08Mm3l0FavsC_QOPo0BSfz_tbGqXLrZUUQKvkCPp3_DM8AMlxjRPAaS4JkFIa/exec";
 
 // Allow passing custom endpoint via command line: node test_live_gas.js <NEW_URL>
 if (process.argv[2]) {
@@ -62,7 +62,8 @@ async function runLiveVerificationSuite() {
     `count: ${trvList.data ? trvList.data.length : 0}`
   );
 
-  let samplePkgId = pkgList.data && pkgList.data[0] ? pkgList.data[0].id : "PKG-DEMO-001";
+  const trv1Pkg = (pkgList.data && pkgList.data.find(p => p.travelId === "TRV-DEMO-001")) || (pkgList.data && pkgList.data[0]) || { id: "PKG-DEMO-001" };
+  let samplePkgId = trv1Pkg.id;
   let sampleTravelId = trvList.data && trvList.data[0] ? trvList.data[0].id : "TRV-DEMO-001";
 
   const pkgDetail = await getApi("packages.detail", { id: samplePkgId });
@@ -106,9 +107,9 @@ async function runLiveVerificationSuite() {
     packageId: samplePkgId,
     visitorKey: visitorKey
   });
-  assert(trackRes.success && trackRes.data && trackRes.data.visitorKey === visitorKey,
+  assert(trackRes.success && trackRes.data && trackRes.data.attributed === true,
     "referrals.track creates live referral click and attribution",
-    `visitorKey: ${trackRes.data ? trackRes.data.visitorKey : null}`
+    `attributed: ${trackRes.data ? trackRes.data.attributed : null}`
   );
 
   // 6. CUSTOMER BOOKING FLOW
