@@ -12,6 +12,10 @@ import { PaxSelectorTabs } from '@/components/documents/PaxSelectorTabs';
 import { PassportUploadForm } from '@/components/documents/PassportUploadForm';
 import { PassportReviewCard } from '@/components/documents/PassportReviewCard';
 import { TravelDashboardView } from '@/components/travel-dashboard/TravelDashboardView';
+import { AuthProvider, useAuth } from '@/context/AuthContext';
+import { AuthModal } from '@/components/auth/AuthModal';
+import { UserProfileMenu } from '@/components/auth/UserProfileMenu';
+import { AdminSupervisionView } from '@/components/admin/AdminSupervisionView';
 import {
   ShieldCheck,
   Plane,
@@ -25,11 +29,13 @@ import {
   ShoppingBag,
   FileText,
   Search,
+  Lock,
 } from 'lucide-react';
 
-export default function UmrohHubEnterpriseApp() {
-  // Navigation State: 'marketplace' | 'pdp' | 'passport' | 'biro'
-  const [currentView, setCurrentView] = useState<'marketplace' | 'pdp' | 'passport' | 'biro'>('marketplace');
+function UmrohHubEnterpriseAppContent() {
+  const { user, quickLogin } = useAuth();
+  // Navigation State: 'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin'
+  const [currentView, setCurrentView] = useState<'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin'>('marketplace');
   const [selectedPackage, setSelectedPackage] = useState<PackageItem | null>(null);
 
   // Filter State
@@ -280,14 +286,14 @@ export default function UmrohHubEnterpriseApp() {
           </div>
 
           {/* Module Switcher Header Tabs */}
-          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-xs font-bold">
+          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-xs font-bold overflow-x-auto no-scrollbar">
             <button
               type="button"
               onClick={() => {
                 setCurrentView('marketplace');
                 setSelectedPackage(null);
               }}
-              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
+              className={`px-2.5 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
                 currentView === 'marketplace' || currentView === 'pdp'
                   ? 'bg-white text-emerald-800 shadow-2xs font-extrabold'
                   : 'text-slate-600 hover:text-slate-900'
@@ -299,28 +305,43 @@ export default function UmrohHubEnterpriseApp() {
             <button
               type="button"
               onClick={() => setCurrentView('passport')}
-              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
+              className={`px-2.5 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
                 currentView === 'passport'
                   ? 'bg-white text-emerald-800 shadow-2xs font-extrabold'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               <FileText className="w-3.5 h-3.5" />
-              <span>Paspor & Manifes</span>
+              <span>Paspor Jamaah</span>
             </button>
             <button
               type="button"
               onClick={() => setCurrentView('biro')}
-              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
+              className={`px-2.5 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
                 currentView === 'biro'
                   ? 'bg-white text-emerald-800 shadow-2xs font-extrabold'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               <Building2 className="w-3.5 h-3.5" />
-              <span>Dashboard Biro (B2B)</span>
+              <span>Dashboard Biro</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setCurrentView('admin')}
+              className={`px-2.5 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                currentView === 'admin'
+                  ? 'bg-purple-900 text-white shadow-2xs font-extrabold'
+                  : 'text-purple-800 hover:bg-purple-100/60'
+              }`}
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-purple-600" />
+              <span>Super Admin</span>
             </button>
           </div>
+
+          {/* User Profile & Auth Trigger */}
+          <UserProfileMenu onNavigatePortal={(view) => setCurrentView(view)} />
         </div>
       </header>
 
@@ -737,7 +758,54 @@ export default function UmrohHubEnterpriseApp() {
         {/* =========================================================================
             VIEW 4: DASHBOARD BIRO TRAVEL PPIU (B2B)
            ========================================================================= */}
-        {currentView === 'biro' && <TravelDashboardView />}
+        {currentView === 'biro' && (
+          <div className="space-y-4">
+            {user?.role !== 'TRAVEL' && user?.role !== 'SUPER_ADMIN' && (
+              <div className="p-4 rounded-2xl bg-sky-50 border border-sky-200 flex flex-wrap items-center justify-between gap-3 text-xs text-sky-900">
+                <div className="flex items-center gap-2">
+                  <Building2 className="w-4 h-4 text-sky-600 shrink-0" />
+                  <span>
+                    Anda sedang melihat <strong>Dashboard Biro PPIU</strong> dalam mode demo peninjau.
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => quickLogin('TRAVEL')}
+                  className="px-3 py-1.5 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-bold text-xs transition-colors cursor-pointer"
+                >
+                  Masuk sebagai Biro Al-Madinah (1-Klik)
+                </button>
+              </div>
+            )}
+            <TravelDashboardView />
+          </div>
+        )}
+
+        {/* =========================================================================
+            VIEW 5: SUPER ADMIN PLATFORM BACKOFFICE
+           ========================================================================= */}
+        {currentView === 'admin' && (
+          <div className="space-y-4">
+            {user?.role !== 'SUPER_ADMIN' && (
+              <div className="p-4 rounded-2xl bg-purple-50 border border-purple-200 flex flex-wrap items-center justify-between gap-3 text-xs text-purple-900">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-purple-600 shrink-0" />
+                  <span>
+                    Anda sedang melihat <strong>Super Admin Backoffice</strong> dalam mode demo auditor.
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => quickLogin('SUPER_ADMIN')}
+                  className="px-3 py-1.5 rounded-xl bg-purple-800 hover:bg-purple-900 text-white font-bold text-xs transition-colors cursor-pointer"
+                >
+                  Masuk sebagai Super Admin (1-Klik)
+                </button>
+              </div>
+            )}
+            <AdminSupervisionView />
+          </div>
+        )}
       </main>
 
       {/* Faceted Filter Modal */}
@@ -760,6 +828,17 @@ export default function UmrohHubEnterpriseApp() {
           })
         }
       />
+
+      {/* Enterprise Multi-Role Authentication Modal */}
+      <AuthModal />
     </div>
+  );
+}
+
+export default function UmrohHubEnterpriseApp() {
+  return (
+    <AuthProvider>
+      <UmrohHubEnterpriseAppContent />
+    </AuthProvider>
   );
 }
