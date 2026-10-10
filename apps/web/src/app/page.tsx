@@ -11,6 +11,7 @@ import { ProductDetailPage } from '@/components/marketplace/ProductDetailPage';
 import { PaxSelectorTabs } from '@/components/documents/PaxSelectorTabs';
 import { PassportUploadForm } from '@/components/documents/PassportUploadForm';
 import { PassportReviewCard } from '@/components/documents/PassportReviewCard';
+import { TravelDashboardView } from '@/components/travel-dashboard/TravelDashboardView';
 import {
   ShieldCheck,
   Plane,
@@ -27,8 +28,8 @@ import {
 } from 'lucide-react';
 
 export default function UmrohHubEnterpriseApp() {
-  // Navigation State: 'marketplace' | 'pdp' | 'passport'
-  const [currentView, setCurrentView] = useState<'marketplace' | 'pdp' | 'passport'>('marketplace');
+  // Navigation State: 'marketplace' | 'pdp' | 'passport' | 'biro'
+  const [currentView, setCurrentView] = useState<'marketplace' | 'pdp' | 'passport' | 'biro'>('marketplace');
   const [selectedPackage, setSelectedPackage] = useState<PackageItem | null>(null);
 
   // Filter State
@@ -280,6 +281,18 @@ export default function UmrohHubEnterpriseApp() {
             >
               <FileText className="w-3.5 h-3.5" />
               <span>Paspor & Manifes</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setCurrentView('biro')}
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
+                currentView === 'biro'
+                  ? 'bg-white text-emerald-800 shadow-2xs font-extrabold'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Building2 className="w-3.5 h-3.5" />
+              <span>Dashboard Biro (B2B)</span>
             </button>
           </div>
         </div>
@@ -694,6 +707,11 @@ export default function UmrohHubEnterpriseApp() {
             )}
           </div>
         )}
+
+        {/* =========================================================================
+            VIEW 4: DASHBOARD BIRO TRAVEL PPIU (B2B)
+           ========================================================================= */}
+        {currentView === 'biro' && <TravelDashboardView />}
       </main>
 
       {/* Faceted Filter Modal */}
