@@ -4,4 +4,5 @@ node_modules/
 Thumbs.db
 .env
 .clasprc.json
-
+.next/
+apps/web/.next/

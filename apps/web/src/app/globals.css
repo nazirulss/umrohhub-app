@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --primary-green: #00aa5b;
+    --primary-green-dark: #007a41;
+    --primary-green-light: #e5f9f0;
+    --gold: #d97706;
+    --gold-light: #fef3c7;
+    --slate-heading: #212121;
+    --slate-sub: #4a4d54;
+  }
+
+  body {
+    background-color: #f7f8fa;
+    color: #212121;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
