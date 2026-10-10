@@ -150,17 +150,43 @@ export default function UmrohHubEnterpriseApp() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleProceedToBooking = (data: {
+  const handleProceedToBooking = async (data: {
     pkg: PackageItem;
     paxCount: number;
     roomVariant: RoomVariant;
     departure: DepartureItem;
     totalPrice: number;
   }) => {
+    let code = `UH-${Date.now().toString(36).toUpperCase().slice(-6)}`;
+    let bkgId = `BKG-${Date.now()}`;
+
+    // Kirim pendaftaran transaksi ke PostgreSQL Booking Table via Prisma API
+    try {
+      const res = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          packageId: data.pkg.id,
+          departureId: data.departure.id,
+          pilgrimCount: data.paxCount,
+          roomType: data.roomVariant.name,
+          customerName: 'Muhammad Ahmad Fauzi',
+          customerPhone: '081298765432',
+          customerEmail: 'jamaah@umrohhub.com',
+        }),
+      });
+      const resData = await res.json();
+      if (res.ok && resData.success && resData.data?.bookingCode) {
+        code = resData.data.bookingCode;
+        bkgId = resData.data.id;
+      }
+    } catch (e) {
+      console.warn('Booking API offline, proceeding with client session code:', e);
+    }
+
     // Generate new booking context and move to passport flow
-    const code = `UH-${Date.now().toString(36).toUpperCase().slice(-6)}`;
     setBookingInfo({
-      bookingId: `BKG-${Date.now()}`,
+      bookingId: bkgId,
       bookingCode: code,
       packageName: `${data.pkg.title} (${data.roomVariant.name})`,
       departureDate: data.departure.departureDate,

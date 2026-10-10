@@ -1,0 +1,427 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==============================================================================
+// 1. ENUMS (Lifecycle & Role Management)
+// ==============================================================================
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  TRAVEL
+  AFFILIATE
+  CUSTOMER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum TravelVerificationStatus {
+  PENDING
+  UNDER_REVIEW
+  VERIFIED
+  REJECTED
+  SUSPENDED
+  EXPIRED
+}
+
+enum FlightType {
+  DIRECT
+  TRANSIT
+}
+
+enum PackageStatus {
+  DRAFT
+  PUBLISHED
+  FULL
+  COMPLETED
+  ARCHIVED
+}
+
+enum DepartureStatus {
+  AVAILABLE
+  ALMOST_FULL
+  FULL
+  CLOSED
+  COMPLETED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  PAID
+  COMPLETED
+  CANCELLED
+  REJECTED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PAID
+  REFUNDED
+}
+
+enum DocumentStatus {
+  BELUM_LENGKAP
+  MENUNGGU_VERIFIKASI
+  TERVERIFIKASI
+  PERLU_REVISI
+}
+
+enum AffiliateStatus {
+  PENDING
+  ACTIVE
+  SUSPENDED
+}
+
+enum AttributionStatus {
+  ACTIVE
+  CONVERTED
+  EXPIRED
+}
+
+enum CommissionStatus {
+  PENDING
+  APPROVED
+  PAID
+  CANCELLED
+}
+
+enum PayoutStatus {
+  REQUESTED
+  APPROVED
+  PAID
+  REJECTED
+}
+
+// ==============================================================================
+// 2. USER & AUTH
+// ==============================================================================
+
+model User {
+  id            String      @id @default(cuid())
+  name          String
+  email         String      @unique
+  passwordHash  String      @map("password_hash")
+  phone         String?
+  role          Role        @default(CUSTOMER)
+  status        UserStatus  @default(ACTIVE)
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+
+  // Relations
+  travel        Travel?
+  affiliate     Affiliate?
+  bookings      Booking[]
+  reviews       Review[]
+  auditLogs     AuditLog[]
+
+  @@map("users")
+}
+
+// ==============================================================================
+// 3. TRAVEL (Biro PPIU Kemenag)
+// ==============================================================================
+
+model Travel {
+  id                  String                    @id @default(cuid())
+  ownerUserId         String                    @unique @map("owner_user_id")
+  name                String
+  slug                String                    @unique
+  legalName           String                    @map("legal_name")
+  skKemenag           String                    @map("sk_kemenag")
+  city                String
+  province            String
+  phone               String
+  email               String
+  logoUrl             String?                   @map("logo_url")
+  description         String?
+  verificationStatus  TravelVerificationStatus  @default(PENDING) @map("verification_status")
+  rating              Float                     @default(0)
+  reviewCount         Int                       @default(0) @map("review_count")
+  status              UserStatus                @default(ACTIVE)
+  createdAt           DateTime                  @default(now()) @map("created_at")
+  updatedAt           DateTime                  @updatedAt @map("updated_at")
+
+  // Relations
+  owner               User                      @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
+  documents           TravelDocument[]
+  packages            Package[]
+  bookings            Booking[]
+  reviews             Review[]
+  commissions         Commission[]
+
+  @@map("travels")
+}
+
+model TravelDocument {
+  id              String      @id @default(cuid())
+  travelId        String      @map("travel_id")
+  documentType    String      @map("document_type")
+  documentNumber  String?     @map("document_number")
+  fileUrl         String      @map("file_url")
+  issuedAt        DateTime?   @map("issued_at")
+  expiresAt       DateTime?   @map("expires_at")
+  status          String      @default("PENDING")
+  notes           String?
+  reviewedBy      String?     @map("reviewed_by")
+  reviewedAt      DateTime?   @map("reviewed_at")
+  createdAt       DateTime    @default(now()) @map("created_at")
+
+  travel          Travel      @relation(fields: [travelId], references: [id], onDelete: Cascade)
+
+  @@map("travel_documents")
+}
+
+// ==============================================================================
+// 4. PACKAGES & DEPARTURES
+// ==============================================================================
+
+model Package {
+  id                  String          @id @default(cuid())
+  travelId            String          @map("travel_id")
+  title               String
+  slug                String          @unique
+  category            String          @default("Reguler")
+  shortDescription    String?         @map("short_description")
+  description         String
+  durationDays        Int             @map("duration_days")
+  basePrice           Int             @map("base_price") // Integer Rupiah
+  departureCity       String          @map("departure_city")
+  airline             String
+  flightType          FlightType      @default(DIRECT) @map("flight_type")
+  hotelMakkah         String          @map("hotel_makkah")
+  hotelMakkahDistance String?         @map("hotel_makkah_distance")
+  hotelMadinah        String          @map("hotel_madinah")
+  hotelMadinahDistance String?        @map("hotel_madinah_distance")
+  facilities          String?         // Inclusions
+  exclusions          String?         // Exclusions
+  imageUrl            String?         @map("image_url")
+  galleryImages       String?         @map("gallery_images") // JSON or pipe delimited
+  commissionAffiliate Int             @default(0) @map("commission_affiliate")
+  rating              Float           @default(5.0)
+  soldCount           Int             @default(0) @map("sold_count")
+  status              PackageStatus   @default(PUBLISHED)
+  featured            Boolean         @default(false)
+  createdAt           DateTime        @default(now()) @map("created_at")
+  updatedAt           DateTime        @updatedAt @map("updated_at")
+
+  // Relations
+  travel              Travel          @relation(fields: [travelId], references: [id], onDelete: Cascade)
+  departures          Departure[]
+  bookings            Booking[]
+  reviews             Review[]
+  referralLinks       ReferralLink[]
+  commissions         Commission[]
+
+  @@map("packages")
+}
+
+model Departure {
+  id            String          @id @default(cuid())
+  packageId     String          @map("package_id")
+  departureDate DateTime        @map("departure_date")
+  returnDate    DateTime?       @map("return_date")
+  departureCity String          @map("departure_city")
+  airline       String
+  flightCode    String?         @map("flight_code")
+  price         Int
+  quotaTotal    Int             @map("quota_total")
+  quotaTaken    Int             @default(0) @map("quota_taken")
+  status        DepartureStatus @default(AVAILABLE)
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime        @updatedAt @map("updated_at")
+
+  package       Package         @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  bookings      Booking[]
+
+  @@map("departures")
+}
+
+// ==============================================================================
+// 5. BOOKINGS & PASSPORT DOCUMENTS (Kemenag 7-Month Compliant)
+// ==============================================================================
+
+model Booking {
+  id              String          @id @default(cuid())
+  bookingCode     String          @unique @map("booking_code")
+  userId          String?         @map("user_id")
+  travelId        String          @map("travel_id")
+  packageId       String          @map("package_id")
+  departureId     String          @map("departure_id")
+  affiliateId     String?         @map("affiliate_id")
+  attributionId   String?         @map("attribution_id")
+  customerName    String          @map("customer_name")
+  customerPhone   String          @map("customer_phone")
+  customerEmail   String          @map("customer_email")
+  pilgrimCount    Int             @default(1) @map("pilgrim_count")
+  roomType        String          @default("Quad") @map("room_type")
+  unitPrice       Int             @map("unit_price")
+  totalAmount     Int             @map("total_amount") // Calculated on server
+  status          BookingStatus   @default(PENDING)
+  paymentStatus   PaymentStatus   @default(UNPAID) @map("payment_status")
+  notes           String?
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime        @updatedAt @map("updated_at")
+
+  // Relations
+  user            User?           @relation(fields: [userId], references: [id], onDelete: SetNull)
+  travel          Travel          @relation(fields: [travelId], references: [id], onDelete: Restrict)
+  package         Package         @relation(fields: [packageId], references: [id], onDelete: Restrict)
+  departure       Departure       @relation(fields: [departureId], references: [id], onDelete: Restrict)
+  affiliate       Affiliate?      @relation(fields: [affiliateId], references: [id], onDelete: SetNull)
+  passports       PassportDocument[]
+  commissions     Commission[]
+
+  @@map("bookings")
+}
+
+model PassportDocument {
+  id              String          @id @default(cuid())
+  bookingId       String          @map("booking_id")
+  paxIndex        Int             @map("pax_index")
+  fullName        String          @map("full_name")
+  passportNumber  String          @map("passport_number")
+  birthDate       DateTime        @map("birth_date")
+  gender          String          // "M" | "F"
+  issuingOffice   String?         @map("issuing_office")
+  issuingDate     DateTime?       @map("issuing_date")
+  expiryDate      DateTime        @map("expiry_date")
+  passportScanUrl String?         @map("passport_scan_url")
+  status          DocumentStatus  @default(BELUM_LENGKAP)
+  rejectionReason String?         @map("rejection_reason")
+  verifiedBy      String?         @map("verified_by")
+  verifiedAt      DateTime?       @map("verified_at")
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime        @updatedAt @map("updated_at")
+
+  booking         Booking         @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@unique([bookingId, paxIndex])
+  @@map("passport_documents")
+}
+
+// ==============================================================================
+// 6. AFFILIATE & ATTRIBUTION
+// ==============================================================================
+
+model Affiliate {
+  id              String          @id @default(cuid())
+  userId          String          @unique @map("user_id")
+  affiliateCode   String          @unique @map("affiliate_code")
+  name            String
+  phone           String
+  bankName        String?         @map("bank_name")
+  bankAccount     String?         @map("bank_account")
+  bankHolderName  String?         @map("bank_holder_name")
+  status          AffiliateStatus @default(ACTIVE)
+  createdAt       DateTime        @default(now()) @map("created_at")
+  updatedAt       DateTime        @updatedAt @map("updated_at")
+
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  referralLinks   ReferralLink[]
+  bookings        Booking[]
+  commissions     Commission[]
+  payouts         Payout[]
+
+  @@map("affiliates")
+}
+
+model ReferralLink {
+  id            String      @id @default(cuid())
+  affiliateId   String      @map("affiliate_id")
+  packageId     String      @map("package_id")
+  code          String      @unique
+  targetUrl     String      @map("target_url")
+  campaign      String?
+  status        String      @default("ACTIVE")
+  createdAt     DateTime    @default(now()) @map("created_at")
+
+  affiliate     Affiliate   @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+  package       Package     @relation(fields: [packageId], references: [id], onDelete: Cascade)
+
+  @@map("referral_links")
+}
+
+model Commission {
+  id                String            @id @default(cuid())
+  bookingId         String            @map("booking_id")
+  affiliateId       String            @map("affiliate_id")
+  travelId          String            @map("travel_id")
+  packageId         String            @map("package_id")
+  commissionAmount  Int               @map("commission_amount")
+  status            CommissionStatus  @default(PENDING)
+  createdAt         DateTime          @default(now()) @map("created_at")
+  updatedAt         DateTime          @updatedAt @map("updated_at")
+
+  booking           Booking           @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  affiliate         Affiliate         @relation(fields: [affiliateId], references: [id], onDelete: Restrict)
+  travel            Travel            @relation(fields: [travelId], references: [id], onDelete: Restrict)
+  package           Package           @relation(fields: [packageId], references: [id], onDelete: Restrict)
+
+  @@map("commissions")
+}
+
+model Payout {
+  id              String        @id @default(cuid())
+  affiliateId     String        @map("affiliate_id")
+  amount          Int
+  bankName        String        @map("bank_name")
+  bankAccount     String        @map("bank_account")
+  bankHolderName  String        @map("bank_holder_name")
+  proofUrl        String?       @map("proof_url")
+  status          PayoutStatus  @default(REQUESTED)
+  requestedAt     DateTime      @default(now()) @map("requested_at")
+  paidAt          DateTime?     @map("paid_at")
+  reviewedBy      String?       @map("reviewed_by")
+
+  affiliate       Affiliate     @relation(fields: [affiliateId], references: [id], onDelete: Restrict)
+
+  @@map("payouts")
+}
+
+// ==============================================================================
+// 7. REVIEWS & AUDIT LOGS
+// ==============================================================================
+
+model Review {
+  id          String    @id @default(cuid())
+  packageId   String    @map("package_id")
+  travelId    String    @map("travel_id")
+  userId      String    @map("user_id")
+  rating      Int       @default(5)
+  comment     String
+  status      String    @default("PUBLISHED")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  package     Package   @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  travel      Travel    @relation(fields: [travelId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("reviews")
+}
+
+model AuditLog {
+  id          String    @id @default(cuid())
+  userId      String?   @map("user_id")
+  action      String    // e.g. "PASSPORT_VERIFIED", "QUOTA_UPDATED", "BOOKING_CREATED"
+  entity      String    // e.g. "PassportDocument", "Departure", "Booking"
+  entityId    String    @map("entity_id")
+  oldValues   String?   @map("old_values") // JSON
+  newValues   String?   @map("new_values") // JSON
+  ipAddress   String?   @map("ip_address")
+  userAgent   String?   @map("user_agent")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  user        User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("audit_logs")
+}

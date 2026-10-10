@@ -115,7 +115,10 @@ export function PassportUploadForm({
     setIsSavedRecently(false);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiFeedback, setApiFeedback] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const isComplete = Boolean(
       formData.fullName &&
@@ -136,7 +139,45 @@ export function PassportUploadForm({
 
     onSave(updatedDoc);
     setIsSavedRecently(true);
-    setTimeout(() => setIsSavedRecently(false), 3000);
+
+    // Kirim sinkronisasi ke PostgreSQL Backend API Layer
+    if (bookingCode && formData.fullName && formData.passportNumber && formData.birthDate && formData.expiryDate) {
+      setIsSubmitting(true);
+      try {
+        const res = await fetch('/api/documents/passport', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            bookingId: bookingCode,
+            paxIndex,
+            fullName: formData.fullName,
+            passportNumber: formData.passportNumber,
+            birthDate: formData.birthDate,
+            gender: formData.gender || 'M',
+            issuingOffice: formData.issuingOffice,
+            issuingDate: formData.issuingDate,
+            expiryDate: formData.expiryDate,
+            passportScanUrl: formData.passportScanUrl,
+          }),
+        });
+        const resData = await res.json();
+        if (res.ok && resData.success) {
+          setApiFeedback('Tersimpan di Database PostgreSQL & lolos validasi server');
+        } else {
+          setApiFeedback('Tersimpan di sesi lokal (Database offline)');
+        }
+      } catch {
+        setApiFeedback('Tersimpan di sesi lokal');
+      } finally {
+        setIsSubmitting(false);
+        setTimeout(() => {
+          setIsSavedRecently(false);
+          setApiFeedback(null);
+        }, 3500);
+      }
+    } else {
+      setTimeout(() => setIsSavedRecently(false), 3000);
+    }
   };
 
   return (
@@ -412,8 +453,14 @@ export function PassportUploadForm({
           <span>Data dilindungi enkripsi privasi sesuai standar UU PDP.</span>
         </div>
 
-        <div className="flex items-center gap-2">
-          {isSavedRecently && (
+        <div className="flex items-center gap-3">
+          {apiFeedback && (
+            <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200 flex items-center gap-1.5 animate-fade-in">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+              {apiFeedback}
+            </span>
+          )}
+          {isSavedRecently && !apiFeedback && (
             <span className="text-xs font-semibold text-emerald-600 flex items-center gap-1">
               <CheckCircle2 className="w-4 h-4" />
               Tersimpan!
@@ -421,10 +468,11 @@ export function PassportUploadForm({
           )}
           <button
             type="submit"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all cursor-pointer"
+            disabled={isSubmitting}
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 active:scale-98 text-white font-bold text-sm shadow-md hover:shadow-lg transition-all cursor-pointer"
           >
             <Save className="w-4 h-4" />
-            Simpan Dokumen Jamaah {paxIndex}
+            {isSubmitting ? 'Menyinkronkan...' : `Simpan Dokumen Jamaah ${paxIndex}`}
           </button>
         </div>
       </div>

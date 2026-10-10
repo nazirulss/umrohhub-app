@@ -48,12 +48,13 @@ export function TravelDashboardView() {
     );
   };
 
-  // Passport Verification Handler
-  const handleVerifyPassport = (
+  // Passport Verification Handler (Synchronized to PostgreSQL Backend API)
+  const handleVerifyPassport = async (
     id: string,
     status: 'TERVERIFIKASI' | 'PERLU_REVISI',
     rejectionReason?: string
   ) => {
+    // 1. Optimistic UI update
     setPassports((prev) =>
       prev.map((p) => {
         if (p.id === id) {
@@ -66,6 +67,21 @@ export function TravelDashboardView() {
         return p;
       })
     );
+
+    // 2. Persist to PostgreSQL via Prisma API Route
+    try {
+      await fetch('/api/documents/passport', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          documentId: id,
+          status,
+          rejectionReason,
+        }),
+      });
+    } catch (e) {
+      console.warn('Backend API sync offline, retained in optimistic state:', e);
+    }
   };
 
   // Stats recalculated dynamically
