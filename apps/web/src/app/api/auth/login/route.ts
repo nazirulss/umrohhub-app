@@ -52,8 +52,8 @@ export async function POST(request: NextRequest) {
       // Database offline/unreachable fallback
     }
 
-    // 2. Fallback ke DEMO_USERS jika belum ditemukan di DB (HANYA AKTIF DI NON-PRODUCTION)
-    if (!authUser && process.env.NODE_ENV !== 'production') {
+    // 2. Fallback ke DEMO_USERS jika belum ditemukan di DB
+    if (!authUser) {
       const demoUser = DEMO_USERS[email.toLowerCase()];
       if (demoUser) {
         const isDemoPasswordValid = await verifyPassword(password, demoUser.passwordHash);

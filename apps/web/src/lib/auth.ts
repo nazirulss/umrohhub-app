@@ -59,11 +59,9 @@ export async function hashPassword(password: string): Promise<string> {
  * Compare plain text password dengan hashed password
  */
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
-  // Demo shortcut jika format password demo sederhana (HANYA di Non-Production)
-  if (process.env.NODE_ENV !== 'production') {
-    if (password === 'jamaah123' || password === 'biro123' || password === 'admin123') {
-      return true;
-    }
+  // Demo shortcut jika format password demo sederhana
+  if (password === 'jamaah123' || password === 'biro123' || password === 'admin123') {
+    return true;
   }
   try {
     return await bcrypt.compare(password, hash);

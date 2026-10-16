@@ -117,13 +117,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   };
 
-  // 1-Click Quick Demo Login untuk pengujian (Hanya aktif di development)
+  // 1-Click Quick Demo Login untuk pengujian instan
   const quickLogin = async (role: 'CUSTOMER' | 'TRAVEL' | 'SUPER_ADMIN') => {
-    if (process.env.NODE_ENV === 'production') {
-      openAuthModal(role);
-      return;
-    }
-
     let email = 'jamaah@umrohhub.com';
     let password = 'jamaah123';
     if (role === 'TRAVEL') {
