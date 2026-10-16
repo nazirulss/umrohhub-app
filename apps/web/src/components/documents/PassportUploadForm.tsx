@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, useId } from 'react';
+import React, { useState, useId } from 'react';
+import Image from 'next/image';
 import { PassportDocument } from '@/types/document';
 import { validatePassportKemenag } from '@/lib/passport-validation';
 import { PassportValidationBadge } from './PassportValidationBadge';
@@ -13,7 +14,6 @@ import {
   HelpCircle,
   ShieldCheck,
   Save,
-  Image as ImageIcon,
 } from 'lucide-react';
 
 interface PassportUploadFormProps {
@@ -52,8 +52,11 @@ export function PassportUploadForm({
     initialData?.passportScanUrl || null
   );
 
-  // Sync state saat paxIndex atau initialData berubah
-  useEffect(() => {
+  // Sync state saat paxIndex atau initialData berubah tanpa memicu cascading render
+  const [prevPaxKey, setPrevPaxKey] = useState<string>(`${paxIndex}_${initialData?.id || ''}`);
+  const currentPaxKey = `${paxIndex}_${initialData?.id || ''}`;
+  if (currentPaxKey !== prevPaxKey) {
+    setPrevPaxKey(currentPaxKey);
     setFormData({
       fullName: initialData?.fullName || '',
       passportNumber: initialData?.passportNumber || '',
@@ -69,7 +72,7 @@ export function PassportUploadForm({
     });
     setPreviewImage(initialData?.passportScanUrl || null);
     setIsSavedRecently(false);
-  }, [paxIndex, initialData]);
+  }
 
   // Real-time Kemenag 7 Months Rule Validation
   const validationResult = validatePassportKemenag(
@@ -382,10 +385,12 @@ export function PassportUploadForm({
             <div className="relative rounded-2xl border-2 border-emerald-500/40 bg-slate-50 p-3 overflow-hidden">
               <div className="flex flex-col sm:flex-row items-center gap-4">
                 <div className="relative w-full sm:w-48 h-32 rounded-xl bg-slate-200 overflow-hidden border border-slate-300 shrink-0">
-                  <img
+                  <Image
                     src={previewImage}
                     alt="Scan Paspor"
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 640px) 100vw, 192px"
+                    className="object-cover"
                   />
                   <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-emerald-600/90 text-white text-[10px] font-bold">
                     Terunggah

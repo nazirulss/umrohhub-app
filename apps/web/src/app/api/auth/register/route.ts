@@ -5,7 +5,7 @@ import {
   hashPassword,
   AUTH_COOKIE_NAME,
 } from '@/lib/auth';
-import { AuthUser } from '@/types/auth';
+import { AuthUser, UserRole } from '@/types/auth';
 
 export async function POST(request: NextRequest) {
   try {
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
           email: email.toLowerCase(),
           passwordHash,
           phone: phone || null,
-          role: assignedRole as any,
+          role: assignedRole,
           status: 'ACTIVE',
           ...(assignedRole === 'TRAVEL' && travelName && {
             travel: {
@@ -70,12 +70,12 @@ export async function POST(request: NextRequest) {
         name: createdUser.name,
         email: createdUser.email,
         phone: createdUser.phone,
-        role: createdUser.role as any,
-        status: createdUser.status as any,
+        role: createdUser.role as UserRole,
+        status: createdUser.status as AuthUser['status'],
         travelId: createdUser.travel?.id,
         travelName: createdUser.travel?.name,
         skKemenag: createdUser.travel?.skKemenag,
-        verificationStatus: createdUser.travel?.verificationStatus as any,
+        verificationStatus: (createdUser.travel?.verificationStatus ?? undefined) as AuthUser['verificationStatus'],
       };
     } catch {
       // Database offline/unreachable fallback
@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
     });
 
     return response;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error saat register:', error);
     return NextResponse.json(
       { success: false, message: 'Gagal melakukan pendaftaran akun' },

@@ -40,10 +40,12 @@ export function MarketplaceFilterBar({
     filters.sortBy !== 'recommended',
   ].filter(Boolean).length;
 
+  const hasActiveChips = Boolean(filters.departureCity || filters.category || filters.cashbackOnly || filters.airline);
+
   return (
-    <div className="space-y-3">
-      {/* Sub-Tabs: Semua Paket vs Biro Travel PPIU */}
-      <div className="flex items-center gap-2 border-b border-slate-200 pb-2">
+    <div className="space-y-1 sm:space-y-3">
+      {/* Sub-Tabs: Semua Paket vs Biro Travel PPIU (Desktop Only, Mobile uses Bottom Nav) */}
+      <div className="hidden sm:flex items-center gap-2 border-b border-slate-200 pb-2">
         <button
           type="button"
           onClick={() => onFilterChange({ activeTab: 'packages' })}
@@ -69,7 +71,7 @@ export function MarketplaceFilterBar({
       </div>
 
       {/* Segmented Quick Sort Pills ala Kuliner Demak */}
-      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+      <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden py-0 sm:py-1">
         <button
           type="button"
           onClick={() =>
@@ -79,82 +81,82 @@ export function MarketplaceFilterBar({
               category: '',
             })
           }
-          className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+          className={`shrink-0 inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all cursor-pointer ${
             filters.sortBy === 'recommended' && !filters.cashbackOnly && !filters.category
               ? 'bg-emerald-600 text-white shadow-xs'
               : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
           }`}
         >
-          <Flame className="w-3.5 h-3.5" />
+          <Flame className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
           Paling Sesuai
         </button>
 
         <button
           type="button"
           onClick={() => onFilterChange({ sortBy: 'departure_asc' })}
-          className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+          className={`shrink-0 inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all cursor-pointer ${
             filters.sortBy === 'departure_asc'
               ? 'bg-emerald-600 text-white shadow-xs'
               : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
           }`}
         >
-          <Calendar className="w-3.5 h-3.5" />
+          <Calendar className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
           Berangkat Terdekat
         </button>
 
         <button
           type="button"
           onClick={() => onFilterChange({ sortBy: 'price_asc' })}
-          className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+          className={`shrink-0 inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all cursor-pointer ${
             filters.sortBy === 'price_asc'
               ? 'bg-emerald-600 text-white shadow-xs'
               : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
           }`}
         >
-          <ArrowDownUp className="w-3.5 h-3.5" />
+          <ArrowDownUp className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
           Harga Terendah
         </button>
 
         <button
           type="button"
           onClick={() => onFilterChange({ category: filters.category === 'VIP' ? '' : 'VIP' })}
-          className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+          className={`shrink-0 inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all cursor-pointer ${
             filters.category === 'VIP'
               ? 'bg-emerald-600 text-white shadow-xs'
               : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
           }`}
         >
-          <Star className="w-3.5 h-3.5" />
+          <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
           VIP Bintang 5
         </button>
 
         <button
           type="button"
           onClick={() => onFilterChange({ cashbackOnly: !filters.cashbackOnly })}
-          className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+          className={`shrink-0 inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold transition-all cursor-pointer ${
             filters.cashbackOnly
               ? 'bg-emerald-600 text-white shadow-xs'
               : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-50'
           }`}
         >
-          <Sparkles className="w-3.5 h-3.5" />
+          <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
           Ada Cashback
         </button>
       </div>
 
       {/* Quick Filter Strip (Scrollable Tokopedia Style) */}
-      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 text-xs">
+      <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden py-0 sm:py-1 text-xs">
         {/* Tombol Buka Modal Filter Lengkap */}
         <button
           type="button"
           onClick={onOpenFilterModal}
-          className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-xl font-bold border transition-all cursor-pointer ${
+          className={`shrink-0 inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl font-bold border transition-all cursor-pointer text-[10.5px] sm:text-xs ${
             activeFiltersCount > 0
               ? 'bg-emerald-50 border-emerald-600 text-emerald-800'
               : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
           }`}
         >
-          <SlidersHorizontal className="w-3.5 h-3.5" />
+          <SlidersHorizontal className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
           Filter
           {activeFiltersCount > 0 && (
             <span className="w-4 h-4 rounded-full bg-emerald-600 text-white text-[10px] flex items-center justify-center font-bold">
@@ -167,23 +169,36 @@ export function MarketplaceFilterBar({
         <select
           value={filters.departureCity}
           onChange={(e) => onFilterChange({ departureCity: e.target.value })}
-          className="shrink-0 px-3 py-2 rounded-xl border border-slate-200 bg-white font-medium text-slate-700 focus:outline-emerald-600 cursor-pointer"
+          className="shrink-0 px-2 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl border border-slate-200 bg-white font-medium text-slate-700 focus:outline-emerald-600 cursor-pointer text-[10.5px] sm:text-xs"
         >
-          <option value="">📍 Semua Kota Asal</option>
-          <option value="Jakarta (CGK)">Jakarta (CGK)</option>
-          <option value="Surabaya (SUB)">Surabaya (SUB)</option>
-          <option value="Solo (SOC)">Solo (SOC)</option>
-          <option value="Medan (KNO)">Medan (KNO)</option>
-          <option value="Makassar (UPG)">Makassar (UPG)</option>
+          <option value="">📍 Lokasi: Semua</option>
+          <option value="Jakarta (CGK)">Jakarta</option>
+          <option value="Surabaya (SUB)">Surabaya</option>
+          <option value="Solo (SOC)">Solo</option>
+          <option value="Medan (KNO)">Medan</option>
+          <option value="Makassar (UPG)">Makassar</option>
+        </select>
+
+        {/* Quick Dropdown: Maskapai / Pesawat */}
+        <select
+          value={filters.airline}
+          onChange={(e) => onFilterChange({ airline: e.target.value })}
+          className="shrink-0 px-2 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl border border-slate-200 bg-white font-medium text-slate-700 focus:outline-emerald-600 cursor-pointer text-[10.5px] sm:text-xs"
+        >
+          <option value="">✈️ Pesawat: Semua</option>
+          <option value="Saudia Airlines">Saudia</option>
+          <option value="Garuda Indonesia">Garuda</option>
+          <option value="Lion Air Direct">Lion Air</option>
+          <option value="Turkish Airlines">Turkish</option>
         </select>
 
         {/* Quick Dropdown: Kategori */}
         <select
           value={filters.category}
           onChange={(e) => onFilterChange({ category: e.target.value })}
-          className="shrink-0 px-3 py-2 rounded-xl border border-slate-200 bg-white font-medium text-slate-700 focus:outline-emerald-600 cursor-pointer"
+          className="shrink-0 px-2 sm:px-3 py-1 sm:py-2 rounded-lg sm:rounded-xl border border-slate-200 bg-white font-medium text-slate-700 focus:outline-emerald-600 cursor-pointer text-[10.5px] sm:text-xs"
         >
-          <option value="">🏷️ Semua Kategori</option>
+          <option value="">🏷️ Kategori: Semua</option>
           <option value="Reguler">Reguler</option>
           <option value="VIP">VIP Bintang 5</option>
           <option value="Ramadhan">Ramadhan</option>
@@ -205,8 +220,8 @@ export function MarketplaceFilterBar({
       </div>
 
       {/* Active Filter Chips */}
-      {activeFiltersCount > 0 && (
-        <div className="flex flex-wrap items-center gap-1.5 pt-1">
+      {hasActiveChips && (
+        <div className="flex flex-wrap items-center gap-1 pt-0.5">
           <span className="text-[11px] text-slate-400 font-semibold mr-1">Filter Aktif:</span>
 
           {filters.departureCity && (

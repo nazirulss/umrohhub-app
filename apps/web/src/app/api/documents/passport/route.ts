@@ -1,9 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { validatePassportKemenag } from '@/lib/passport-validation';
+import { verifySessionToken, AUTH_COOKIE_NAME } from '@/lib/auth';
 
 // POST: Jamaah Upload/Simpan Data Paspor
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const {
@@ -62,7 +63,7 @@ export async function POST(request: Request) {
         data: saved,
         kemenagValidation,
       });
-    } catch (dbErr) {
+    } catch {
       // Fallback
       return NextResponse.json({
         success: true,
@@ -77,7 +78,7 @@ export async function POST(request: Request) {
         kemenagValidation,
       });
     }
-  } catch (err) {
+  } catch {
     return NextResponse.json(
       { success: false, message: 'Gagal memproses data paspor.' },
       { status: 500 }
@@ -85,11 +86,48 @@ export async function POST(request: Request) {
   }
 }
 
-// PATCH: Biro Travel Verifikasi / Minta Revisi
-export async function PATCH(request: Request) {
+// PATCH: Biro Travel Verifikasi / Minta Revisi (Wajib Autentikasi TRAVEL / ADMIN)
+export async function PATCH(request: NextRequest) {
   try {
+    // 1. Verifikasi Sesi & Otorisasi Biro Travel / Admin
+    const token = request.cookies.get(AUTH_COOKIE_NAME)?.value;
+    if (!token) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: Sesi autentikasi tidak ditemukan. Silakan login sebagai biro travel atau admin.',
+        },
+        { status: 401 }
+      );
+    }
+
+    const authUser = await verifySessionToken(token);
+    if (!authUser) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Unauthorized: Sesi tidak valid atau telah kedaluwarsa.',
+        },
+        { status: 401 }
+      );
+    }
+
+    if (
+      authUser.role !== 'TRAVEL' &&
+      authUser.role !== 'SUPER_ADMIN' &&
+      authUser.role !== 'ADMIN'
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Forbidden: Hanya Biro Travel PPIU atau Administrator yang berhak memverifikasi paspor jemaah.',
+        },
+        { status: 403 }
+      );
+    }
+
     const body = await request.json();
-    const { documentId, status, rejectionReason, verifiedBy = 'Biro Travel PPIU' } = body;
+    const { documentId, status, rejectionReason } = body;
 
     if (!documentId || !status) {
       return NextResponse.json(
@@ -97,6 +135,9 @@ export async function PATCH(request: Request) {
         { status: 400 }
       );
     }
+
+    // Nama verifikator terverifikasi dari sesi biro/admin yang valid
+    const verifiedBy = authUser.travelName || authUser.name || 'Biro Travel PPIU Terverifikasi';
 
     try {
       const updated = await prisma.passportDocument.update({
@@ -114,7 +155,7 @@ export async function PATCH(request: Request) {
         source: 'database',
         data: updated,
       });
-    } catch (dbErr) {
+    } catch {
       return NextResponse.json({
         success: true,
         source: 'memory_session',
@@ -127,7 +168,7 @@ export async function PATCH(request: Request) {
         },
       });
     }
-  } catch (err) {
+  } catch {
     return NextResponse.json(
       { success: false, message: 'Gagal memperbarui status verifikasi paspor.' },
       { status: 500 }

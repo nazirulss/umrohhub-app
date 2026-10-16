@@ -1,24 +1,20 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { PackageItem, RoomVariant, DepartureItem } from '@/types/marketplace';
 import {
   ArrowLeft,
   Share2,
   CheckCircle2,
   Sparkles,
-  Plane,
-  Building,
   Calendar,
-  Users,
   ShieldCheck,
   MapPin,
-  Clock,
   Plus,
   Minus,
   MessageCircle,
   ChevronRight,
-  Info,
 } from 'lucide-react';
 
 interface ProductDetailPageProps {
@@ -105,10 +101,13 @@ export function ProductDetailPage({
            ========================================================================= */}
         <div className="lg:col-span-4 space-y-3">
           <div className="relative aspect-4/3 w-full rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shadow-xs">
-            <img
+            <Image
               src={selectedImage}
               alt={pkg.title}
-              className="w-full h-full object-cover"
+              fill
+              sizes="(max-width: 1024px) 100vw, 33vw"
+              className="object-cover"
+              priority
             />
             <span className="absolute top-3 left-3 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/95 text-emerald-800 shadow-xs backdrop-blur-xs">
               <CheckCircle2 className="w-3 h-3 text-emerald-600" />
@@ -129,7 +128,13 @@ export function ProductDetailPage({
                     : 'border-slate-200 hover:border-slate-300 opacity-70 hover:opacity-100'
                 }`}
               >
-                <img src={img} alt={`Foto ${idx + 1}`} className="w-full h-full object-cover" />
+                <Image
+                  src={img}
+                  alt={`Foto ${idx + 1}`}
+                  fill
+                  sizes="64px"
+                  className="object-cover"
+                />
               </button>
             ))}
           </div>

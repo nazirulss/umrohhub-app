@@ -6,16 +6,16 @@ import {
   AUTH_COOKIE_NAME,
   DEMO_USERS,
 } from '@/lib/auth';
-import { AuthUser } from '@/types/auth';
+import { AuthUser, UserRole } from '@/types/auth';
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { email, password, roleHint } = body;
 
-    if (!email) {
+    if (!email || !password) {
       return NextResponse.json(
-        { success: false, message: 'Email wajib diisi' },
+        { success: false, message: 'Email dan password wajib diisi' },
         { status: 400 }
       );
     }
@@ -30,9 +30,7 @@ export async function POST(request: NextRequest) {
       });
 
       if (dbUser) {
-        const isPasswordValid = password
-          ? await verifyPassword(password, dbUser.passwordHash)
-          : true;
+        const isPasswordValid = await verifyPassword(password, dbUser.passwordHash);
 
         if (isPasswordValid) {
           authUser = {
@@ -40,13 +38,13 @@ export async function POST(request: NextRequest) {
             name: dbUser.name,
             email: dbUser.email,
             phone: dbUser.phone,
-            role: dbUser.role as any,
-            status: dbUser.status as any,
+            role: dbUser.role as UserRole,
+            status: dbUser.status as AuthUser['status'],
             travelId: dbUser.travel?.id,
             travelName: dbUser.travel?.name,
             travelSlug: dbUser.travel?.slug,
             skKemenag: dbUser.travel?.skKemenag,
-            verificationStatus: dbUser.travel?.verificationStatus as any,
+            verificationStatus: (dbUser.travel?.verificationStatus ?? undefined) as AuthUser['verificationStatus'],
           };
         }
       }
@@ -54,25 +52,28 @@ export async function POST(request: NextRequest) {
       // Database offline/unreachable fallback
     }
 
-    // 2. Fallback ke DEMO_USERS jika belum ditemukan di DB
-    if (!authUser) {
+    // 2. Fallback ke DEMO_USERS jika belum ditemukan di DB (HANYA AKTIF DI NON-PRODUCTION)
+    if (!authUser && process.env.NODE_ENV !== 'production') {
       const demoUser = DEMO_USERS[email.toLowerCase()];
       if (demoUser) {
-        authUser = {
-          id: demoUser.id,
-          name: demoUser.name,
-          email: demoUser.email,
-          phone: demoUser.phone,
-          role: demoUser.role,
-          status: demoUser.status,
-          travelId: demoUser.travelId,
-          travelName: demoUser.travelName,
-          travelSlug: demoUser.travelSlug,
-          skKemenag: demoUser.skKemenag,
-          verificationStatus: demoUser.verificationStatus,
-        };
+        const isDemoPasswordValid = await verifyPassword(password, demoUser.passwordHash);
+        if (isDemoPasswordValid) {
+          authUser = {
+            id: demoUser.id,
+            name: demoUser.name,
+            email: demoUser.email,
+            phone: demoUser.phone,
+            role: demoUser.role,
+            status: demoUser.status,
+            travelId: demoUser.travelId,
+            travelName: demoUser.travelName,
+            travelSlug: demoUser.travelSlug,
+            skKemenag: demoUser.skKemenag,
+            verificationStatus: demoUser.verificationStatus,
+          };
+        }
       } else if (roleHint) {
-        // Fallback dinamis jika user mengetik email acak untuk role tertentu
+        // Fallback dinamis lokal untuk testing cepat dengan roleHint di dev
         authUser = {
           id: `usr-${Date.now()}`,
           name: email.split('@')[0],
@@ -116,7 +117,7 @@ export async function POST(request: NextRequest) {
     });
 
     return response;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error saat login:', error);
     return NextResponse.json(
       { success: false, message: 'Terjadi kesalahan pada server saat login' },

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { BiroPassportItem } from '@/types/travel-dashboard';
 import {
   FileCheck,
@@ -8,7 +9,6 @@ import {
   XCircle,
   AlertTriangle,
   Search,
-  ExternalLink,
   Clock,
   Eye,
   X,
@@ -190,10 +190,12 @@ export function PassportVerificationTable({
                       className="group relative w-12 h-9 rounded-lg overflow-hidden border border-slate-300 hover:border-emerald-600 transition-all cursor-pointer block"
                       title="Klik untuk melihat foto paspor"
                     >
-                      <img
+                      <Image
                         src={item.passportScanUrl}
                         alt="Scan Paspor"
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                        fill
+                        sizes="48px"
+                        className="object-cover group-hover:scale-110 transition-transform"
                       />
                       <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-slate-900/40 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity">
                         <Eye className="w-3.5 h-3.5" />
@@ -279,8 +281,14 @@ export function PassportVerificationTable({
                 <X className="w-4 h-4" />
               </button>
             </div>
-            <div className="py-4 flex justify-center max-h-[70vh] overflow-auto">
-              <img src={previewImage} alt="Paspor" className="rounded-xl max-h-full object-contain" />
+            <div className="relative py-4 flex justify-center w-full h-[60vh] max-h-[500px]">
+              <Image
+                src={previewImage}
+                alt="Paspor"
+                fill
+                sizes="(max-width: 768px) 100vw, 600px"
+                className="rounded-xl object-contain"
+              />
             </div>
           </div>
         </div>

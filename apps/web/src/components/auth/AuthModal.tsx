@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { UserRole } from '@/types/auth';
 import {
@@ -14,7 +14,6 @@ import {
   ArrowRight,
   Sparkles,
   AlertCircle,
-  CheckCircle2,
   Eye,
   EyeOff,
 } from 'lucide-react';
@@ -44,10 +43,16 @@ export function AuthModal() {
   const [city, setCity] = useState('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  useEffect(() => {
+  // Sync role default saat modal dibuka atau default role berubah
+  const [prevDefaultRole, setPrevDefaultRole] = useState<UserRole>(authModalDefaultRole);
+  const [prevIsOpen, setPrevIsOpen] = useState<boolean>(isAuthModalOpen);
+
+  if (authModalDefaultRole !== prevDefaultRole || isAuthModalOpen !== prevIsOpen) {
+    setPrevDefaultRole(authModalDefaultRole);
+    setPrevIsOpen(isAuthModalOpen);
     setSelectedRole(authModalDefaultRole);
     setErrorMessage(null);
-  }, [authModalDefaultRole, isAuthModalOpen]);
+  }
 
   if (!isAuthModalOpen) return null;
 

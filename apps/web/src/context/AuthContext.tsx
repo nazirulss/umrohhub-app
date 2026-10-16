@@ -20,8 +20,10 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  // Default demo user: Jamaah Aktif agar preview interaktif langsung hidup
-  const [user, setUser] = useState<AuthUser | null>(DEMO_USERS['jamaah@umrohhub.com']);
+  // Default demo user: Jamaah Aktif hanya di development agar preview interaktif langsung hidup
+  const [user, setUser] = useState<AuthUser | null>(
+    process.env.NODE_ENV === 'production' ? null : (DEMO_USERS['jamaah@umrohhub.com'] ?? null)
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authModalDefaultRole, setAuthModalDefaultRole] = useState<UserRole>('CUSTOMER');
@@ -33,10 +35,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       .then((data) => {
         if (data.success && data.user) {
           setUser(data.user);
+        } else if (process.env.NODE_ENV === 'production') {
+          setUser(null);
         }
       })
       .catch(() => {
-        // Tetap menggunakan user awal
+        if (process.env.NODE_ENV === 'production') {
+          setUser(null);
+        }
       });
   }, []);
 
@@ -65,14 +71,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       return { success: false, message: data.message || 'Login gagal' };
     } catch {
-      // Fallback offline
-      const demo = DEMO_USERS[payload.email.toLowerCase()];
-      if (demo) {
-        setUser(demo);
-        closeAuthModal();
-        return { success: true };
+      // Fallback offline hanya aktif di development/preview non-production
+      if (process.env.NODE_ENV !== 'production') {
+        const demo = DEMO_USERS[payload.email.toLowerCase()];
+        if (demo) {
+          setUser(demo);
+          closeAuthModal();
+          return { success: true };
+        }
       }
-      return { success: false, message: 'Server tidak terjangkau' };
+      return { success: false, message: 'Server tidak terjangkau. Silakan periksa koneksi Anda.' };
     } finally {
       setIsLoading(false);
     }
@@ -109,8 +117,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   };
 
-  // 1-Click Quick Demo Login untuk pengujian cepat 3 portal berbeda
+  // 1-Click Quick Demo Login untuk pengujian (Hanya aktif di development)
   const quickLogin = async (role: 'CUSTOMER' | 'TRAVEL' | 'SUPER_ADMIN') => {
+    if (process.env.NODE_ENV === 'production') {
+      openAuthModal(role);
+      return;
+    }
+
     let email = 'jamaah@umrohhub.com';
     let password = 'jamaah123';
     if (role === 'TRAVEL') {

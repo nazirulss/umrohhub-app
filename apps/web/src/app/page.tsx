@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import Image from 'next/image';
 import { PackageItem, MarketplaceFilterState, RoomVariant, DepartureItem } from '@/types/marketplace';
 import { PassportDocument, BookingPaxInfo } from '@/types/document';
 import { MOCK_PACKAGES } from '@/data/mock-packages';
@@ -12,6 +13,9 @@ import { PaxSelectorTabs } from '@/components/documents/PaxSelectorTabs';
 import { PassportUploadForm } from '@/components/documents/PassportUploadForm';
 import { PassportReviewCard } from '@/components/documents/PassportReviewCard';
 import { TravelDashboardView } from '@/components/travel-dashboard/TravelDashboardView';
+import { ScheduleView } from '@/components/schedule/ScheduleView';
+import { BiroDirectoryView } from '@/components/biro/BiroDirectoryView';
+import { TravelMapView } from '@/components/map/TravelMapView';
 import { AuthProvider, useAuth } from '@/context/AuthContext';
 import { AuthModal } from '@/components/auth/AuthModal';
 import { UserProfileMenu } from '@/components/auth/UserProfileMenu';
@@ -29,14 +33,48 @@ import {
   ShoppingBag,
   FileText,
   Search,
-  Lock,
+  Home,
+  Calendar,
+  MapPin,
+  User,
+  X,
 } from 'lucide-react';
 
 function UmrohHubEnterpriseAppContent() {
   const { user, quickLogin } = useAuth();
-  // Navigation State: 'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin'
-  const [currentView, setCurrentView] = useState<'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin'>('marketplace');
+  // Navigation State: 'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'schedule' | 'travel-dashboard' | 'map'
+  const [currentView, setCurrentView] = useState<'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'schedule' | 'travel-dashboard' | 'map'>('marketplace');
   const [selectedPackage, setSelectedPackage] = useState<PackageItem | null>(null);
+
+  // Hash Routing ala Umrohpedia (#travels, #schedule, #travel-map, #marketplace, dll.)
+  useEffect(() => {
+    const handleHash = () => {
+      const h = window.location.hash.toLowerCase();
+      if (h === '#travels' || h === '#biro' || h === '#biro-agen') {
+        setCurrentView('biro');
+        setSelectedPackage(null);
+      } else if (h === '#travel-map' || h === '#map' || h === '#lokasi') {
+        setCurrentView('map');
+        setSelectedPackage(null);
+      } else if (h === '#schedule' || h === '#jadwal') {
+        setCurrentView('schedule');
+        setSelectedPackage(null);
+      } else if (h === '#passport' || h === '#paspor') {
+        setCurrentView('passport');
+      } else if (h === '#admin') {
+        setCurrentView('admin');
+      } else if (h === '#travel-dashboard') {
+        setCurrentView('travel-dashboard');
+      } else if (h === '#marketplace' || h === '#home' || h === '') {
+        setCurrentView('marketplace');
+        setSelectedPackage(null);
+      }
+    };
+
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
 
   // Filter State
   const [filters, setFilters] = useState<MarketplaceFilterState>({
@@ -166,6 +204,10 @@ function UmrohHubEnterpriseAppContent() {
     let code = `UH-${Date.now().toString(36).toUpperCase().slice(-6)}`;
     let bkgId = `BKG-${Date.now()}`;
 
+    const customerName = user?.name || 'Calon Jamaah Umroh';
+    const customerPhone = user?.phone || '081200000000';
+    const customerEmail = user?.email || 'jamaah@umrohhub.com';
+
     // Kirim pendaftaran transaksi ke PostgreSQL Booking Table via Prisma API
     try {
       const res = await fetch('/api/bookings', {
@@ -176,18 +218,25 @@ function UmrohHubEnterpriseAppContent() {
           departureId: data.departure.id,
           pilgrimCount: data.paxCount,
           roomType: data.roomVariant.name,
-          customerName: 'Muhammad Ahmad Fauzi',
-          customerPhone: '081298765432',
-          customerEmail: 'jamaah@umrohhub.com',
+          customerName,
+          customerPhone,
+          customerEmail,
         }),
       });
       const resData = await res.json();
       if (res.ok && resData.success && resData.data?.bookingCode) {
         code = resData.data.bookingCode;
         bkgId = resData.data.id;
+      } else if (!res.ok) {
+        alert(resData.error || 'Gagal memproses booking. Silakan coba lagi.');
+        return;
       }
     } catch (e) {
-      console.warn('Booking API offline, proceeding with client session code:', e);
+      console.warn('Booking API offline:', e);
+      if (process.env.NODE_ENV === 'production') {
+        alert('Layanan booking sedang mengalami gangguan jaringan. Silakan coba beberapa saat lagi.');
+        return;
+      }
     }
 
     // Generate new booking context and move to passport flow
@@ -206,19 +255,19 @@ function UmrohHubEnterpriseAppContent() {
     setDepartureDate(data.departure.departureDate);
     setActivePaxIndex(1);
 
-    // Inisialisasi dokumen baru
+    // Inisialisasi dokumen baru berbasis user session
     const initialDocs: Record<number, Partial<PassportDocument>> = {};
     for (let i = 1; i <= data.paxCount; i++) {
       initialDocs[i] = {
         bookingId: code,
         paxIndex: i,
-        fullName: i === 1 ? 'MUHAMMAD AHMAD FAUZI' : '',
-        passportNumber: i === 1 ? 'C8192031' : '',
+        fullName: i === 1 && user?.name ? user.name.toUpperCase() : '',
+        passportNumber: '',
         gender: 'M',
-        birthDate: i === 1 ? '1984-06-12' : '',
-        issuingOffice: i === 1 ? 'Kanim Jakarta Selatan' : '',
-        expiryDate: i === 1 ? '2032-01-10' : '',
-        status: i === 1 ? 'MENUNGGU_VERIFIKASI' : 'BELUM_LENGKAP',
+        birthDate: '',
+        issuingOffice: '',
+        expiryDate: '',
+        status: 'BELUM_LENGKAP',
       };
     }
     setDocuments(initialDocs);
@@ -245,23 +294,23 @@ function UmrohHubEnterpriseAppContent() {
     <div className="min-h-screen bg-[#F7F8FA] text-[#212121] pb-16">
       {/* Top Navbar Tokopedia-Inspired */}
       <header className="sticky top-0 z-30 bg-white border-b border-slate-200 shadow-2xs">
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
+        <div className="max-w-6xl mx-auto px-2.5 sm:px-4 h-10 sm:h-16 flex items-center justify-between gap-2.5 sm:gap-4">
           <div
-            className="flex items-center gap-3 cursor-pointer"
+            className="flex items-center gap-2 sm:gap-3 cursor-pointer"
             onClick={() => {
               setCurrentView('marketplace');
               setSelectedPackage(null);
             }}
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-700 text-white flex items-center justify-center font-black text-lg shadow-sm">
+            <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-md sm:rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-700 text-white flex items-center justify-center font-black text-xs sm:text-lg shadow-sm">
               UH
             </div>
             <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-base tracking-tight text-slate-900">
+              <div className="flex items-center gap-1 sm:gap-1.5">
+                <span className="font-extrabold text-xs sm:text-base tracking-tight text-slate-900">
                   UmrohHub
                 </span>
-                <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                <span className="px-1 py-0.2 sm:px-1.5 sm:py-0.5 rounded text-[8px] sm:text-[10px] font-bold bg-emerald-100 text-emerald-800">
                   ENTERPRISE v1.0
                 </span>
               </div>
@@ -285,8 +334,8 @@ function UmrohHubEnterpriseAppContent() {
             </div>
           </div>
 
-          {/* Module Switcher Header Tabs */}
-          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-xs font-bold overflow-x-auto no-scrollbar">
+          {/* Module Switcher Header Tabs (Desktop Only, Mobile uses Bottom Nav) */}
+          <div className="hidden md:flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-xs font-bold overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
             <button
               type="button"
               onClick={() => {
@@ -304,6 +353,36 @@ function UmrohHubEnterpriseAppContent() {
             </button>
             <button
               type="button"
+              onClick={() => {
+                setCurrentView('schedule');
+                setSelectedPackage(null);
+              }}
+              className={`px-2.5 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                currentView === 'schedule'
+                  ? 'bg-white text-emerald-800 shadow-2xs font-extrabold'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Calendar className="w-3.5 h-3.5" />
+              <span>Jadwal Keberangkatan</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setCurrentView('biro');
+                setSelectedPackage(null);
+              }}
+              className={`px-2.5 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                currentView === 'biro'
+                  ? 'bg-white text-emerald-800 shadow-2xs font-extrabold'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Building2 className="w-3.5 h-3.5" />
+              <span>Direktori Biro</span>
+            </button>
+            <button
+              type="button"
               onClick={() => setCurrentView('passport')}
               className={`px-2.5 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
                 currentView === 'passport'
@@ -316,15 +395,15 @@ function UmrohHubEnterpriseAppContent() {
             </button>
             <button
               type="button"
-              onClick={() => setCurrentView('biro')}
+              onClick={() => setCurrentView('travel-dashboard')}
               className={`px-2.5 py-1.5 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
-                currentView === 'biro'
+                currentView === 'travel-dashboard'
                   ? 'bg-white text-emerald-800 shadow-2xs font-extrabold'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Building2 className="w-3.5 h-3.5" />
-              <span>Dashboard Biro</span>
+              <Building2 className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Dashboard Mitra</span>
             </button>
             <button
               type="button"
@@ -346,25 +425,74 @@ function UmrohHubEnterpriseAppContent() {
       </header>
 
       {/* Main App Body */}
-      <main className="max-w-6xl mx-auto px-4 pt-6">
+      <main className="max-w-6xl mx-auto px-3 sm:px-4 pt-2 sm:pt-6 pb-20 sm:pb-8">
         {/* =========================================================================
             VIEW 1: MARKETPLACE CATALOG (TOKOPEDIA-INSPIRED)
            ========================================================================= */}
         {currentView === 'marketplace' && (
-          <div className="space-y-6">
-            {/* Promo Banner Strip */}
-            <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-emerald-900 via-emerald-800 to-slate-900 text-white p-6 sm:p-8 shadow-sm">
-              <div className="max-w-xl space-y-2 relative z-10">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-white/20 text-emerald-200 backdrop-blur-xs">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-300" />
-                  Jaminan 5 Pasti Umroh Kemenag RI
+          <div className="space-y-2.5 sm:space-y-4">
+            {/* Promo Banner Slider ala Umrohpedia (archive/index.html) */}
+            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm min-h-[125px] sm:min-h-[160px] flex items-center bg-slate-900">
+              <Image
+                src="https://images.unsplash.com/photo-1565552684305-7e8e7a080824?auto=format&fit=crop&w=1200&q=80"
+                alt="Banner Garansi PPIU Resmi"
+                fill
+                unoptimized
+                className="object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/95 via-emerald-900/80 to-transparent" />
+              
+              <div className="relative z-10 p-3.5 sm:p-6 max-w-xl space-y-1 sm:space-y-2">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-xs font-bold bg-[#00aa5b] text-white shadow-xs">
+                  <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />
+                  Jaminan 5 Pasti Kemenag
                 </span>
-                <h1 className="text-xl sm:text-3xl font-black tracking-tight text-white leading-tight">
-                  Temukan Travel Terpercaya. Bandingkan Paket. Berangkat Lebih Tenang.
+                <h1 className="text-sm sm:text-xl lg:text-2xl font-black text-white leading-tight">
+                  Garansi PPIU Resmi & Transparansi Biaya Tanpa Tipu-Tipu
                 </h1>
-                <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed">
-                  Bandingkan paket resmi berizin PPIU Kemenag RI dengan perlindungan transaksi amanah, kepastian maskapai, hotel, dan audit paspor otomatis.
+                <p className="text-[10.5px] sm:text-xs text-emerald-100/90 line-clamp-1 sm:line-clamp-none leading-relaxed">
+                  Semua biro travel telah lolos verifikasi legalitas SK Kemenag & NIB resmi.
                 </p>
+                <div className="pt-0.5 sm:pt-1">
+                  <button
+                    type="button"
+                    onClick={() => setCurrentView('biro')}
+                    className="inline-flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-[#00aa5b] hover:bg-emerald-700 text-white text-[10.5px] sm:text-xs font-bold transition-all shadow-xs cursor-pointer"
+                  >
+                    <span>Cek Biro PPIU</span>
+                    <span>&rarr;</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Kolom Pencarian Penuh ala Umrohpedia (archive/index.html) */}
+            <div className="relative">
+              <div className="flex items-center bg-white rounded-xl sm:rounded-2xl border border-slate-200/90 shadow-2xs p-1 sm:p-1.5 pl-3 focus-within:border-emerald-600 focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all">
+                <Search className="w-4 h-4 text-slate-400 shrink-0 mr-2" />
+                <input
+                  type="text"
+                  placeholder="Cari paket umroh, biro PPIU, kota, maskapai..."
+                  value={filters.searchQuery}
+                  onChange={(e) => setFilters((prev) => ({ ...prev, searchQuery: e.target.value }))}
+                  className="w-full bg-transparent border-none text-xs sm:text-sm text-slate-800 placeholder-slate-400 font-medium focus:outline-hidden py-1"
+                />
+                {filters.searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setFilters((prev) => ({ ...prev, searchQuery: '' }))}
+                    className="p-1 text-slate-400 hover:text-slate-600 mr-1 cursor-pointer"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+                <button
+                  type="button"
+                  className="bg-[#00aa5b] hover:bg-emerald-700 text-white px-3 py-1.5 sm:p-2.5 rounded-lg sm:rounded-xl flex items-center justify-center transition-colors cursor-pointer shadow-xs shrink-0"
+                  aria-label="Cari Paket"
+                >
+                  <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                </button>
               </div>
             </div>
 
@@ -389,9 +517,9 @@ function UmrohHubEnterpriseAppContent() {
               totalResults={filteredPackages.length}
             />
 
-            {/* Product Cards Grid (GrabFood / Tokopedia style) */}
+            {/* Product Cards Grid (Horizontal catalog card ala Umrohpedia) */}
             {filteredPackages.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-4">
                 {filteredPackages.map((pkg) => (
                   <PackageCard
                     key={pkg.id}
@@ -429,6 +557,16 @@ function UmrohHubEnterpriseAppContent() {
               </div>
             )}
           </div>
+        )}
+
+        {/* =========================================================================
+            VIEW 1B: JADWAL KEBERANGKATAN (UMROHPEDIA REFERENCE)
+           ========================================================================= */}
+        {currentView === 'schedule' && (
+          <ScheduleView
+            packages={MOCK_PACKAGES}
+            onSelectPackage={handleSelectPackage}
+          />
         )}
 
         {/* =========================================================================
@@ -756,9 +894,43 @@ function UmrohHubEnterpriseAppContent() {
         )}
 
         {/* =========================================================================
-            VIEW 4: DASHBOARD BIRO TRAVEL PPIU (B2B)
+            VIEW 4: DIREKTORI BIRO PPIU (UMROHPEDIA REFERENCE)
            ========================================================================= */}
         {currentView === 'biro' && (
+          <BiroDirectoryView
+            packages={MOCK_PACKAGES}
+            onSelectPackage={handleSelectPackage}
+            onOpenOwnerDashboard={() => setCurrentView('travel-dashboard')}
+            onNavigateMap={() => {
+              window.location.hash = '#travel-map';
+              setCurrentView('map');
+              setSelectedPackage(null);
+            }}
+          />
+        )}
+
+        {/* =========================================================================
+            VIEW 4C: PETA LOKASI KANTOR BIRO PPIU (UMROHPEDIA REFERENCE)
+           ========================================================================= */}
+        {currentView === 'map' && (
+          <TravelMapView
+            onNavigateBiro={() => {
+              window.location.hash = '#travels';
+              setCurrentView('biro');
+              setSelectedPackage(null);
+            }}
+            onSelectBiro={() => {
+              window.location.hash = '#travels';
+              setCurrentView('biro');
+              setSelectedPackage(null);
+            }}
+          />
+        )}
+
+        {/* =========================================================================
+            VIEW 4B: DASHBOARD BIRO TRAVEL PPIU (B2B OWNER CENTER)
+           ========================================================================= */}
+        {currentView === 'travel-dashboard' && (
           <div className="space-y-4">
             {user?.role !== 'TRAVEL' && user?.role !== 'SUPER_ADMIN' && (
               <div className="p-4 rounded-2xl bg-sky-50 border border-sky-200 flex flex-wrap items-center justify-between gap-3 text-xs text-sky-900">
@@ -831,6 +1003,98 @@ function UmrohHubEnterpriseAppContent() {
 
       {/* Enterprise Multi-Role Authentication Modal */}
       <AuthModal />
+
+      {/* Mobile Bottom Navigation Bar ala Umrohpedia */}
+      <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200/90 shadow-lg px-2 py-1.5 flex items-center justify-around">
+        <button
+          type="button"
+          onClick={() => {
+            window.location.hash = '#marketplace';
+            setCurrentView('marketplace');
+            setSelectedPackage(null);
+            setFilters((prev) => ({ ...prev, activeTab: 'packages' }));
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className={`flex flex-col items-center justify-center gap-0.5 py-1 px-2 rounded-lg transition-colors cursor-pointer ${
+            currentView === 'marketplace'
+              ? 'text-emerald-700 font-bold'
+              : 'text-slate-500 hover:text-slate-800'
+          }`}
+        >
+          <Home className={`w-5 h-5 ${currentView === 'marketplace' ? 'text-emerald-600 stroke-[2.5]' : 'stroke-2'}`} />
+          <span className="text-[10px] tracking-tight">Beranda</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            window.location.hash = '#schedule';
+            setCurrentView('schedule');
+            setSelectedPackage(null);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className={`flex flex-col items-center justify-center gap-0.5 py-1 px-2 rounded-lg transition-colors cursor-pointer ${
+            currentView === 'schedule'
+              ? 'text-emerald-700 font-bold'
+              : 'text-slate-500 hover:text-slate-800'
+          }`}
+        >
+          <Calendar className={`w-5 h-5 ${currentView === 'schedule' ? 'text-emerald-600 stroke-[2.5]' : 'stroke-2'}`} />
+          <span className="text-[10px] tracking-tight">Jadwal</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            window.location.hash = '#travels';
+            setCurrentView('biro');
+            setSelectedPackage(null);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className={`flex flex-col items-center justify-center gap-0.5 py-1 px-2 rounded-lg transition-colors cursor-pointer ${
+            currentView === 'biro'
+              ? 'text-emerald-700 font-bold'
+              : 'text-slate-500 hover:text-slate-800'
+          }`}
+        >
+          <Building2 className={`w-5 h-5 ${currentView === 'biro' ? 'text-emerald-600 stroke-[2.5]' : 'stroke-2'}`} />
+          <span className="text-[10px] tracking-tight">Biro Agen</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            window.location.hash = '#travel-map';
+            setCurrentView('map');
+            setSelectedPackage(null);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className={`flex flex-col items-center justify-center gap-0.5 py-1 px-2 rounded-lg transition-colors cursor-pointer ${
+            currentView === 'map'
+              ? 'text-emerald-700 font-bold'
+              : 'text-slate-500 hover:text-slate-800'
+          }`}
+        >
+          <MapPin className={`w-5 h-5 ${currentView === 'map' ? 'text-emerald-600 stroke-[2.5]' : 'stroke-2'}`} />
+          <span className="text-[10px] tracking-tight">Lokasi</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            setCurrentView('passport');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className={`flex flex-col items-center justify-center gap-0.5 py-1 px-2 rounded-lg transition-colors cursor-pointer ${
+            currentView === 'passport' || currentView === 'admin'
+              ? 'text-emerald-700 font-bold'
+              : 'text-slate-500 hover:text-slate-800'
+          }`}
+        >
+          <User className={`w-5 h-5 ${currentView === 'passport' || currentView === 'admin' ? 'text-emerald-600 stroke-[2.5]' : 'stroke-2'}`} />
+          <span className="text-[10px] tracking-tight">Akun</span>
+        </button>
+      </nav>
     </div>
   );
 }

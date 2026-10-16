@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { MOCK_BIRO_PASSPORTS, MOCK_DEPARTURES } from '@/data/mock-travel-data';
+import { MOCK_BIRO_PASSPORTS } from '@/data/mock-travel-data';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -7,7 +7,7 @@ export async function GET(request: Request) {
   const departureDate = searchParams.get('date') || '2026-10-15';
   const format = searchParams.get('format');
 
-  let passengers = MOCK_BIRO_PASSPORTS.filter((p) => {
+  const passengers = MOCK_BIRO_PASSPORTS.filter((p) => {
     if (departureDate && p.departureDate !== departureDate) return false;
     return true;
   });

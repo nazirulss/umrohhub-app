@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { MarketplaceFilterState, SortOption } from '@/types/marketplace';
 import { X, Check } from 'lucide-react';
 
@@ -20,10 +20,15 @@ export function FilterModal({
   onReset,
 }: FilterModalProps) {
   const [localFilters, setLocalFilters] = useState<MarketplaceFilterState>(filters);
+  const [prevFilters, setPrevFilters] = useState<MarketplaceFilterState>(filters);
+  const [prevIsOpen, setPrevIsOpen] = useState<boolean>(isOpen);
 
-  useEffect(() => {
+  // Sync state saat modal dibuka atau filters dari parent berubah
+  if (filters !== prevFilters || isOpen !== prevIsOpen) {
+    setPrevFilters(filters);
+    setPrevIsOpen(isOpen);
     setLocalFilters(filters);
-  }, [filters, isOpen]);
+  }
 
   if (!isOpen) return null;
 

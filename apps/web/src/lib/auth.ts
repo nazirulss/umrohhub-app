@@ -2,9 +2,20 @@ import { SignJWT, jwtVerify } from 'jose';
 import bcrypt from 'bcryptjs';
 import { AuthUser, UserRole } from '@/types/auth';
 
-const JWT_SECRET = new TextEncoder().encode(
-  process.env.AUTH_SECRET || 'umrohhub-enterprise-jwt-secret-key-32chars-min'
-);
+function getJwtSecret(): Uint8Array {
+  const secret = process.env.AUTH_SECRET;
+  if (!secret) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error(
+        'FATAL SECURITY CONFIGURATION: Environment variable AUTH_SECRET wajib didefinisikan saat NODE_ENV=production!'
+      );
+    }
+    return new TextEncoder().encode('umrohhub-enterprise-jwt-secret-key-32chars-min');
+  }
+  return new TextEncoder().encode(secret);
+}
+
+const JWT_SECRET = getJwtSecret();
 
 export const AUTH_COOKIE_NAME = 'umrohhub_session';
 
@@ -56,9 +67,11 @@ export async function hashPassword(password: string): Promise<string> {
  * Compare plain text password dengan hashed password
  */
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
-  // Demo shortcut jika format password demo sederhana
-  if (password === 'jamaah123' || password === 'biro123' || password === 'admin123') {
-    return true;
+  // Demo shortcut jika format password demo sederhana (HANYA di Non-Production)
+  if (process.env.NODE_ENV !== 'production') {
+    if (password === 'jamaah123' || password === 'biro123' || password === 'admin123') {
+      return true;
+    }
   }
   try {
     return await bcrypt.compare(password, hash);
