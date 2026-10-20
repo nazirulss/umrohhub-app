@@ -27,6 +27,9 @@ import {
   Clock,
   Heart,
   Share2,
+  ArrowRight,
+  UserCheck,
+  Lock,
 } from 'lucide-react';
 
 interface AccountPageViewProps {
@@ -64,7 +67,7 @@ export function AccountPageView({
     setTimeout(() => setToastMessage(null), 3500);
   };
 
-  // Kalkulasi ringkasan progres paspor jamaah
+  // Kalkulasi ringkasan progres paspor jamaah (hanya saat login)
   const totalPax = bookingInfo?.totalPax || 3;
   const docsList = Object.values(documents);
   const verifiedCount = docsList.filter((d) => d.status === 'TERVERIFIKASI').length;
@@ -81,6 +84,287 @@ export function AccountPageView({
         .toUpperCase()
     : 'JM';
 
+  // =========================================================================
+  // KONDISI 1: TAMPILAN SEBELUM LOGIN (GUEST STATE)
+  // Menghilangkan duplikasi tombol Masuk/Daftar & tidak menampilkan data booking palsu
+  // =========================================================================
+  if (!user) {
+    return (
+      <div className="max-w-2xl mx-auto px-3 sm:px-4 py-4 space-y-4 pb-20">
+        {/* Toast Notification Alert */}
+        {toastMessage && (
+          <div className="fixed top-18 left-1/2 -translate-x-1/2 z-50 bg-slate-900/90 text-white text-xs px-4 py-2.5 rounded-full shadow-lg backdrop-blur-md flex items-center gap-2 animate-in fade-in slide-in-from-top-2">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span>{toastMessage}</span>
+          </div>
+        )}
+
+        {/* 1. HERO CARD MASUK / DAFTAR AKUN */}
+        <div className="bg-gradient-to-br from-emerald-800 via-emerald-700 to-teal-800 rounded-3xl p-5 sm:p-6 text-white shadow-md relative overflow-hidden">
+          <div className="absolute -right-6 -bottom-6 w-36 h-36 bg-white/5 rounded-full blur-xl pointer-events-none" />
+          <div className="relative z-10 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-2xl shadow-inner">
+                🕋
+              </div>
+              <div>
+                <span className="text-[10px] font-bold tracking-widest uppercase text-emerald-200">
+                  Portal Resmi Jamaah &amp; Mitra
+                </span>
+                <h1 className="text-lg sm:text-xl font-black text-white leading-tight">
+                  Masuk ke Akun UmrohHub
+                </h1>
+              </div>
+            </div>
+
+            <p className="text-xs sm:text-[13px] text-emerald-100/90 leading-relaxed">
+              Pantau validasi dokumen paspor, kepastian jadwal penerbangan, dan proteksi transaksi
+              melalui <strong>Rekening Escrow Amanah Kemenag RI</strong>.
+            </p>
+
+            {/* Tombol Masuk & Daftar Utama */}
+            <div className="grid grid-cols-2 gap-2.5 pt-1">
+              <button
+                type="button"
+                onClick={() => openAuthModal('CUSTOMER')}
+                className="py-2.5 px-4 rounded-xl bg-white hover:bg-emerald-50 text-emerald-800 text-xs font-black shadow-sm transition-all cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                <span>Masuk Akun</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => openAuthModal('CUSTOMER')}
+                className="py-2.5 px-4 rounded-xl bg-emerald-900/60 hover:bg-emerald-900/80 text-white border border-white/30 text-xs font-bold transition-all cursor-pointer flex items-center justify-center"
+              >
+                Daftar Baru
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* 2. UJI COBA DEMO CEPAT (1-KLIK) */}
+        <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-4 space-y-2.5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-amber-500" />
+              <h2 className="text-xs font-bold text-slate-900">Uji Coba Demo Akun (1-Klik)</h2>
+            </div>
+            <span className="text-[10px] text-slate-500">Pilih peran untuk review fitur</span>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                quickLogin('CUSTOMER');
+                showToast('Berhasil masuk sebagai Jamaah Demo');
+              }}
+              className="py-2 px-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold transition-colors cursor-pointer flex flex-col items-center gap-1"
+            >
+              <span className="text-base">👤</span>
+              <span>Jamaah</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                quickLogin('TRAVEL');
+                showToast('Berhasil masuk sebagai Pengelola Biro PPIU');
+              }}
+              className="py-2 px-2 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 text-xs font-bold transition-colors cursor-pointer flex flex-col items-center gap-1"
+            >
+              <span className="text-base">🏢</span>
+              <span>Biro PPIU</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                quickLogin('SUPER_ADMIN');
+                showToast('Berhasil masuk sebagai Super Admin Platform');
+              }}
+              className="py-2 px-2 rounded-xl bg-purple-50 hover:bg-purple-100 text-purple-800 border border-purple-200 text-xs font-bold transition-colors cursor-pointer flex flex-col items-center gap-1"
+            >
+              <span className="text-base">🛡️</span>
+              <span>Auditor Admin</span>
+            </button>
+          </div>
+        </div>
+
+        {/* 3. KEUNTUNGAN MEMILIKI AKUN UMROHHUB */}
+        <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-4 sm:p-5 space-y-3">
+          <h2 className="text-xs sm:text-sm font-bold text-slate-900 flex items-center gap-1.5">
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <span>Keuntungan Memiliki Akun Jamaah Terverifikasi</span>
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm flex-shrink-0">
+                🛡️
+              </div>
+              <div>
+                <strong className="text-slate-900 block font-bold mb-0.5">
+                  Rekening Escrow Amanah
+                </strong>
+                <p className="text-slate-500 text-[11px] leading-relaxed">
+                  Dana pembayaran Anda diamankan di perbankan syariah hingga jamaah dipastikan
+                  berangkat.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center text-sm flex-shrink-0">
+                📑
+              </div>
+              <div>
+                <strong className="text-slate-900 block font-bold mb-0.5">
+                  Validasi Paspor Mandiri
+                </strong>
+                <p className="text-slate-500 text-[11px] leading-relaxed">
+                  Sistem otomatis mengecek masa berlaku paspor (aturan min. 7 bulan) &amp;
+                  kelengkapan manifes.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center text-sm flex-shrink-0">
+                🎟️
+              </div>
+              <div>
+                <strong className="text-slate-900 block font-bold mb-0.5">
+                  Voucher Berkah &amp; Cashback
+                </strong>
+                <p className="text-slate-500 text-[11px] leading-relaxed">
+                  Akses langsung ke kupon diskon musim 1448H dan cashback pendaftaran keluarga.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center text-sm flex-shrink-0">
+                🎁
+              </div>
+              <div>
+                <strong className="text-slate-900 block font-bold mb-0.5">
+                  Peluang Syiar Afiliasi
+                </strong>
+                <p className="text-slate-500 text-[11px] leading-relaxed">
+                  Bagikan informasi paket umroh resmi dan dapatkan komisi syiar berkah hingga Rp 1,5
+                  Jt/jamaah.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 4. LAYANAN PUBLIK & EKSPLORASI (TANPA PERLU LOGIN) */}
+        <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-4 sm:p-5 space-y-3">
+          <h2 className="text-xs sm:text-sm font-bold text-slate-900">
+            Layanan Terbuka &amp; Informasi Publik
+          </h2>
+
+          <div className="grid grid-cols-4 gap-2 text-center">
+            <button
+              type="button"
+              onClick={() => {
+                window.location.hash = '#travels';
+                onNavigateView('biro');
+              }}
+              className="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer group"
+            >
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-xl group-hover:scale-105 transition-transform">
+                🕌
+              </div>
+              <span className="text-[10px] sm:text-[11px] font-semibold text-slate-700 leading-tight">
+                Biro PPIU
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                window.location.hash = '#travel-map';
+                onNavigateView('map');
+              }}
+              className="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer group"
+            >
+              <div className="w-10 h-10 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center text-xl group-hover:scale-105 transition-transform">
+                🗺️
+              </div>
+              <span className="text-[10px] sm:text-[11px] font-semibold text-slate-700 leading-tight">
+                Peta Lokasi
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                window.location.hash = '#schedule';
+                onNavigateView('schedule');
+              }}
+              className="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer group"
+            >
+              <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-xl group-hover:scale-105 transition-transform">
+                🗓️
+              </div>
+              <span className="text-[10px] sm:text-[11px] font-semibold text-slate-700 leading-tight">
+                Jadwal Terbang
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() =>
+                showToast('Layanan CS Siaga UmrohHub: WhatsApp +62 812-9900-8800')
+              }
+              className="flex flex-col items-center gap-1.5 p-2 rounded-xl hover:bg-slate-50 transition-colors cursor-pointer group"
+            >
+              <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-700 flex items-center justify-center text-xl group-hover:scale-105 transition-transform">
+                💬
+              </div>
+              <span className="text-[10px] sm:text-[11px] font-semibold text-slate-700 leading-tight">
+                Pusat Bantuan
+              </span>
+            </button>
+          </div>
+        </div>
+
+        {/* 5. REKOMENDASI PAKET UMROH PILIHAN */}
+        <div className="space-y-3 pt-2">
+          <div className="flex items-center justify-between px-1">
+            <h2 className="text-xs sm:text-sm font-bold text-slate-900">
+              Jelajahi Paket Umroh Unggulan 1448H
+            </h2>
+            <button
+              type="button"
+              onClick={() => {
+                window.location.hash = '#marketplace';
+                onNavigateView('marketplace');
+              }}
+              className="text-xs font-bold text-emerald-700 hover:text-emerald-800 cursor-pointer"
+            >
+              Lihat Semua &rsaquo;
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            {recommendations.slice(0, 4).map((pkg) => (
+              <PackageCard key={pkg.id} pkg={pkg} onSelect={onSelectPackage} />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // =========================================================================
+  // KONDISI 2: TAMPILAN SESUDAH LOGIN (AUTHENTICATED USER DASHBOARD)
+  // Menampilkan profil lengkap, saldo, progres dokumen paspor, dan transaksi
+  // =========================================================================
   return (
     <div className="max-w-2xl mx-auto px-3 sm:px-4 py-4 space-y-4 pb-20">
       {/* Toast Notification Alert */}
@@ -91,91 +375,51 @@ export function AccountPageView({
         </div>
       )}
 
-      {/* =========================================================================
-          1. HEADER PROFIL TOKOPEDIA STYLE
-         ========================================================================= */}
+      {/* 1. HEADER PROFIL PENGGUNA TERVERIFIKASI */}
       <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-4 sm:p-5">
-        {user ? (
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3.5 min-w-0">
-              <div className="relative">
-                <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center font-black text-xl shadow-sm flex-shrink-0">
-                  {initials}
-                </div>
-                <div className="absolute -bottom-1 -right-1 bg-emerald-600 text-white p-1 rounded-full border-2 border-white shadow-xs">
-                  <CheckCircle2 className="w-3 h-3" />
-                </div>
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3.5 min-w-0">
+            <div className="relative">
+              <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center font-black text-xl shadow-sm flex-shrink-0">
+                {initials}
               </div>
-
-              <div className="min-w-0">
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  <h1 className="text-base sm:text-lg font-black text-slate-900 truncate">
-                    {user.name}
-                  </h1>
-                </div>
-                <p className="text-xs text-slate-500 font-mono truncate">{user.email}</p>
-                <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
-                    ⭐ Member Jamaah 1448H
-                  </span>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-                    <ShieldCheck className="w-3 h-3" />
-                    Terverifikasi Kemenag
-                  </span>
-                </div>
+              <div className="absolute -bottom-1 -right-1 bg-emerald-600 text-white p-1 rounded-full border-2 border-white shadow-xs">
+                <CheckCircle2 className="w-3 h-3" />
               </div>
             </div>
 
-            {/* Tombol Bantuan / Hubungi CS */}
-            <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
-              <button
-                type="button"
-                onClick={() =>
-                  showToast('CS Siaga 24/7 UmrohHub: WhatsApp Resmi +62 812-9900-8800')
-                }
-                className="w-9 h-9 rounded-full bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-colors cursor-pointer"
-                title="Pusat Bantuan & WhatsApp CS"
-              >
-                <HelpCircle className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center font-bold text-lg">
-                <User className="w-6 h-6" />
-              </div>
-              <div>
-                <h2 className="text-sm font-bold text-slate-900">Masuk ke Akun UmrohHub</h2>
-                <p className="text-xs text-slate-500">
-                  Akses riwayat pemesanan, dokumen paspor, dan voucher berkah.
-                </p>
+            <div className="min-w-0">
+              <h1 className="text-base sm:text-lg font-black text-slate-900 truncate">
+                {user.name}
+              </h1>
+              <p className="text-xs text-slate-500 font-mono truncate">{user.email}</p>
+              <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
+                  ⭐ Member Jamaah 1448H
+                </span>
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  <ShieldCheck className="w-3 h-3" />
+                  Terverifikasi Kemenag
+                </span>
               </div>
             </div>
-            <div className="flex items-center gap-2 flex-shrink-0">
-              <button
-                type="button"
-                onClick={() => openAuthModal('CUSTOMER')}
-                className="px-3.5 py-1.5 rounded-xl border border-emerald-600 text-emerald-700 hover:bg-emerald-50 text-xs font-bold transition-colors cursor-pointer"
-              >
-                Masuk
-              </button>
-              <button
-                type="button"
-                onClick={() => openAuthModal('CUSTOMER')}
-                className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-xs transition-colors cursor-pointer"
-              >
-                Daftar
-              </button>
-            </div>
           </div>
-        )}
+
+          {/* Tombol Bantuan CS */}
+          <button
+            type="button"
+            onClick={() =>
+              showToast('CS Siaga 24/7 UmrohHub: WhatsApp Resmi +62 812-9900-8800')
+            }
+            className="w-9 h-9 rounded-full bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-colors cursor-pointer flex-shrink-0"
+            title="Pusat Bantuan & WhatsApp CS"
+          >
+            <HelpCircle className="w-5 h-5" />
+          </button>
+        </div>
       </div>
 
-      {/* =========================================================================
-          2. KARTU SALDO & PRIVILEGE MEMBER (2-COLUMN TOKOPEDIA STYLE)
-         ========================================================================= */}
+      {/* 2. KARTU SALDO & PRIVILEGE MEMBER (2-COLUMN TOKOPEDIA STYLE) */}
       <div className="grid grid-cols-2 gap-2.5">
         <div
           onClick={() =>
@@ -221,9 +465,7 @@ export function AccountPageView({
         </div>
       </div>
 
-      {/* =========================================================================
-          3. QUICK BENEFIT STRIP (PITA 4 MANFAAT TOKOPEDIA STYLE)
-         ========================================================================= */}
+      {/* 3. QUICK BENEFIT STRIP (PITA 4 MANFAAT) */}
       <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-3 flex items-center justify-around divide-x divide-slate-100">
         <button
           type="button"
@@ -272,9 +514,7 @@ export function AccountPageView({
         </button>
       </div>
 
-      {/* =========================================================================
-          4. PROMO ALERT STRIP (DISMISSIBLE)
-         ========================================================================= */}
+      {/* 4. PROMO ALERT STRIP (DISMISSIBLE) */}
       {showPromoAlert && (
         <div className="bg-amber-50/90 border border-amber-200/90 rounded-xl px-3.5 py-2.5 flex items-center justify-between gap-3 text-xs text-amber-900">
           <div className="flex items-center gap-2">
@@ -308,9 +548,7 @@ export function AccountPageView({
         </div>
       )}
 
-      {/* =========================================================================
-          5. WIDGET DOKUMEN PASPOR & MANIFES (KONEKSI UTAMA KE VIEW PASSPORT)
-         ========================================================================= */}
+      {/* 5. WIDGET DOKUMEN PASPOR & MANIFES (KHUSUS PENGGUNA TERDAFTAR) */}
       <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-4 sm:p-5 space-y-3.5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -387,9 +625,7 @@ export function AccountPageView({
         </button>
       </div>
 
-      {/* =========================================================================
-          6. PIPELINE STATUS TRANSAKSI (5 TAHAP TOKOPEDIA STYLE)
-         ========================================================================= */}
+      {/* 6. PIPELINE STATUS TRANSAKSI (5 TAHAP TOKOPEDIA STYLE) */}
       <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-4 sm:p-5 space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-sm font-bold text-slate-900">Transaksi Saya</h2>
@@ -478,9 +714,7 @@ export function AccountPageView({
         </div>
       </div>
 
-      {/* =========================================================================
-          7. MENU LAYANAN LAINNYA (SHORTCUT PORTAL & FITUR)
-         ========================================================================= */}
+      {/* 7. MENU LAYANAN EKOSISTEM */}
       <div className="bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-4 sm:p-5 space-y-3">
         <h2 className="text-sm font-bold text-slate-900">Menu &amp; Layanan Ekosistem</h2>
 
@@ -551,9 +785,7 @@ export function AccountPageView({
         </div>
       </div>
 
-      {/* =========================================================================
-          8. SIMULASI ROLE SWITCHER (INTERAKTIF DEMO)
-         ========================================================================= */}
+      {/* 8. SIMULASI ROLE SWITCHER (INTERAKTIF DEMO) */}
       <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-2.5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -621,9 +853,7 @@ export function AccountPageView({
         </div>
       </div>
 
-      {/* =========================================================================
-          9. REKOMENDASI PAKET TOKOPEDIA STYLE ("Mungkin kamu suka ini")
-         ========================================================================= */}
+      {/* 9. REKOMENDASI PAKET TOKOPEDIA STYLE ("Mungkin kamu suka ini") */}
       <div className="space-y-3 pt-2">
         <div className="flex items-center justify-between px-1">
           <h2 className="text-sm font-bold text-slate-900">Mungkin kamu suka ini</h2>
@@ -641,35 +871,27 @@ export function AccountPageView({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
           {recommendations.slice(0, 4).map((pkg) => (
-            <PackageCard
-              key={pkg.id}
-              pkg={pkg}
-              onSelect={onSelectPackage}
-            />
+            <PackageCard key={pkg.id} pkg={pkg} onSelect={onSelectPackage} />
           ))}
         </div>
       </div>
 
-      {/* =========================================================================
-          10. LOGOUT BUTTON (IF LOGGED IN)
-         ========================================================================= */}
-      {user && (
-        <div className="pt-3">
-          <button
-            type="button"
-            onClick={async () => {
-              if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
-                await logout();
-                showToast('Anda telah berhasil keluar.');
-              }
-            }}
-            className="w-full py-2.5 rounded-xl border border-rose-200 bg-rose-50/50 hover:bg-rose-100/60 text-rose-700 text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer"
-          >
-            <LogOut className="w-4 h-4" />
-            <span>Keluar dari Akun</span>
-          </button>
-        </div>
-      )}
+      {/* 10. TOMBOL KELUAR AKUN */}
+      <div className="pt-3">
+        <button
+          type="button"
+          onClick={async () => {
+            if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+              await logout();
+              showToast('Anda telah berhasil keluar.');
+            }
+          }}
+          className="w-full py-2.5 rounded-xl border border-rose-200 bg-rose-50/50 hover:bg-rose-100/60 text-rose-700 text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer"
+        >
+          <LogOut className="w-4 h-4" />
+          <span>Keluar dari Akun</span>
+        </button>
+      </div>
     </div>
   );
 }

@@ -424,7 +424,10 @@ function UmrohHubEnterpriseAppContent() {
           </div>
 
           {/* User Profile & Auth Trigger */}
-          <UserProfileMenu onNavigatePortal={(view) => setCurrentView(view)} />
+          <UserProfileMenu
+            onNavigatePortal={(view) => setCurrentView(view)}
+            hideAuthButtonsOnMobile={currentView === 'account'}
+          />
         </div>
       </header>
 

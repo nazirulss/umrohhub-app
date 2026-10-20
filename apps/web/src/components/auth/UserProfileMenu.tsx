@@ -15,9 +15,10 @@ import {
 
 interface UserProfileMenuProps {
   onNavigatePortal?: (view: 'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'account') => void;
+  hideAuthButtonsOnMobile?: boolean;
 }
 
-export function UserProfileMenu({ onNavigatePortal }: UserProfileMenuProps) {
+export function UserProfileMenu({ onNavigatePortal, hideAuthButtonsOnMobile }: UserProfileMenuProps) {
   const { user, logout, openAuthModal, quickLogin } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -35,7 +36,7 @@ export function UserProfileMenu({ onNavigatePortal }: UserProfileMenuProps) {
 
   if (!user) {
     return (
-      <div className="flex items-center gap-2">
+      <div className={`items-center gap-2 ${hideAuthButtonsOnMobile ? 'hidden sm:flex' : 'flex'}`}>
         <button
           type="button"
           onClick={() => openAuthModal('CUSTOMER')}
