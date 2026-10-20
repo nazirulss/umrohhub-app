@@ -20,6 +20,7 @@ import { AuthProvider, useAuth } from '@/context/AuthContext';
 import { AuthModal } from '@/components/auth/AuthModal';
 import { UserProfileMenu } from '@/components/auth/UserProfileMenu';
 import { AdminSupervisionView } from '@/components/admin/AdminSupervisionView';
+import { AccountPageView } from '@/components/account/AccountPageView';
 import {
   ShieldCheck,
   Plane,
@@ -42,11 +43,11 @@ import {
 
 function UmrohHubEnterpriseAppContent() {
   const { user, quickLogin } = useAuth();
-  // Navigation State: 'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'schedule' | 'travel-dashboard' | 'map'
-  const [currentView, setCurrentView] = useState<'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'schedule' | 'travel-dashboard' | 'map'>('marketplace');
+  // Navigation State: 'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'schedule' | 'travel-dashboard' | 'map' | 'account'
+  const [currentView, setCurrentView] = useState<'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'schedule' | 'travel-dashboard' | 'map' | 'account'>('marketplace');
   const [selectedPackage, setSelectedPackage] = useState<PackageItem | null>(null);
 
-  // Hash Routing ala Umrohpedia (#travels, #schedule, #travel-map, #marketplace, dll.)
+  // Hash Routing ala Umrohpedia (#travels, #schedule, #travel-map, #marketplace, #account, dll.)
   useEffect(() => {
     const handleHash = () => {
       const h = window.location.hash.toLowerCase();
@@ -61,6 +62,9 @@ function UmrohHubEnterpriseAppContent() {
         setSelectedPackage(null);
       } else if (h === '#passport' || h === '#paspor') {
         setCurrentView('passport');
+      } else if (h === '#account' || h === '#akun') {
+        setCurrentView('account');
+        setSelectedPackage(null);
       } else if (h === '#admin') {
         setCurrentView('admin');
       } else if (h === '#travel-dashboard') {
@@ -978,6 +982,30 @@ function UmrohHubEnterpriseAppContent() {
             <AdminSupervisionView />
           </div>
         )}
+
+        {/* =========================================================================
+            VIEW 6: TOKOPEDIA-STYLE ACCOUNT DASHBOARD ("AKUN SAYA")
+           ========================================================================= */}
+        {currentView === 'account' && (
+          <AccountPageView
+            onNavigateView={(v) => {
+              setCurrentView(v);
+              if (v === 'marketplace') window.location.hash = '#marketplace';
+              else if (v === 'passport') window.location.hash = '#passport';
+              else if (v === 'biro') window.location.hash = '#travels';
+              else if (v === 'map') window.location.hash = '#travel-map';
+              else if (v === 'schedule') window.location.hash = '#schedule';
+              else if (v === 'travel-dashboard') window.location.hash = '#travel-dashboard';
+              else if (v === 'admin') window.location.hash = '#admin';
+              else if (v === 'account') window.location.hash = '#account';
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onSelectPackage={handleSelectPackage}
+            recommendations={MOCK_PACKAGES}
+            bookingInfo={bookingInfo}
+            documents={documents}
+          />
+        )}
       </main>
 
       {/* Faceted Filter Modal */}
@@ -1082,16 +1110,18 @@ function UmrohHubEnterpriseAppContent() {
         <button
           type="button"
           onClick={() => {
-            setCurrentView('passport');
+            window.location.hash = '#account';
+            setCurrentView('account');
+            setSelectedPackage(null);
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           className={`flex flex-col items-center justify-center gap-0.5 py-1 px-2 rounded-lg transition-colors cursor-pointer ${
-            currentView === 'passport' || currentView === 'admin'
+            currentView === 'account'
               ? 'text-emerald-700 font-bold'
               : 'text-slate-500 hover:text-slate-800'
           }`}
         >
-          <User className={`w-5 h-5 ${currentView === 'passport' || currentView === 'admin' ? 'text-emerald-600 stroke-[2.5]' : 'stroke-2'}`} />
+          <User className={`w-5 h-5 ${currentView === 'account' ? 'text-emerald-600 stroke-[2.5]' : 'stroke-2'}`} />
           <span className="text-[10px] tracking-tight">Akun</span>
         </button>
       </nav>

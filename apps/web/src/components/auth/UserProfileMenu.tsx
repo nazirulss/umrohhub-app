@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 
 interface UserProfileMenuProps {
-  onNavigatePortal?: (view: 'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin') => void;
+  onNavigatePortal?: (view: 'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'account') => void;
 }
 
 export function UserProfileMenu({ onNavigatePortal }: UserProfileMenuProps) {
@@ -134,6 +134,18 @@ export function UserProfileMenu({ onNavigatePortal }: UserProfileMenuProps) {
 
           {/* Portal Navigation Shortcuts */}
           <div className="space-y-1 mb-2 pb-2 border-b border-slate-100 text-xs">
+            <button
+              type="button"
+              onClick={() => {
+                setIsOpen(false);
+                onNavigatePortal?.('account');
+              }}
+              className="w-full text-left px-3 py-1.5 rounded-lg hover:bg-slate-50 font-semibold text-emerald-800 cursor-pointer flex items-center justify-between"
+            >
+              <span>👤 Halaman Akun Saya</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold">Baru</span>
+            </button>
+
             <button
               type="button"
               onClick={() => {
