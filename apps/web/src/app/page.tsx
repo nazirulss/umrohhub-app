@@ -297,7 +297,7 @@ function UmrohHubEnterpriseAppContent() {
   return (
     <div className="min-h-screen bg-[#F7F8FA] text-[#212121] pb-16">
       {/* Top Navbar Tokopedia-Inspired */}
-      <header className="sticky top-0 z-30 bg-white border-b border-slate-200 shadow-2xs">
+      <header className={`sticky top-0 z-30 bg-white border-b border-slate-200 shadow-2xs ${currentView === 'account' ? 'hidden sm:block' : ''}`}>
         <div className="max-w-6xl mx-auto px-2.5 sm:px-4 h-10 sm:h-16 flex items-center justify-between gap-2.5 sm:gap-4">
           <div
             className="flex items-center gap-2 sm:gap-3 cursor-pointer"
@@ -432,7 +432,7 @@ function UmrohHubEnterpriseAppContent() {
       </header>
 
       {/* Main App Body */}
-      <main className="max-w-6xl mx-auto px-3 sm:px-4 pt-2 sm:pt-6 pb-20 sm:pb-8">
+      <main className={`max-w-6xl mx-auto ${currentView === 'account' ? 'px-0 sm:px-4 pt-0 sm:pt-6' : 'px-3 sm:px-4 pt-2 sm:pt-6'} pb-20 sm:pb-8`}>
         {/* =========================================================================
             VIEW 1: MARKETPLACE CATALOG (TOKOPEDIA-INSPIRED)
            ========================================================================= */}
@@ -1120,11 +1120,11 @@ function UmrohHubEnterpriseAppContent() {
           }}
           className={`flex flex-col items-center justify-center gap-0.5 py-1 px-2 rounded-lg transition-colors cursor-pointer ${
             currentView === 'account'
-              ? 'text-emerald-700 font-bold'
+              ? 'text-[#03AC0E] font-bold'
               : 'text-slate-500 hover:text-slate-800'
           }`}
         >
-          <User className={`w-5 h-5 ${currentView === 'account' ? 'text-emerald-600 stroke-[2.5]' : 'stroke-2'}`} />
+          <User className={`w-5 h-5 ${currentView === 'account' ? 'text-[#03AC0E] stroke-[2.5]' : 'stroke-2'}`} />
           <span className="text-[10px] tracking-tight">Akun</span>
         </button>
       </nav>
