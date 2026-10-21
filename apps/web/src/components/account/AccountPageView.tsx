@@ -6,8 +6,6 @@ import { useAuth } from '@/context/AuthContext';
 import { PackageItem } from '@/types/marketplace';
 import { BookingPaxInfo, PassportDocument } from '@/types/document';
 import { ManasikDoaModal } from './ManasikDoaModal';
-import { RegisterBiroModal } from './RegisterBiroModal';
-import { MitraSyiarModal } from './MitraSyiarModal';
 import {
   ChevronRight,
   LogOut,
@@ -35,6 +33,8 @@ interface AccountPageViewProps {
       | 'account'
       | 'escrow'
       | 'orders'
+      | 'register-biro'
+      | 'mitra-syiar'
   ) => void;
   onSelectPackage: (pkg: PackageItem) => void;
   recommendations: PackageItem[];
@@ -53,8 +53,6 @@ export function AccountPageView({
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isManasikModalOpen, setIsManasikModalOpen] = useState(false);
   const [isEmergencyModalOpen, setIsEmergencyModalOpen] = useState(false);
-  const [isRegisterBiroOpen, setIsRegisterBiroOpen] = useState(false);
-  const [isMitraSyiarOpen, setIsMitraSyiarOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const showToast = (msg: string) => {
@@ -305,7 +303,10 @@ export function AccountPageView({
           {/* Item 3: Komisi Syiar */}
           <button
             type="button"
-            onClick={() => setIsMitraSyiarOpen(true)}
+            onClick={() => {
+              window.location.hash = '#mitra-syiar';
+              onNavigateView('mitra-syiar');
+            }}
             className="flex-1 flex flex-col items-center text-center cursor-pointer group"
           >
             <div className="text-[#F59E0B] mb-0.5">
@@ -601,7 +602,8 @@ export function AccountPageView({
                 window.location.hash = '#travel-dashboard';
                 onNavigateView('travel-dashboard');
               } else {
-                setIsRegisterBiroOpen(true);
+                window.location.hash = '#register-biro';
+                onNavigateView('register-biro');
               }
             }}
             className="flex flex-col items-center gap-1.5 cursor-pointer group"
@@ -620,7 +622,10 @@ export function AccountPageView({
           {/* 2. Mitra Syiar */}
           <button
             type="button"
-            onClick={() => setIsMitraSyiarOpen(true)}
+            onClick={() => {
+              window.location.hash = '#mitra-syiar';
+              onNavigateView('mitra-syiar');
+            }}
             className="flex flex-col items-center gap-1.5 cursor-pointer group"
           >
             <div className="w-7 h-7 flex items-center justify-center text-[#212121]">
@@ -929,26 +934,6 @@ export function AccountPageView({
           </div>
         </div>
       )}
-
-      {/* Modal Pendaftaran Biro PPIU Baru */}
-      <RegisterBiroModal
-        isOpen={isRegisterBiroOpen}
-        onClose={() => setIsRegisterBiroOpen(false)}
-        onSuccessRegistered={(data) => {
-          showToast(`Alhamdulillah! ${data.brandName} berhasil terdaftar. Membuka Dashboard Biro...`);
-          setTimeout(() => {
-            window.location.hash = '#travel-dashboard';
-            onNavigateView('travel-dashboard');
-          }, 800);
-        }}
-      />
-
-      {/* Modal Kemitraan Afiliasi Syiar */}
-      <MitraSyiarModal
-        isOpen={isMitraSyiarOpen}
-        onClose={() => setIsMitraSyiarOpen(false)}
-        initialRegistered={true}
-      />
     </div>
   );
 }
