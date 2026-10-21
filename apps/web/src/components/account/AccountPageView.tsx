@@ -6,6 +6,8 @@ import { useAuth } from '@/context/AuthContext';
 import { PackageItem } from '@/types/marketplace';
 import { BookingPaxInfo, PassportDocument } from '@/types/document';
 import { ManasikDoaModal } from './ManasikDoaModal';
+import { RegisterBiroModal } from './RegisterBiroModal';
+import { MitraSyiarModal } from './MitraSyiarModal';
 import {
   ChevronRight,
   LogOut,
@@ -51,6 +53,8 @@ export function AccountPageView({
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isManasikModalOpen, setIsManasikModalOpen] = useState(false);
   const [isEmergencyModalOpen, setIsEmergencyModalOpen] = useState(false);
+  const [isRegisterBiroOpen, setIsRegisterBiroOpen] = useState(false);
+  const [isMitraSyiarOpen, setIsMitraSyiarOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const showToast = (msg: string) => {
@@ -301,9 +305,7 @@ export function AccountPageView({
           {/* Item 3: Komisi Syiar */}
           <button
             type="button"
-            onClick={() =>
-              showToast('Komisi Syiar: Rp 9.000.000 dari pendaftaran jamaah referensi Anda')
-            }
+            onClick={() => setIsMitraSyiarOpen(true)}
             className="flex-1 flex flex-col items-center text-center cursor-pointer group"
           >
             <div className="text-[#F59E0B] mb-0.5">
@@ -595,8 +597,12 @@ export function AccountPageView({
           <button
             type="button"
             onClick={() => {
-              window.location.hash = '#travel-dashboard';
-              onNavigateView('travel-dashboard');
+              if (user?.role === 'TRAVEL') {
+                window.location.hash = '#travel-dashboard';
+                onNavigateView('travel-dashboard');
+              } else {
+                setIsRegisterBiroOpen(true);
+              }
             }}
             className="flex flex-col items-center gap-1.5 cursor-pointer group"
           >
@@ -614,9 +620,7 @@ export function AccountPageView({
           {/* 2. Mitra Syiar */}
           <button
             type="button"
-            onClick={() =>
-              showToast('Program Mitra Syiar: Dapatkan komisi berkah hingga Rp 1,5 Jt / jamaah!')
-            }
+            onClick={() => setIsMitraSyiarOpen(true)}
             className="flex flex-col items-center gap-1.5 cursor-pointer group"
           >
             <div className="w-7 h-7 flex items-center justify-center text-[#212121]">
@@ -925,6 +929,26 @@ export function AccountPageView({
           </div>
         </div>
       )}
+
+      {/* Modal Pendaftaran Biro PPIU Baru */}
+      <RegisterBiroModal
+        isOpen={isRegisterBiroOpen}
+        onClose={() => setIsRegisterBiroOpen(false)}
+        onSuccessRegistered={(data) => {
+          showToast(`Alhamdulillah! ${data.brandName} berhasil terdaftar. Membuka Dashboard Biro...`);
+          setTimeout(() => {
+            window.location.hash = '#travel-dashboard';
+            onNavigateView('travel-dashboard');
+          }, 800);
+        }}
+      />
+
+      {/* Modal Kemitraan Afiliasi Syiar */}
+      <MitraSyiarModal
+        isOpen={isMitraSyiarOpen}
+        onClose={() => setIsMitraSyiarOpen(false)}
+        initialRegistered={true}
+      />
     </div>
   );
 }
