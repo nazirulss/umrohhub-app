@@ -39,6 +39,7 @@ import {
   MapPin,
   User,
   X,
+  ArrowLeft,
 } from 'lucide-react';
 
 function UmrohHubEnterpriseAppContent() {
@@ -597,21 +598,42 @@ function UmrohHubEnterpriseAppContent() {
           <div className="space-y-6">
             {/* Breadcrumb & Title */}
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <div className="flex items-center gap-2 text-xs text-slate-500 mb-1">
-                  <button
-                    type="button"
-                    onClick={() => setCurrentView('marketplace')}
-                    className="hover:underline hover:text-emerald-700 cursor-pointer"
-                  >
-                    Katalog Paket
-                  </button>
-                  <ChevronRight className="w-3 h-3" />
-                  <span className="font-semibold text-emerald-700">Dokumen Paspor & Manifes</span>
+              <div className="flex items-start gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (window.history.length > 1) {
+                      window.history.back();
+                    } else {
+                      window.location.hash = '#account';
+                      setCurrentView('account');
+                    }
+                  }}
+                  className="mt-1 w-9 h-9 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-emerald-500 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer shadow-2xs shrink-0"
+                  title="Kembali ke Akun"
+                  aria-label="Kembali"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                </button>
+                <div>
+                  <div className="flex items-center gap-1.5 text-xs text-slate-500 mb-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        window.location.hash = '#account';
+                        setCurrentView('account');
+                      }}
+                      className="hover:underline hover:text-emerald-700 cursor-pointer font-medium"
+                    >
+                      Akun Saya
+                    </button>
+                    <ChevronRight className="w-3 h-3" />
+                    <span className="font-semibold text-emerald-700">Dokumen Paspor &amp; Manifes</span>
+                  </div>
+                  <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-tight">
+                    Manajemen Paspor &amp; Manifes Penerbangan
+                  </h1>
                 </div>
-                <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                  Manajemen Paspor & Manifes Penerbangan
-                </h1>
               </div>
 
               {/* View Mode Switcher */}
