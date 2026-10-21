@@ -32,6 +32,7 @@ interface AccountPageViewProps {
       | 'map'
       | 'account'
       | 'escrow'
+      | 'orders'
   ) => void;
   onSelectPackage: (pkg: PackageItem) => void;
   recommendations: PackageItem[];
@@ -360,8 +361,8 @@ export function AccountPageView({
       <div className="bg-white rounded-2xl border border-slate-200/80 p-4 shadow-[0_1px_4px_rgba(0,0,0,0.04)] space-y-3.5">
         <div
           onClick={() => {
-            window.location.hash = '#passport';
-            onNavigateView('passport');
+            window.location.hash = '#orders';
+            onNavigateView('orders');
           }}
           className="flex items-center justify-between cursor-pointer group"
         >
@@ -373,7 +374,10 @@ export function AccountPageView({
           {/* 1. Belum Bayar */}
           <button
             type="button"
-            onClick={() => showToast('Tidak ada tagihan pembayaran/DP yang pending.')}
+            onClick={() => {
+              window.location.hash = '#orders?tab=unpaid';
+              onNavigateView('orders');
+            }}
             className="flex flex-col items-center gap-1.5 cursor-pointer group"
           >
             <div className="w-7 h-7 flex items-center justify-center text-[#212121]">
@@ -390,8 +394,8 @@ export function AccountPageView({
           <button
             type="button"
             onClick={() => {
-              window.location.hash = '#passport';
-              onNavigateView('passport');
+              window.location.hash = '#orders?tab=verification';
+              onNavigateView('orders');
             }}
             className="flex flex-col items-center gap-1.5 cursor-pointer group relative"
           >
@@ -412,8 +416,8 @@ export function AccountPageView({
           <button
             type="button"
             onClick={() => {
-              window.location.hash = '#passport';
-              onNavigateView('passport');
+              window.location.hash = '#orders?tab=ready';
+              onNavigateView('orders');
             }}
             className="flex flex-col items-center gap-1.5 cursor-pointer group"
           >
@@ -428,7 +432,10 @@ export function AccountPageView({
           {/* 4. Di Tanah Suci (Ka'bah / Ibadah) */}
           <button
             type="button"
-            onClick={() => showToast('Tracking Agenda Ibadah & Muthawif di Makkah / Madinah')}
+            onClick={() => {
+              window.location.hash = '#orders?tab=active';
+              onNavigateView('orders');
+            }}
             className="flex flex-col items-center gap-1.5 cursor-pointer group"
           >
             <div className="w-7 h-7 flex items-center justify-center text-[#212121]">
@@ -444,7 +451,10 @@ export function AccountPageView({
           {/* 5. Ulasan Biro */}
           <button
             type="button"
-            onClick={() => showToast('Beri ulasan kepuasan hotel, konsumsi, dan bimbingan ibadah')}
+            onClick={() => {
+              window.location.hash = '#orders?tab=completed';
+              onNavigateView('orders');
+            }}
             className="flex flex-col items-center gap-1.5 cursor-pointer group"
           >
             <div className="w-7 h-7 flex items-center justify-center text-[#212121]">

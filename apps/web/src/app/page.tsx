@@ -22,6 +22,7 @@ import { UserProfileMenu } from '@/components/auth/UserProfileMenu';
 import { AdminSupervisionView } from '@/components/admin/AdminSupervisionView';
 import { AccountPageView } from '@/components/account/AccountPageView';
 import { EscrowSavingsDetailView } from '@/components/account/EscrowSavingsDetailView';
+import { TransactionHistoryView } from '@/components/account/TransactionHistoryView';
 import {
   ShieldCheck,
   Plane,
@@ -45,14 +46,17 @@ import {
 
 function UmrohHubEnterpriseAppContent() {
   const { user, quickLogin } = useAuth();
-  // Navigation State: 'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'schedule' | 'travel-dashboard' | 'map' | 'account' | 'escrow'
-  const [currentView, setCurrentView] = useState<'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'schedule' | 'travel-dashboard' | 'map' | 'account' | 'escrow'>('marketplace');
+  // Navigation State: 'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'schedule' | 'travel-dashboard' | 'map' | 'account' | 'escrow' | 'orders'
+  const [currentView, setCurrentView] = useState<'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'schedule' | 'travel-dashboard' | 'map' | 'account' | 'escrow' | 'orders'>('marketplace');
   const [selectedPackage, setSelectedPackage] = useState<PackageItem | null>(null);
+  const [orderTab, setOrderTab] = useState<'all' | 'unpaid' | 'verification' | 'ready' | 'active' | 'completed'>('all');
 
-  // Hash Routing ala Umrohpedia (#travels, #schedule, #travel-map, #marketplace, #account, #escrow, dll.)
+  // Hash Routing ala Umrohpedia (#travels, #schedule, #travel-map, #marketplace, #account, #escrow, #orders, dll.)
   useEffect(() => {
     const handleHash = () => {
-      const h = window.location.hash.toLowerCase();
+      const rawHash = window.location.hash.toLowerCase();
+      const [h, query] = rawHash.split('?');
+
       if (h === '#travels' || h === '#biro' || h === '#biro-agen') {
         setCurrentView('biro');
         setSelectedPackage(null);
@@ -69,6 +73,16 @@ function UmrohHubEnterpriseAppContent() {
         setSelectedPackage(null);
       } else if (h === '#escrow' || h === '#savings' || h === '#tabungan') {
         setCurrentView('escrow');
+        setSelectedPackage(null);
+      } else if (h === '#orders' || h === '#transaksi' || h === '#daftar-transaksi') {
+        if (query?.includes('tab=unpaid')) setOrderTab('unpaid');
+        else if (query?.includes('tab=verification')) setOrderTab('verification');
+        else if (query?.includes('tab=ready')) setOrderTab('ready');
+        else if (query?.includes('tab=active')) setOrderTab('active');
+        else if (query?.includes('tab=completed')) setOrderTab('completed');
+        else setOrderTab('all');
+
+        setCurrentView('orders');
         setSelectedPackage(null);
       } else if (h === '#admin') {
         setCurrentView('admin');
@@ -302,7 +316,7 @@ function UmrohHubEnterpriseAppContent() {
   return (
     <div className="min-h-screen bg-[#F7F8FA] text-[#212121] pb-16">
       {/* Top Navbar Tokopedia-Inspired */}
-      <header className={`sticky top-0 z-30 bg-white border-b border-slate-200 shadow-2xs ${currentView === 'account' || currentView === 'escrow' ? 'hidden sm:block' : ''}`}>
+      <header className={`sticky top-0 z-30 bg-white border-b border-slate-200 shadow-2xs ${currentView === 'account' || currentView === 'escrow' || currentView === 'orders' ? 'hidden sm:block' : ''}`}>
         <div className="max-w-6xl mx-auto px-2.5 sm:px-4 h-10 sm:h-16 flex items-center justify-between gap-2.5 sm:gap-4">
           <div
             className="flex items-center gap-2 sm:gap-3 cursor-pointer"
@@ -1028,6 +1042,7 @@ function UmrohHubEnterpriseAppContent() {
               else if (v === 'admin') window.location.hash = '#admin';
               else if (v === 'account') window.location.hash = '#account';
               else if (v === 'escrow') window.location.hash = '#escrow';
+              else if (v === 'orders') window.location.hash = '#orders';
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onSelectPackage={handleSelectPackage}
@@ -1053,6 +1068,30 @@ function UmrohHubEnterpriseAppContent() {
               setSelectedPackage(null);
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
+          />
+        )}
+
+        {/* =========================================================================
+            VIEW 8: DAFTAR TRANSAKSI IBADAH (ORDER HISTORY TOKOPEDIA STYLE)
+           ========================================================================= */}
+        {currentView === 'orders' && (
+          <TransactionHistoryView
+            onBack={() => {
+              window.location.hash = '#account';
+              setCurrentView('account');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onNavigatePassport={() => {
+              window.location.hash = '#passport';
+              setCurrentView('passport');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onNavigateEscrow={() => {
+              window.location.hash = '#escrow';
+              setCurrentView('escrow');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            initialTab={orderTab}
           />
         )}
       </main>
@@ -1165,12 +1204,12 @@ function UmrohHubEnterpriseAppContent() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           className={`flex flex-col items-center justify-center gap-0.5 py-1 px-2 rounded-lg transition-colors cursor-pointer ${
-            currentView === 'account' || currentView === 'escrow'
+            currentView === 'account' || currentView === 'escrow' || currentView === 'orders'
               ? 'text-[#03AC0E] font-bold'
               : 'text-slate-500 hover:text-slate-800'
           }`}
         >
-          <User className={`w-5 h-5 ${currentView === 'account' || currentView === 'escrow' ? 'text-[#03AC0E] stroke-[2.5]' : 'stroke-2'}`} />
+          <User className={`w-5 h-5 ${currentView === 'account' || currentView === 'escrow' || currentView === 'orders' ? 'text-[#03AC0E] stroke-[2.5]' : 'stroke-2'}`} />
           <span className="text-[10px] tracking-tight">Akun</span>
         </button>
       </nav>
