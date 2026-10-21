@@ -21,6 +21,7 @@ import { AuthModal } from '@/components/auth/AuthModal';
 import { UserProfileMenu } from '@/components/auth/UserProfileMenu';
 import { AdminSupervisionView } from '@/components/admin/AdminSupervisionView';
 import { AccountPageView } from '@/components/account/AccountPageView';
+import { EscrowSavingsDetailView } from '@/components/account/EscrowSavingsDetailView';
 import {
   ShieldCheck,
   Plane,
@@ -44,11 +45,11 @@ import {
 
 function UmrohHubEnterpriseAppContent() {
   const { user, quickLogin } = useAuth();
-  // Navigation State: 'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'schedule' | 'travel-dashboard' | 'map' | 'account'
-  const [currentView, setCurrentView] = useState<'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'schedule' | 'travel-dashboard' | 'map' | 'account'>('marketplace');
+  // Navigation State: 'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'schedule' | 'travel-dashboard' | 'map' | 'account' | 'escrow'
+  const [currentView, setCurrentView] = useState<'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'schedule' | 'travel-dashboard' | 'map' | 'account' | 'escrow'>('marketplace');
   const [selectedPackage, setSelectedPackage] = useState<PackageItem | null>(null);
 
-  // Hash Routing ala Umrohpedia (#travels, #schedule, #travel-map, #marketplace, #account, dll.)
+  // Hash Routing ala Umrohpedia (#travels, #schedule, #travel-map, #marketplace, #account, #escrow, dll.)
   useEffect(() => {
     const handleHash = () => {
       const h = window.location.hash.toLowerCase();
@@ -65,6 +66,9 @@ function UmrohHubEnterpriseAppContent() {
         setCurrentView('passport');
       } else if (h === '#account' || h === '#akun') {
         setCurrentView('account');
+        setSelectedPackage(null);
+      } else if (h === '#escrow' || h === '#savings' || h === '#tabungan') {
+        setCurrentView('escrow');
         setSelectedPackage(null);
       } else if (h === '#admin') {
         setCurrentView('admin');
@@ -298,7 +302,7 @@ function UmrohHubEnterpriseAppContent() {
   return (
     <div className="min-h-screen bg-[#F7F8FA] text-[#212121] pb-16">
       {/* Top Navbar Tokopedia-Inspired */}
-      <header className={`sticky top-0 z-30 bg-white border-b border-slate-200 shadow-2xs ${currentView === 'account' ? 'hidden sm:block' : ''}`}>
+      <header className={`sticky top-0 z-30 bg-white border-b border-slate-200 shadow-2xs ${currentView === 'account' || currentView === 'escrow' ? 'hidden sm:block' : ''}`}>
         <div className="max-w-6xl mx-auto px-2.5 sm:px-4 h-10 sm:h-16 flex items-center justify-between gap-2.5 sm:gap-4">
           <div
             className="flex items-center gap-2 sm:gap-3 cursor-pointer"
@@ -1023,12 +1027,32 @@ function UmrohHubEnterpriseAppContent() {
               else if (v === 'travel-dashboard') window.location.hash = '#travel-dashboard';
               else if (v === 'admin') window.location.hash = '#admin';
               else if (v === 'account') window.location.hash = '#account';
+              else if (v === 'escrow') window.location.hash = '#escrow';
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onSelectPackage={handleSelectPackage}
             recommendations={MOCK_PACKAGES}
             bookingInfo={bookingInfo}
             documents={documents}
+          />
+        )}
+
+        {/* =========================================================================
+            VIEW 7: TABUNGAN & REKENING ESCROW SYARIAH KEMENAG RI
+           ========================================================================= */}
+        {currentView === 'escrow' && (
+          <EscrowSavingsDetailView
+            onBack={() => {
+              window.location.hash = '#account';
+              setCurrentView('account');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            onExplorePackages={() => {
+              window.location.hash = '#marketplace';
+              setCurrentView('marketplace');
+              setSelectedPackage(null);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
           />
         )}
       </main>
@@ -1141,12 +1165,12 @@ function UmrohHubEnterpriseAppContent() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           className={`flex flex-col items-center justify-center gap-0.5 py-1 px-2 rounded-lg transition-colors cursor-pointer ${
-            currentView === 'account'
+            currentView === 'account' || currentView === 'escrow'
               ? 'text-[#03AC0E] font-bold'
               : 'text-slate-500 hover:text-slate-800'
           }`}
         >
-          <User className={`w-5 h-5 ${currentView === 'account' ? 'text-[#03AC0E] stroke-[2.5]' : 'stroke-2'}`} />
+          <User className={`w-5 h-5 ${currentView === 'account' || currentView === 'escrow' ? 'text-[#03AC0E] stroke-[2.5]' : 'stroke-2'}`} />
           <span className="text-[10px] tracking-tight">Akun</span>
         </button>
       </nav>

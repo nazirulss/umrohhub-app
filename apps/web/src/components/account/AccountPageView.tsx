@@ -31,6 +31,7 @@ interface AccountPageViewProps {
       | 'travel-dashboard'
       | 'map'
       | 'account'
+      | 'escrow'
   ) => void;
   onSelectPackage: (pkg: PackageItem) => void;
   recommendations: PackageItem[];
@@ -197,11 +198,10 @@ export function AccountPageView({
         <div className="grid grid-cols-2 gap-2.5">
           {/* Card Kiri: Tabungan Umroh / Saldo Escrow */}
           <div
-            onClick={() =>
-              showToast(
-                'Saldo Escrow Terlindungi: Dana akad tersimpan aman di Bank Syariah Mitra Kemenag RI.'
-              )
-            }
+            onClick={() => {
+              window.location.hash = '#escrow';
+              onNavigateView('escrow');
+            }}
             className="bg-[#F7F8FA] border border-[#E5E7E9] rounded-xl p-3 flex flex-col justify-between hover:border-emerald-300 transition-all cursor-pointer group"
           >
             <div>
@@ -320,9 +320,10 @@ export function AccountPageView({
           {/* Item 4: Rekening Escrow */}
           <button
             type="button"
-            onClick={() =>
-              showToast('Rekening Bersama Syariah BSI/Muamalat: Dana aman hingga keberangkatan!')
-            }
+            onClick={() => {
+              window.location.hash = '#escrow';
+              onNavigateView('escrow');
+            }}
             className="flex-1 flex flex-col items-center text-center cursor-pointer group"
           >
             <div className="text-[#0088CC] mb-0.5">
