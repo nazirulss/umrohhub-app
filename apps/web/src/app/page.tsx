@@ -1215,7 +1215,7 @@ function UmrohHubEnterpriseAppContent() {
           }`}
         >
           <Building2 className={`w-5 h-5 ${currentView === 'biro' ? 'text-emerald-600 stroke-[2.5]' : 'stroke-2'}`} />
-          <span className="text-[10px] tracking-tight">Biro Agen</span>
+          <span className="text-[10px] tracking-tight">Biro</span>
         </button>
 
         <button
