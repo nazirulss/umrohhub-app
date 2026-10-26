@@ -10,7 +10,7 @@ interface AuthContextType {
   login: (payload: LoginPayload) => Promise<{ success: boolean; message?: string }>;
   register: (payload: RegisterPayload) => Promise<{ success: boolean; message?: string }>;
   logout: () => Promise<void>;
-  quickLogin: (role: 'CUSTOMER' | 'TRAVEL' | 'SUPER_ADMIN') => Promise<void>;
+  quickLogin: (role: 'CUSTOMER' | 'TRAVEL' | 'SUPER_ADMIN' | 'AFFILIATE') => Promise<void>;
   isAuthModalOpen: boolean;
   authModalDefaultRole: UserRole;
   openAuthModal: (defaultRole?: UserRole) => void;
@@ -118,7 +118,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   // 1-Click Quick Demo Login untuk pengujian instan
-  const quickLogin = async (role: 'CUSTOMER' | 'TRAVEL' | 'SUPER_ADMIN') => {
+  const quickLogin = async (role: 'CUSTOMER' | 'TRAVEL' | 'SUPER_ADMIN' | 'AFFILIATE') => {
     let email = 'jamaah@umrohhub.com';
     let password = 'jamaah123';
     if (role === 'TRAVEL') {
@@ -127,6 +127,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } else if (role === 'SUPER_ADMIN') {
       email = 'admin@kemenag-hub.id';
       password = 'admin123';
+    } else if (role === 'AFFILIATE') {
+      email = 'afiliasi@syiar.id';
+      password = 'syiar123';
     }
 
     await login({ email, password, roleHint: role });

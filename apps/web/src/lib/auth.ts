@@ -45,6 +45,15 @@ export const DEMO_USERS: Record<string, AuthUser & { passwordHash: string }> = {
     status: 'ACTIVE',
     passwordHash: '$2a$10$vI8aWBnW3fO.R0k6Jz6tUOMo6V5l4E4sL9x2pGg1F4fK3sP9lQx6y', // 'admin123'
   },
+  'afiliasi@syiar.id': {
+    id: 'user-demo-affiliate',
+    name: 'Ustadz Salman Faris (Mitra Syiar)',
+    email: 'afiliasi@syiar.id',
+    phone: '081234567890',
+    role: 'AFFILIATE',
+    status: 'ACTIVE',
+    passwordHash: '$2a$10$vI8aWBnW3fO.R0k6Jz6tUOMo6V5l4E4sL9x2pGg1F4fK3sP9lQx6y', // 'syiar123'
+  },
 };
 
 /**
