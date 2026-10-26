@@ -9,6 +9,7 @@ import { PackageCard } from '@/components/marketplace/PackageCard';
 import { MarketplaceFilterBar } from '@/components/marketplace/MarketplaceFilterBar';
 import { FilterModal } from '@/components/marketplace/FilterModal';
 import { ProductDetailPage } from '@/components/marketplace/ProductDetailPage';
+import { HomeBannerSlider } from '@/components/marketplace/HomeBannerSlider';
 import { PaxSelectorTabs } from '@/components/documents/PaxSelectorTabs';
 import { PassportUploadForm } from '@/components/documents/PassportUploadForm';
 import { PassportReviewCard } from '@/components/documents/PassportReviewCard';
@@ -465,40 +466,21 @@ function UmrohHubEnterpriseAppContent() {
            ========================================================================= */}
         {currentView === 'marketplace' && (
           <div className="space-y-2.5 sm:space-y-4">
-            {/* Promo Banner Slider ala Umrohpedia (archive/index.html) */}
-            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm min-h-[125px] sm:min-h-[160px] flex items-center bg-slate-900">
-              <Image
-                src="https://images.unsplash.com/photo-1565552684305-7e8e7a080824?auto=format&fit=crop&w=1200&q=80"
-                alt="Banner Garansi PPIU Resmi"
-                fill
-                unoptimized
-                className="object-cover object-center"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/95 via-emerald-900/80 to-transparent" />
-              
-              <div className="relative z-10 p-3.5 sm:p-6 max-w-xl space-y-1 sm:space-y-2">
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[9px] sm:text-xs font-bold bg-[#00aa5b] text-white shadow-xs">
-                  <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" />
-                  Jaminan 5 Pasti Kemenag
-                </span>
-                <h1 className="text-sm sm:text-xl lg:text-2xl font-black text-white leading-tight">
-                  Garansi PPIU Resmi & Transparansi Biaya Tanpa Tipu-Tipu
-                </h1>
-                <p className="text-[10.5px] sm:text-xs text-emerald-100/90 line-clamp-1 sm:line-clamp-none leading-relaxed">
-                  Semua biro travel telah lolos verifikasi legalitas SK Kemenag & NIB resmi.
-                </p>
-                <div className="pt-0.5 sm:pt-1">
-                  <button
-                    type="button"
-                    onClick={() => setCurrentView('biro')}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg bg-[#00aa5b] hover:bg-emerald-700 text-white text-[10.5px] sm:text-xs font-bold transition-all shadow-xs cursor-pointer"
-                  >
-                    <span>Cek Biro PPIU</span>
-                    <span>&rarr;</span>
-                  </button>
-                </div>
-              </div>
-            </div>
+            {/* Promo Banner Slider (Ukuran 3:1 Otomatis dengan 3 Slide Bergantian) */}
+            <HomeBannerSlider
+              onNavigateView={(v) => {
+                setCurrentView(v);
+                if (v === 'biro') window.location.hash = '#travels';
+                else if (v === 'schedule') window.location.hash = '#schedule';
+                else if (v === 'account') window.location.hash = '#account';
+                else if (v === 'orders') window.location.hash = '#orders';
+                else if (v === 'escrow') window.location.hash = '#escrow';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              onFilterCategory={(cat) => {
+                setFilters((prev) => ({ ...prev, category: cat }));
+              }}
+            />
 
             {/* Kolom Pencarian Penuh ala Umrohpedia (archive/index.html) */}
             <div className="relative">
