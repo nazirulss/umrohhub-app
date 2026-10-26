@@ -45,7 +45,7 @@ export function MitraSyiarPageView({
   const [totalPilgrims, setTotalPilgrims] = useState(6);
   const [isWithdrawing, setIsWithdrawing] = useState(false);
 
-  const referralLink = `https://umrohhub.my.id/syiar/${referralSlug}`;
+  const referralLink = `https://umrohpedia.my.id/syiar/${referralSlug}`;
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -171,7 +171,7 @@ export function MitraSyiarPageView({
                 Custom Kode / Tautan Syiar:
               </label>
               <div className="flex items-center bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 focus-within:border-emerald-600 focus-within:bg-white">
-                <span className="text-[11px] text-slate-400 font-mono">umrohhub.my.id/syiar/</span>
+                <span className="text-[11px] text-slate-400 font-mono">umrohpedia.my.id/syiar/</span>
                 <input
                   type="text"
                   value={referralSlug}

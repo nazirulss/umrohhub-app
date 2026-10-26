@@ -26,6 +26,9 @@ export async function GET(request: NextRequest) {
       user,
     });
   } catch (error) {
+    if (error && typeof error === 'object' && 'digest' in error && String((error as any).digest).startsWith('NEXT_PRERENDER')) {
+      throw error;
+    }
     console.error('Error saat verifikasi session:', error);
     return NextResponse.json({
       success: false,

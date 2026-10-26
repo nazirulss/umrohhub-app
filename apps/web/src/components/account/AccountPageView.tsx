@@ -164,7 +164,7 @@ export function AccountPageView({
           {/* Help Center / CS Face Icon */}
           <button
             type="button"
-            onClick={() => showToast('Pusat Bantuan & CS Siaga 24/7 UmrohHub Kemenag RI')}
+            onClick={() => showToast('Pusat Bantuan & CS Siaga 24/7 Umrohpedia Kemenag RI')}
             className="text-[#212121] hover:opacity-75 transition-opacity p-1 cursor-pointer"
             title="Pusat Bantuan"
             aria-label="Pusat Bantuan"

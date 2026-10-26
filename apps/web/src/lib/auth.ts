@@ -3,20 +3,20 @@ import bcrypt from 'bcryptjs';
 import { AuthUser, UserRole } from '@/types/auth';
 
 function getJwtSecret(): Uint8Array {
-  const secret = process.env.AUTH_SECRET || 'umrohhub-enterprise-jwt-secret-key-32chars-min';
+  const secret = process.env.AUTH_SECRET || 'umrohpedia-enterprise-jwt-secret-key-32chars-min';
   return new TextEncoder().encode(secret);
 }
 
 const JWT_SECRET = getJwtSecret();
 
-export const AUTH_COOKIE_NAME = 'umrohhub_session';
+export const AUTH_COOKIE_NAME = 'umrohpedia_session';
 
 // Demo Enterprise Users (digunakan untuk fallback offline dan 1-Click Quick Demo Login)
 export const DEMO_USERS: Record<string, AuthUser & { passwordHash: string }> = {
-  'jamaah@umrohhub.com': {
+  'jamaah@umrohpedia.com': {
     id: 'user-demo-customer',
     name: 'Muhammad Fadhil Al-Farisi',
-    email: 'jamaah@umrohhub.com',
+    email: 'jamaah@umrohpedia.com',
     phone: '081311223344',
     role: 'CUSTOMER',
     status: 'ACTIVE',

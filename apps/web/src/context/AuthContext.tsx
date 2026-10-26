@@ -22,7 +22,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   // Default demo user: Jamaah Aktif hanya di development agar preview interaktif langsung hidup
   const [user, setUser] = useState<AuthUser | null>(
-    process.env.NODE_ENV === 'production' ? null : (DEMO_USERS['jamaah@umrohhub.com'] ?? null)
+    process.env.NODE_ENV === 'production' ? null : (DEMO_USERS['jamaah@umrohpedia.com'] ?? null)
   );
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -119,7 +119,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // 1-Click Quick Demo Login untuk pengujian instan
   const quickLogin = async (role: 'CUSTOMER' | 'TRAVEL' | 'SUPER_ADMIN' | 'AFFILIATE') => {
-    let email = 'jamaah@umrohhub.com';
+    let email = 'jamaah@umrohpedia.com';
     let password = 'jamaah123';
     if (role === 'TRAVEL') {
       email = 'biro@almadinah.com';

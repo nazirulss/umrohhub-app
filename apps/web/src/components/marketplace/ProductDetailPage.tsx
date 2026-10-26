@@ -60,7 +60,7 @@ export function ProductDetailPage({
     if (navigator.share) {
       navigator.share({
         title: pkg.title,
-        text: `Lihat ${pkg.title} di UmrohHub!`,
+        text: `Lihat ${pkg.title} di Umrohpedia!`,
         url: window.location.href,
       }).catch(() => {});
     } else {

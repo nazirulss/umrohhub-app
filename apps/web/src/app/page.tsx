@@ -47,7 +47,7 @@ import {
   ArrowLeft,
 } from 'lucide-react';
 
-function UmrohHubEnterpriseAppContent() {
+function UmrohpediaEnterpriseAppContent() {
   const { user, quickLogin } = useAuth();
   // Navigation State: 'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'schedule' | 'travel-dashboard' | 'map' | 'account' | 'escrow' | 'orders' | 'register-biro' | 'mitra-syiar'
   const [currentView, setCurrentView] = useState<'marketplace' | 'pdp' | 'passport' | 'biro' | 'admin' | 'schedule' | 'travel-dashboard' | 'map' | 'account' | 'escrow' | 'orders' | 'register-biro' | 'mitra-syiar'>('marketplace');
@@ -233,12 +233,12 @@ function UmrohHubEnterpriseAppContent() {
     departure: DepartureItem;
     totalPrice: number;
   }) => {
-    let code = `UH-${Date.now().toString(36).toUpperCase().slice(-6)}`;
+    let code = `UP-${Date.now().toString(36).toUpperCase().slice(-6)}`;
     let bkgId = `BKG-${Date.now()}`;
 
     const customerName = user?.name || 'Calon Jamaah Umroh';
     const customerPhone = user?.phone || '081200000000';
-    const customerEmail = user?.email || 'jamaah@umrohhub.com';
+    const customerEmail = user?.email || 'jamaah@umrohpedia.com';
 
     // Kirim pendaftaran transaksi ke PostgreSQL Booking Table via Prisma API
     try {
@@ -327,27 +327,34 @@ function UmrohHubEnterpriseAppContent() {
       {/* Top Navbar Tokopedia-Inspired */}
       <header className={`sticky top-0 z-30 bg-white border-b border-slate-200 shadow-2xs ${currentView === 'account' || currentView === 'escrow' || currentView === 'orders' || currentView === 'register-biro' || currentView === 'mitra-syiar' ? 'hidden sm:block' : ''}`}>
         <div className="max-w-6xl mx-auto px-2.5 sm:px-4 h-10 sm:h-16 flex items-center justify-between gap-2.5 sm:gap-4">
+          {/* Logo & Brand Identity */}
           <div
-            className="flex items-center gap-2 sm:gap-3 cursor-pointer"
+            className="flex items-center gap-2 sm:gap-2.5 cursor-pointer"
             onClick={() => {
               setCurrentView('marketplace');
               setSelectedPackage(null);
             }}
           >
-            <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-md sm:rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-700 text-white flex items-center justify-center font-black text-xs sm:text-lg shadow-sm">
-              UH
+            <div className="relative w-8 h-8 sm:w-9 sm:h-9 shrink-0 rounded-lg overflow-hidden shadow-2xs">
+              <Image
+                src="/favicon-96x96.png"
+                alt="Logo Umrohpedia"
+                fill
+                unoptimized
+                className="object-contain"
+              />
             </div>
             <div>
               <div className="flex items-center gap-1 sm:gap-1.5">
-                <span className="font-extrabold text-xs sm:text-base tracking-tight text-slate-900">
-                  UmrohHub
+                <span className="font-black text-sm sm:text-lg tracking-tight text-slate-900">
+                  Umrohpedia
                 </span>
-                <span className="px-1 py-0.2 sm:px-1.5 sm:py-0.5 rounded text-[8px] sm:text-[10px] font-bold bg-emerald-100 text-emerald-800">
-                  ENTERPRISE v1.0
+                <span className="px-1 py-0.2 sm:px-1.5 sm:py-0.5 rounded text-[8px] sm:text-[9.5px] font-bold bg-emerald-100 text-[#007A41]">
+                  Resmi Kemenag
                 </span>
               </div>
-              <p className="text-[11px] text-slate-500 hidden sm:block">
-                Marketplace & Portal Umroh Terverifikasi Kemenag RI
+              <p className="text-[10px] sm:text-[11px] text-slate-500 hidden sm:block leading-none mt-0.5">
+                Marketplace &amp; Portal Umroh Terverifikasi
               </p>
             </div>
           </div>
@@ -1240,10 +1247,10 @@ function UmrohHubEnterpriseAppContent() {
   );
 }
 
-export default function UmrohHubEnterpriseApp() {
+export default function UmrohpediaEnterpriseApp() {
   return (
     <AuthProvider>
-      <UmrohHubEnterpriseAppContent />
+      <UmrohpediaEnterpriseAppContent />
     </AuthProvider>
   );
 }

@@ -2,7 +2,7 @@ import { prisma } from '../src/lib/prisma';
 import { Role, TravelVerificationStatus, FlightType, PackageStatus, DepartureStatus, BookingStatus, PaymentStatus, DocumentStatus } from '@prisma/client';
 
 async function main() {
-  console.log('🌱 Memulai seeding data enterprise UmrohHub...');
+  console.log('🌱 Memulai seeding data enterprise Umrohpedia...');
 
   // 1. Seed Biro Owner & Admin
   const biroOwner = await prisma.user.upsert({
@@ -18,11 +18,11 @@ async function main() {
   });
 
   const demoCustomer = await prisma.user.upsert({
-    where: { email: 'customer@umrohhub.com' },
+    where: { email: 'customer@umrohpedia.com' },
     update: {},
     create: {
       name: 'Muhammad Fadhil',
-      email: 'customer@umrohhub.com',
+      email: 'customer@umrohpedia.com',
       passwordHash: '$2a$12$e8wF4y8w9eF9x8w.example.hashedpassword',
       phone: '081311223344',
       role: Role.CUSTOMER,
@@ -171,7 +171,7 @@ async function main() {
       departureId: departure1.id,
       customerName: 'Muhammad Fadhil',
       customerPhone: '081311223344',
-      customerEmail: 'customer@umrohhub.com',
+      customerEmail: 'customer@umrohpedia.com',
       pilgrimCount: 2,
       roomType: 'Double',
       unitPrice: 28500000,
@@ -222,7 +222,7 @@ async function main() {
   });
 
   console.log(`✅ Booking & Passports seeded for: ${booking1.bookingCode}`);
-  console.log('🎉 Seeding database enterprise UmrohHub selesai dengan sukses!');
+  console.log('🎉 Seeding database enterprise Umrohpedia selesai dengan sukses!');
 }
 
 main()

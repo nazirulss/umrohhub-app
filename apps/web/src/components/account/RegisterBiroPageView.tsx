@@ -241,7 +241,7 @@ export function RegisterBiroPageView({
             <div className="bg-amber-50/80 border border-amber-200 rounded-xl p-3 flex items-start gap-2.5">
               <ShieldCheck className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
               <p className="text-[11px] text-amber-950 leading-relaxed">
-                UmrohHub hanya melayani PPIU (Penyelenggara Perjalanan Ibadah Umrah) yang memiliki izin operasional aktif dari Kementerian Agama RI.
+                Umrohpedia hanya melayani PPIU (Penyelenggara Perjalanan Ibadah Umrah) yang memiliki izin operasional aktif dari Kementerian Agama RI.
               </p>
             </div>
 
@@ -411,7 +411,7 @@ export function RegisterBiroPageView({
                 Pendaftaran Biro Berhasil!
               </h4>
               <p className="text-xs text-slate-600 max-w-xs mx-auto leading-relaxed">
-                Selamat! <strong>{brandName}</strong> telah terdaftar di ekosistem UmrohHub dengan verifikasi SK Kemenag resmi.
+                Selamat! <strong>{brandName}</strong> telah terdaftar di ekosistem Umrohpedia dengan verifikasi SK Kemenag resmi.
               </p>
             </div>
 

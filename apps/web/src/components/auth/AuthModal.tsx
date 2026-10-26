@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useAuth } from '@/context/AuthContext';
 import { UserRole } from '@/types/auth';
 import {
@@ -99,17 +100,23 @@ export function AuthModal() {
             <X className="w-4 h-4" />
           </button>
 
-          <div className="flex items-center gap-2 mb-2">
-            <span className="w-8 h-8 rounded-xl bg-emerald-500/30 border border-emerald-400/40 flex items-center justify-center text-emerald-300 font-black text-sm">
-              UH
-            </span>
+          <div className="flex items-center gap-2.5 mb-2">
+            <div className="relative w-8 h-8 rounded-lg overflow-hidden shadow-2xs shrink-0">
+              <Image
+                src="/favicon-96x96.png"
+                alt="Logo Umrohpedia"
+                fill
+                unoptimized
+                className="object-contain"
+              />
+            </div>
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-300">
-              Enterprise Authentication Portal
+              Umrohpedia Portal
             </span>
           </div>
 
           <h2 className="text-xl font-extrabold text-white">
-            {mode === 'login' ? 'Masuk ke UmrohHub' : 'Daftar Akun Baru'}
+            {mode === 'login' ? 'Masuk ke Umrohpedia' : 'Daftar Akun Baru'}
           </h2>
           <p className="text-xs text-emerald-200/90 mt-1">
             Pilih portal sesuai peran Anda untuk melanjutkan ke layanan terintegrasi

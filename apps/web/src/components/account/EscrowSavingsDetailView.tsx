@@ -70,7 +70,7 @@ export function EscrowSavingsDetailView({
       type: 'voucher',
       amount: 500000,
       status: 'AKTIF',
-      source: 'Program Afiliasi Syiar UmrohHub',
+      source: 'Program Afiliasi Syiar Umrohpedia',
       referenceNo: 'VCH-RAMADHAN-1448H',
     },
   ]);
@@ -158,7 +158,7 @@ export function EscrowSavingsDetailView({
         <button
           type="button"
           onClick={() =>
-            showToast('Layanan Escrow UmrohHub diawasi langsung oleh Ditjen PHU Kementerian Agama RI & DSN-MUI.')
+            showToast('Layanan Escrow Umrohpedia diawasi langsung oleh Ditjen PHU Kementerian Agama RI & DSN-MUI.')
           }
           className="text-slate-400 hover:text-slate-700 p-1 cursor-pointer"
           aria-label="Informasi Escrow"
