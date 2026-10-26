@@ -151,7 +151,7 @@ export function ProductDetailPage({
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                 </h4>
                 <p className="text-[11px] text-slate-500 truncate">{pkg.skKemenag}</p>
-                <p className="text-[10px] text-emerald-700 font-semibold">Toko Resmi Terverifikasi</p>
+                <p className="text-[10px] text-emerald-700 font-semibold">Biro Resmi Terverifikasi</p>
               </div>
             </div>
 
@@ -161,7 +161,7 @@ export function ProductDetailPage({
                 onClick={() => alert(`Membuka etalase resmi ${pkg.travelName}`)}
                 className="py-1.5 px-3 rounded-lg border border-slate-200 hover:bg-slate-50 text-[11px] font-bold text-slate-700 transition-colors text-center cursor-pointer"
               >
-                Kunjungi Toko
+                Kunjungi Biro
               </button>
               <button
                 type="button"
@@ -187,11 +187,12 @@ export function ProductDetailPage({
               </span>
               <span className="text-slate-400">•</span>
               <span className="text-slate-500 font-medium">Terjual {pkg.soldCount}+ jamaah</span>
-              <span className="text-slate-400">•</span>
-              <span className="text-amber-500 font-bold">★ {pkg.rating} (Ulasan Terverifikasi)</span>
             </div>
 
-            <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 leading-snug">
+            <h1
+              className="text-sm sm:text-base md:text-lg font-extrabold text-slate-900 leading-snug truncate"
+              title={pkg.title}
+            >
               {pkg.title}
             </h1>
 
