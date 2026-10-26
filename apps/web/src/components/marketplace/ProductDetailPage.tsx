@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { PackageItem, RoomVariant, DepartureItem } from '@/types/marketplace';
+import { useAuth } from '@/context/AuthContext';
+import { CheckoutSummaryModal } from './CheckoutSummaryModal';
 import {
   ArrowLeft,
   Share2,
@@ -26,6 +28,12 @@ interface ProductDetailPageProps {
     roomVariant: RoomVariant;
     departure: DepartureItem;
     totalPrice: number;
+    customerName?: string;
+    customerPhone?: string;
+    customerEmail?: string;
+    paymentOption?: 'DP' | 'FULL';
+    specialNotes?: string;
+    proceedTo?: 'passport' | 'orders';
   }) => void;
 }
 
@@ -34,6 +42,9 @@ export function ProductDetailPage({
   onBack,
   onProceedToBooking,
 }: ProductDetailPageProps) {
+  const { user, openAuthModal } = useAuth();
+  const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false);
+
   const [selectedImage, setSelectedImage] = useState(pkg.galleryImages[0] || pkg.image);
   const [selectedRoom, setSelectedRoom] = useState<RoomVariant>(
     pkg.roomVariants[0] || { id: 'RM-QUAD', name: 'Quad (Sekamar Ber-4)', paxPerRoom: 4, priceDelta: 0 }
@@ -50,6 +61,14 @@ export function ProductDetailPage({
   );
   const [paxCount, setPaxCount] = useState(2);
   const [activeTab, setActiveTab] = useState<'detail' | 'hotel' | 'itinerary' | 'syarat'>('detail');
+
+  const handleLanjutClick = () => {
+    if (!user) {
+      openAuthModal('CUSTOMER');
+      return;
+    }
+    setIsCheckoutModalOpen(true);
+  };
 
   // Perhitungan Finansial
   const unitPrice = pkg.price + selectedRoom.priceDelta;
@@ -453,19 +472,11 @@ export function ProductDetailPage({
               </div>
             </div>
 
-            {/* CTA Button: Menghubungkan langsung ke Alur Dokumen Paspor! */}
+            {/* CTA Button: Menghubungkan langsung ke Ringkasan Checkout */}
             <button
               type="button"
-              onClick={() =>
-                onProceedToBooking({
-                  pkg,
-                  paxCount,
-                  roomVariant: selectedRoom,
-                  departure: selectedDeparture,
-                  totalPrice,
-                })
-              }
-              className="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-extrabold text-xs tracking-wide uppercase shadow-md hover:shadow-lg transition-all cursor-pointer flex items-center justify-center gap-2"
+              onClick={handleLanjutClick}
+              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#005B31] to-[#007A41] hover:from-[#004e2a] hover:to-[#006a38] active:scale-98 text-white font-extrabold text-xs tracking-wide uppercase shadow-md hover:shadow-lg transition-all cursor-pointer flex items-center justify-center gap-2"
             >
               <span>Lanjut & Lengkapi Paspor</span>
               <ChevronRight className="w-4 h-4" />
@@ -485,6 +496,51 @@ export function ProductDetailPage({
           </div>
         </div>
       </div>
+
+      {/* Modal Ringkasan Pemesanan / Checkout Summary */}
+      <CheckoutSummaryModal
+        isOpen={isCheckoutModalOpen}
+        onClose={() => setIsCheckoutModalOpen(false)}
+        pkg={pkg}
+        paxCount={paxCount}
+        roomVariant={selectedRoom}
+        departure={selectedDeparture}
+        totalPrice={totalPrice}
+        unitPrice={unitPrice}
+        user={user}
+        onProceedToPassport={(checkoutData) => {
+          setIsCheckoutModalOpen(false);
+          onProceedToBooking({
+            pkg,
+            paxCount,
+            roomVariant: selectedRoom,
+            departure: selectedDeparture,
+            totalPrice,
+            customerName: checkoutData.customerName,
+            customerPhone: checkoutData.customerPhone,
+            customerEmail: checkoutData.customerEmail,
+            paymentOption: checkoutData.paymentOption,
+            specialNotes: checkoutData.specialNotes,
+            proceedTo: 'passport',
+          });
+        }}
+        onPayLaterAndUploadLater={(checkoutData) => {
+          setIsCheckoutModalOpen(false);
+          onProceedToBooking({
+            pkg,
+            paxCount,
+            roomVariant: selectedRoom,
+            departure: selectedDeparture,
+            totalPrice,
+            customerName: checkoutData.customerName,
+            customerPhone: checkoutData.customerPhone,
+            customerEmail: checkoutData.customerEmail,
+            paymentOption: checkoutData.paymentOption,
+            specialNotes: checkoutData.specialNotes,
+            proceedTo: 'orders',
+          });
+        }}
+      />
     </div>
   );
 }

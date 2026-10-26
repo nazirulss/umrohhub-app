@@ -232,13 +232,19 @@ function UmrohpediaEnterpriseAppContent() {
     roomVariant: RoomVariant;
     departure: DepartureItem;
     totalPrice: number;
+    customerName?: string;
+    customerPhone?: string;
+    customerEmail?: string;
+    paymentOption?: 'DP' | 'FULL';
+    specialNotes?: string;
+    proceedTo?: 'passport' | 'orders';
   }) => {
     let code = `UP-${Date.now().toString(36).toUpperCase().slice(-6)}`;
     let bkgId = `BKG-${Date.now()}`;
 
-    const customerName = user?.name || 'Calon Jamaah Umroh';
-    const customerPhone = user?.phone || '081200000000';
-    const customerEmail = user?.email || 'jamaah@umrohpedia.com';
+    const customerName = data.customerName || user?.name || 'Calon Jamaah Umroh';
+    const customerPhone = data.customerPhone || user?.phone || '081200000000';
+    const customerEmail = data.customerEmail || user?.email || 'jamaah@umrohpedia.com';
 
     // Kirim pendaftaran transaksi ke PostgreSQL Booking Table via Prisma API
     try {
@@ -253,6 +259,8 @@ function UmrohpediaEnterpriseAppContent() {
           customerName,
           customerPhone,
           customerEmail,
+          paymentOption: data.paymentOption,
+          specialNotes: data.specialNotes,
         }),
       });
       const resData = await res.json();
@@ -271,7 +279,7 @@ function UmrohpediaEnterpriseAppContent() {
       }
     }
 
-    // Generate new booking context and move to passport flow
+    // Generate new booking context and move to passport flow or orders view
     setBookingInfo({
       bookingId: bkgId,
       bookingCode: code,
@@ -293,7 +301,7 @@ function UmrohpediaEnterpriseAppContent() {
       initialDocs[i] = {
         bookingId: code,
         paxIndex: i,
-        fullName: i === 1 && user?.name ? user.name.toUpperCase() : '',
+        fullName: i === 1 && customerName ? customerName.toUpperCase() : '',
         passportNumber: '',
         gender: 'M',
         birthDate: '',
@@ -304,7 +312,12 @@ function UmrohpediaEnterpriseAppContent() {
     }
     setDocuments(initialDocs);
 
-    setCurrentView('passport');
+    if (data.proceedTo === 'orders') {
+      window.location.hash = '#orders';
+      setCurrentView('orders');
+    } else {
+      setCurrentView('passport');
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

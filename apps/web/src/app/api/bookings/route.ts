@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
     // Generate unique human-readable booking code: UH-YYYYMMDD-RANDOM
     const dateStr = new Date().toISOString().slice(2, 10).replace(/-/g, '');
     const randStr = Math.random().toString(36).substring(2, 6).toUpperCase();
-    const bookingCode = `UH-${dateStr}-${randStr}`;
+    const bookingCode = `UP-${dateStr}-${randStr}`;
 
     const totalAmount = unitPrice * pilgrimCount;
 
