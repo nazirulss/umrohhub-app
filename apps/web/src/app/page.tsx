@@ -329,34 +329,20 @@ function UmrohpediaEnterpriseAppContent() {
         <div className="max-w-6xl mx-auto px-2.5 sm:px-4 h-10 sm:h-16 flex items-center justify-between gap-2.5 sm:gap-4">
           {/* Logo & Brand Identity */}
           <div
-            className="flex items-center gap-2 sm:gap-2.5 cursor-pointer"
+            className="flex items-center cursor-pointer select-none py-1"
             onClick={() => {
               setCurrentView('marketplace');
               setSelectedPackage(null);
             }}
           >
-            <div className="relative w-8 h-8 sm:w-9 sm:h-9 shrink-0 rounded-lg overflow-hidden shadow-2xs">
-              <Image
-                src="/favicon-96x96.png"
-                alt="Logo Umrohpedia"
-                fill
-                unoptimized
-                className="object-contain"
-              />
-            </div>
-            <div>
-              <div className="flex items-center gap-1 sm:gap-1.5">
-                <span className="font-black text-sm sm:text-lg tracking-tight text-slate-900">
-                  Umrohpedia
-                </span>
-                <span className="px-1 py-0.2 sm:px-1.5 sm:py-0.5 rounded text-[8px] sm:text-[9.5px] font-bold bg-emerald-100 text-[#007A41]">
-                  Resmi Kemenag
-                </span>
-              </div>
-              <p className="text-[10px] sm:text-[11px] text-slate-500 hidden sm:block leading-none mt-0.5">
-                Marketplace &amp; Portal Umroh Terverifikasi
-              </p>
-            </div>
+            <Image
+              src="/logo-umrohpedia.png"
+              alt="Umrohpedia"
+              width={617}
+              height={132}
+              priority
+              className="h-7 sm:h-9 w-auto object-contain"
+            />
           </div>
 
           {/* Search Box in Navbar (Marketplace View) */}
